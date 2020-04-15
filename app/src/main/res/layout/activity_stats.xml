@@ -12,7 +12,7 @@
         android:layout_height="64dp"
         android:autoText="false"
         android:background="@color/Orange"
-        android:fontFamily="@font/ibmplexsansregular"
+        android:fontFamily="@font/ibm_plex_sans_regular"
         android:gravity="center"
         android:text="statistik"
         android:textAllCaps="true"

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <font-family xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--
     <font
         android:fontStyle="normal"
         android:fontWeight="4000"
@@ -18,5 +19,5 @@
         android:fontStyle="normal"
         android:fontWeight="400"
         android:font="@font/ibmplexsansitalic" />
-
+    -->
 </font-family>
