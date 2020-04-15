@@ -33,14 +33,32 @@
         android:text="Vælg madspild eller madaffald samt dag, uge eller måned"
         android:textAllCaps="false"
         android:textSize="18sp"
-        android:textStyle="bold"
+        android:textStyle="normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.436"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title" />
 
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="89dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="184dp"
+        android:autoText="false"
+        android:background="@color/Beige"
+        android:fontFamily="@font/ibm_plex_sans_regular"
+        android:gravity="center"
+        android:text="August"
+        android:textAllCaps="false"
+        android:textSize="24sp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
+
     <view
-        android:id="@+id/view"
+        android:id="@+id/greenbox"
         class="androidx.appcompat.widget.ActionMenuView"
         android:layout_width="410dp"
         android:layout_height="96dp"
@@ -49,52 +67,46 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/explainer" />
 
-    <Button
-        android:id="@+id/toggle"
-        android:layout_width="52dp"
-        android:layout_height="37dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="@+id/view"
-        app:layout_constraintStart_toStartOf="@+id/view"
-        app:layout_constraintTop_toTopOf="@+id/view" />
+    <view
+        android:id="@+id/taskbarPicked"
+        class="androidx.appcompat.widget.ActionMenuView"
+        android:layout_width="206dp"
+        android:layout_height="58dp"
+        android:background="@color/Orange"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/toggleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginStart="84dp"
+        android:layout_marginLeft="84dp"
         android:text="Mad Spild"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/view"
-        app:layout_constraintStart_toEndOf="@+id/toggle"
-        app:layout_constraintTop_toTopOf="@+id/view" />
+        app:layout_constraintBottom_toBottomOf="@+id/greenbox"
+        app:layout_constraintEnd_toStartOf="@+id/dropdown"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/greenbox"
+        app:layout_constraintTop_toTopOf="@+id/greenbox" />
 
     <Spinner
         android:id="@+id/dropdown"
         android:layout_width="148dp"
         android:layout_height="41dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginRight="12dp"
         android:scrollbarSize="4dp"
         android:spinnerMode="dialog"
-        app:layout_constraintBottom_toBottomOf="@+id/view"
-        app:layout_constraintEnd_toEndOf="@+id/view"
-        app:layout_constraintTop_toTopOf="@+id/view" />
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="109dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
-        android:text="Button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/view" />
+        app:layout_constraintBottom_toBottomOf="@+id/greenbox"
+        app:layout_constraintEnd_toEndOf="@+id/greenbox"
+        app:layout_constraintTop_toTopOf="@+id/greenbox"
+        app:layout_constraintVertical_bias="0.509" />
 
     <View
-        android:id="@+id/divider"
+        android:id="@+id/line"
         android:layout_width="409dp"
         android:layout_height="1dp"
         android:background="@color/Black"
@@ -107,78 +119,386 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <View
-        android:id="@+id/divider2"
+        android:id="@+id/line2"
         android:layout_width="409dp"
         android:layout_height="1dp"
         android:background="@color/Black"
         android:clickable="false"
         android:outlineAmbientShadowColor="#000000"
-        app:layout_constraintBottom_toTopOf="@+id/view"
+        app:layout_constraintBottom_toTopOf="@+id/greenbox"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <View
-        android:id="@+id/divider3"
+        android:id="@+id/line3"
         android:layout_width="409dp"
         android:layout_height="1dp"
         android:background="@color/Black"
         android:clickable="false"
         android:outlineAmbientShadowColor="#000000"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view" />
+        app:layout_constraintTop_toBottomOf="@+id/greenbox" />
+
+    <View
+        android:id="@+id/line4"
+        android:layout_width="409dp"
+        android:layout_height="1dp"
+        android:background="@color/Black"
+        android:clickable="false"
+        android:outlineAmbientShadowColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
+
+    <View
+        android:id="@+id/line5"
+        android:layout_width="60dp"
+        android:layout_height="1dp"
+        android:background="@color/Black"
+        android:clickable="false"
+        android:outlineAmbientShadowColor="#000000"
+        android:rotation="90"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/line4"
+        app:layout_constraintStart_toStartOf="@+id/line4"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
 
     <TableLayout
-        android:layout_width="409dp"
-        android:layout_height="425dp"
+        android:id="@+id/tableLayout"
+        android:layout_width="414dp"
+        android:layout_height="373dp"
+        android:clipToPadding="false"
         android:fadeScrollbars="true"
         android:scrollbars="none"
         android:showDividers="none"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/taskbarPicked"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/date">
 
         <TableRow
+            android:id="@+id/SixthRow"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="25dp">
+
+            <TextView
+                android:id="@+id/fwnText6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:scrollbarSize="0dp"
+                android:text="Miljø belastning:"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/fwnNum6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_horizontal|left"
+                android:gravity="right"
+                android:paddingLeft="10dp"
+                android:scrollbarSize="0dp"
+                android:text="1,2 Kg."
+                android:textSize="24sp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/FifthRow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="25dp">
+
+            <TextView
+                android:id="@+id/fwnText5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:scrollbarSize="0dp"
+                android:text="Total vægt for i dag:"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/fwnNum5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_horizontal|left"
+                android:gravity="right"
+                android:paddingLeft="10dp"
+                android:scrollbarSize="0dp"
+                android:text="2,7 Kg."
+                android:textSize="24sp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/firstRow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="25dp"
             android:scrollbarSize="0dp"
             android:scrollbars="none"
             android:showDividers="none">
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/fwnText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="50dp"
+                android:paddingLeft="20dp"
                 android:scrollbarSize="0dp"
                 android:text="Food Waste Number:"
-                android:textSize="18sp"
+                android:textSize="24sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/fwnNum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|center_horizontal|left"
                 android:gravity="right"
-                android:paddingLeft="50dp"
+                android:paddingLeft="10dp"
                 android:scrollbarSize="0dp"
                 android:text="25 gram"
-                android:textSize="18sp" />
+                android:textSize="24sp" />
         </TableRow>
 
         <TableRow
+            android:id="@+id/secondRow"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_marginTop="25dp">
+
+            <TextView
+                android:id="@+id/fwnText2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:scrollbarSize="0dp"
+                android:text="Gennemsnits pris:"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/fwnNum2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_horizontal|left"
+                android:gravity="right"
+                android:paddingLeft="10dp"
+                android:scrollbarSize="0dp"
+                android:text="997 Kr. per dag"
+                android:textSize="22sp" />
+        </TableRow>
 
         <TableRow
+            android:id="@+id/ThirdRow"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_marginTop="25dp">
+
+            <TextView
+                android:id="@+id/fwnText3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:scrollbarSize="0dp"
+                android:text="Gennemsnits vægt:"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/fwnNum3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_horizontal|left"
+                android:gravity="right"
+                android:paddingLeft="10dp"
+                android:scrollbarSize="0dp"
+                android:text="3 Kg. per dag"
+                android:textSize="24sp" />
+        </TableRow>
 
         <TableRow
+            android:id="@+id/FourdRow"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_marginTop="25dp">
+
+            <TextView
+                android:id="@+id/fwnText4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:scrollbarSize="0dp"
+                android:text="Total pris for i dag:"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/fwnNum4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_horizontal|left"
+                android:gravity="right"
+                android:paddingLeft="10dp"
+                android:scrollbarSize="0dp"
+                android:text="640 Kr."
+                android:textSize="24sp" />
+
+        </TableRow>
     </TableLayout>
+
+    <ImageButton
+        android:id="@+id/button_information"
+        android:layout_width="33dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="10dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.94"
+        app:layout_constraintStart_toEndOf="@+id/date"
+        app:layout_constraintTop_toBottomOf="@+id/greenbox"
+        app:srcCompat="@drawable/button_information" />
+
+    <ImageButton
+        android:id="@+id/button_options"
+        android:layout_width="36dp"
+        android:layout_height="40dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/line"
+        app:layout_constraintEnd_toEndOf="@+id/title"
+        app:layout_constraintHorizontal_bias="0.97"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/button_options" />
+
+    <ImageButton
+        android:id="@+id/button_switch"
+        android:layout_width="33dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginBottom="10dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
+        app:layout_constraintEnd_toStartOf="@+id/button_arrow_left"
+        app:layout_constraintHorizontal_bias="0.16"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line3"
+        app:srcCompat="@drawable/button_stats" />
+
+    <ImageButton
+        android:id="@+id/button_input"
+        android:layout_width="56dp"
+        android:layout_height="46dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/line5"
+        app:layout_constraintHorizontal_bias="0.55"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/button_input" />
+
+    <ImageButton
+        android:id="@+id/button_stats"
+        android:layout_width="48dp"
+        android:layout_height="39dp"
+        android:layout_marginEnd="72dp"
+        android:layout_marginRight="72dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.781"
+        app:layout_constraintStart_toEndOf="@+id/line5"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout"
+        app:layout_constraintVertical_bias="0.05"
+        app:srcCompat="@drawable/button_stats" />
+
+    <ImageButton
+        android:id="@+id/button_arrow_right"
+        android:layout_width="47dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="3dp"
+        android:scaleType="fitCenter"
+        android:tint="@color/Green"
+        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
+        app:layout_constraintEnd_toStartOf="@+id/button_information"
+        app:layout_constraintHorizontal_bias="0.466"
+        app:layout_constraintStart_toStartOf="@+id/date"
+        app:layout_constraintTop_toBottomOf="@+id/greenbox"
+        app:srcCompat="@android:drawable/ic_media_play" />
+
+    <ImageButton
+        android:id="@+id/button_arrow_left"
+        android:layout_width="47dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="3dp"
+        android:rotation="180"
+        android:scaleType="fitCenter"
+        android:tint="@color/Green"
+        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
+        app:layout_constraintEnd_toStartOf="@+id/date"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/greenbox"
+        app:srcCompat="@android:drawable/ic_media_play" />
+
+    <ImageButton
+        android:id="@+id/button_toggle"
+        android:layout_width="79dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginBottom="18dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/line3"
+        app:layout_constraintEnd_toStartOf="@+id/toggleText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/greenbox"
+        app:srcCompat="@drawable/button_toggle" />
+
+    <TextView
+        android:id="@+id/input_button_text"
+        android:layout_width="86dp"
+        android:layout_height="23dp"
+        android:autoText="false"
+        android:fontFamily="@font/ibm_plex_sans_regular"
+        android:gravity="center"
+        android:text="Indtastning"
+        android:textAllCaps="false"
+        android:textSize="12sp"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/taskbarPicked"
+        app:layout_constraintHorizontal_bias="0.453"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/button_input"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/stats_button_text"
+        android:layout_width="86dp"
+        android:layout_height="23dp"
+        android:autoText="false"
+        android:fontFamily="@font/ibm_plex_sans_regular"
+        android:gravity="center"
+        android:text="Statistik"
+        android:textAllCaps="false"
+        android:textSize="12sp"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.47"
+        app:layout_constraintStart_toStartOf="@+id/taskbarPicked"
+        app:layout_constraintTop_toBottomOf="@+id/button_stats"
+        app:layout_constraintVertical_bias="0.98" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
