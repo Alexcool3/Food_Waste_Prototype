@@ -25,7 +25,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_stats);
+        setContentView(R.layout.settings_activity);
         final Context context = SettingsActivity.this;
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); // make the app fullscreen
         TaskBarButtons(); // activate the taskbar buttons
@@ -35,7 +35,7 @@ public class SettingsActivity extends AppCompatActivity {
     private void TaskBarButtons() {
 
 
-        ImageButton inputtaskbarbutton = findViewById(R.id.button_input);
+        ImageButton inputtaskbarbutton = findViewById(R.id.button_input5);
         ImageButton statsbutton = findViewById(R.id.button_stats5);
         ImageButton backbutton = findViewById(R.id.backbutton);
 

@@ -41,6 +41,7 @@ public class StatsActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); // make the app fullscreen
         TaskBarButtons(); // activate the taskbar buttons
         FillTable();
+        ToggleButton();
     }
 
 
@@ -60,26 +61,39 @@ public class StatsActivity extends AppCompatActivity {
 
     private void ToggleButton() {
 
+        final ImageButton switchbutton = findViewById(R.id.button_switch);
+        final TableLayout table = findViewById(R.id.tableLayout);
+
 
         final ImageButton toggle = findViewById(R.id.button_toggle);
-        final TableLayout table = findViewById(R.id.tableLayout);
         final TextView toggletext= findViewById(R.id.toggleText);
         toggle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SwitchToggle(toggle,table,toggletext);
+                SwitchToggle(toggle,toggletext);
             }
-
-
+        });
+        switchbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+             //   SwitchTable(switchbutton,table);
+            }
         });
     }
 
-    private void SwitchToggle(ImageButton toggle, TableLayout table, TextView toggletext){
+    private void SwitchTable(){
+
+    }
+
+    private void SwitchToggle(ImageButton toggle, TextView toggletext){
         foodwastetoggle=!foodwastetoggle;
+
             if (foodwastetoggle){
                 toggletext.setText("Mad Spild");
+                toggle.setImageResource(R.drawable. button_toggle_reverse);
             } else {
             toggletext.setText("Mad Affald");
+                toggle.setImageResource(R.drawable. button_toggle);
         }
     }
 
