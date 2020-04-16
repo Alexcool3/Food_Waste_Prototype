@@ -13,7 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.preference.PreferenceFragmentCompat;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -37,21 +36,44 @@ public class SettingsActivity extends AppCompatActivity {
 
 
         ImageButton inputtaskbarbutton = findViewById(R.id.button_input);
+        ImageButton statsbutton = findViewById(R.id.button_stats5);
+        ImageButton backbutton = findViewById(R.id.backbutton);
 
 
         inputtaskbarbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SwitchActivity();
+                SwitchActivity("input");
             }
         });
-
+        statsbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SwitchActivity("stats");
+            }
+        });
+        backbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SwitchActivity("back");
+            }
+        });
     }
-    private void SwitchActivity() {
+    private void SwitchActivity(String string) {
+        if (string == "input") {
+            Intent intent = new Intent(this, InputActivity.class);
 
+            startActivity(intent);
+        }
+        if (string == "stats") {
+            Intent intent = new Intent(this, StatsActivity.class);
 
-        Intent intent = new Intent(this, InputActivity.class);
+            startActivity(intent);
+        }
+        if (string == "back") {
+            Intent intent = new Intent(this, InputActivity.class);
 
-        startActivity(intent);
+            startActivity(intent);
+        }
     }
 }
