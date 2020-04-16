@@ -1,5 +1,7 @@
 package com.example.food_waste_prototype;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import java.io.IOException;
 import java.io.InputStream;
@@ -86,11 +89,15 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-
     }
+    public void openDialog() {
+        final Dialog dialog = new Dialog(this); // Context, this, etc.
+        String dialog_title = "Bekræft";
+        dialog.setContentView(R.layout.dialog_activity);
+        dialog.setTitle(dialog_title);
+        dialog.show();
+    }
+
     private void SwitchActivity(String string) {
         if (string == "input") {
             Intent intent = new Intent(this, InputActivity.class);
@@ -106,6 +113,7 @@ public class SettingsActivity extends AppCompatActivity {
             finish();
         }
         if (string == "login") {
+            openDialog();
             Toast.makeText(SettingsActivity.this,
                     "Du af blevet logget af", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(this, LoginActivity.class);
@@ -121,6 +129,7 @@ public class SettingsActivity extends AppCompatActivity {
             //startActivity(intent);
         }
         if (string == "delete") {
+            openDialog();
             Toast.makeText(SettingsActivity.this,
                     "Din bruger er sletet", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(this, LoginActivity.class);
@@ -129,7 +138,6 @@ public class SettingsActivity extends AppCompatActivity {
         }
         if (string == "same") {
             Intent intent = new Intent(this, SettingsActivity.class);
-            finish();
             startActivity(intent);
         }
     }
