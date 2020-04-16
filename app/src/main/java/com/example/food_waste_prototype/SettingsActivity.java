@@ -35,13 +35,13 @@ public class SettingsActivity extends AppCompatActivity {
     private void TaskBarButtons() {
 
 
-        ImageButton inputtaskbarbutton = findViewById(R.id.button_input5);
-        ImageButton statsbutton = findViewById(R.id.button_stats5);
-        ImageButton backbutton = findViewById(R.id.backbutton);
-        Button logoff = findViewById(R.id.logout);
-        Button indstillinger = findViewById(R.id.change);
-        Button nulstil = findViewById(R.id.erase);
-        Button slet = findViewById(R.id.delete);
+        ImageButton inputtaskbarbutton = findViewById(R.id.button_input5); //input button
+        ImageButton statsbutton = findViewById(R.id.button_stats5); //stats button
+        ImageButton backbutton = findViewById(R.id.backbutton); //back button
+        Button logoff = findViewById(R.id.logout);  //log off button
+        Button indstillinger = findViewById(R.id.change); //change button
+        Button slet = findViewById(R.id.erase); //nulstil button
+        Button nulstil = findViewById(R.id.delete); //slet button
 
         inputtaskbarbutton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,6 +117,7 @@ public class SettingsActivity extends AppCompatActivity {
         if (string == "warning") {
             Toast.makeText(SettingsActivity.this,
                     "Failed", Toast.LENGTH_LONG).show();
+
             Intent intent = new Intent(this, SettingsActivity.class);
 
             startActivity(intent);
