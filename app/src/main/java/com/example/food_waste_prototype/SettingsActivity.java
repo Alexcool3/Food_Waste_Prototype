@@ -70,19 +70,19 @@ public class SettingsActivity extends AppCompatActivity {
         indstillinger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SwitchActivity("back");
+                SwitchActivity("Same");
             }
         });
         nulstil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SwitchActivity("Warning");
+                SwitchActivity("warning");
             }
         });
         slet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SwitchActivity("login");
+                SwitchActivity("delete");
             }
         });
 
@@ -103,13 +103,11 @@ public class SettingsActivity extends AppCompatActivity {
             startActivity(intent);
         }
         if (string == "back") {
-            Intent intent = new Intent(this, InputActivity.class);
-
-            startActivity(intent);
+            finish();
         }
         if (string == "login") {
             Toast.makeText(SettingsActivity.this,
-                    "Failed", Toast.LENGTH_LONG).show();
+                    "Du af blevet logget af", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(this, LoginActivity.class);
 
             startActivity(intent);
@@ -118,6 +116,13 @@ public class SettingsActivity extends AppCompatActivity {
             Toast.makeText(SettingsActivity.this,
                     "Failed", Toast.LENGTH_LONG).show();
 
+            Intent intent = new Intent(this, SettingsActivity.class);
+
+            startActivity(intent);
+        }
+        if (string == "delete") {
+            Toast.makeText(SettingsActivity.this,
+                    "Din bruger er sletet", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(this, SettingsActivity.class);
 
             startActivity(intent);
