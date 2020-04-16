@@ -9,12 +9,14 @@
     </style>
     -->
 
-    <style name="FoodWasteTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="FoodWasteTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here.-->
         <item name="colorPrimary">@color/Orange</item>
         <item name="android:colorBackground">@color/Beige</item>
         <item name="colorAccent">@color/Yellow</item>
-        <item name="title">@font/ibm_plex_sans_regular</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <!--<item name="title">@font/ibm_plex_sans_regular</item> -->
     </style>
 
 

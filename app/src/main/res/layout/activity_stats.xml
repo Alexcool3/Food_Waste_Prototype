@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/Beige">
+    android:background="@color/Beige"
+    android:scrollbars="horizontal|vertical">
 
     <TextView
         android:id="@+id/title"
@@ -43,7 +44,10 @@
         android:id="@+id/date"
         android:layout_width="89dp"
         android:layout_height="54dp"
-        android:layout_marginTop="184dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginRight="1dp"
         android:autoText="false"
         android:background="@color/Beige"
         android:fontFamily="@font/ibm_plex_sans_regular"
@@ -52,10 +56,9 @@
         android:textAllCaps="false"
         android:textSize="24sp"
         android:textStyle="normal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+        app:layout_constraintEnd_toStartOf="@+id/button_arrow_right"
+        app:layout_constraintStart_toEndOf="@+id/button_arrow_left"
+        app:layout_constraintTop_toBottomOf="@+id/line3" />
 
     <view
         android:id="@+id/greenbox"
@@ -70,13 +73,11 @@
     <view
         android:id="@+id/taskbarPicked"
         class="androidx.appcompat.widget.ActionMenuView"
-        android:layout_width="206dp"
-        android:layout_height="58dp"
+        android:layout_width="204dp"
+        android:layout_height="69dp"
         android:background="@color/Orange"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/toggleText"
@@ -147,36 +148,29 @@
         android:background="@color/Black"
         android:clickable="false"
         android:outlineAmbientShadowColor="#000000"
+        app:layout_constraintBottom_toTopOf="@+id/button_input"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
-
-    <View
-        android:id="@+id/line5"
-        android:layout_width="60dp"
-        android:layout_height="1dp"
-        android:background="@color/Black"
-        android:clickable="false"
-        android:outlineAmbientShadowColor="#000000"
-        android:rotation="90"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/line4"
-        app:layout_constraintStart_toStartOf="@+id/line4"
-        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TableLayout
         android:id="@+id/tableLayout"
         android:layout_width="414dp"
         android:layout_height="373dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginRight="1dp"
         android:clipToPadding="false"
         android:fadeScrollbars="true"
         android:scrollbars="none"
         android:showDividers="none"
-        app:layout_constraintBottom_toTopOf="@+id/taskbarPicked"
+        app:layout_constraintBottom_toTopOf="@+id/button_input"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/date">
+        app:layout_constraintTop_toBottomOf="@+id/date"
+        app:layout_constraintVertical_bias="0.504">
 
         <TableRow
             android:id="@+id/SixthRow"
@@ -357,18 +351,21 @@
         android:layout_height="36dp"
         android:layout_marginTop="18dp"
         android:layout_marginBottom="10dp"
+        android:background="@null"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toTopOf="@+id/tableLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.94"
+        app:layout_constraintHorizontal_bias="0.904"
         app:layout_constraintStart_toEndOf="@+id/date"
         app:layout_constraintTop_toBottomOf="@+id/greenbox"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/button_information" />
 
     <ImageButton
         android:id="@+id/button_options"
         android:layout_width="36dp"
         android:layout_height="40dp"
+        android:background="@null"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toTopOf="@+id/line"
         app:layout_constraintEnd_toEndOf="@+id/title"
@@ -381,74 +378,68 @@
         android:id="@+id/button_switch"
         android:layout_width="33dp"
         android:layout_height="36dp"
-        android:layout_marginTop="17dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="18dp"
+        android:background="@null"
         android:scaleType="fitCenter"
-        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
-        app:layout_constraintEnd_toStartOf="@+id/button_arrow_left"
-        app:layout_constraintHorizontal_bias="0.16"
+        app:layout_constraintEnd_toStartOf="@+id/date"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/line3"
+        app:layout_constraintTop_toBottomOf="@+id/greenbox"
         app:srcCompat="@drawable/button_stats" />
 
     <ImageButton
         android:id="@+id/button_input"
         android:layout_width="56dp"
         android:layout_height="46dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginBottom="23dp"
+        android:background="@null"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/line5"
-        app:layout_constraintHorizontal_bias="0.55"
+        app:layout_constraintEnd_toStartOf="@+id/taskbarPicked"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tableLayout"
-        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/button_input" />
 
     <ImageButton
         android:id="@+id/button_stats"
         android:layout_width="48dp"
         android:layout_height="39dp"
-        android:layout_marginEnd="72dp"
-        android:layout_marginRight="72dp"
+        android:background="@null"
         android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.781"
-        app:layout_constraintStart_toEndOf="@+id/line5"
-        app:layout_constraintTop_toBottomOf="@+id/tableLayout"
-        app:layout_constraintVertical_bias="0.05"
+        app:layout_constraintBottom_toBottomOf="@+id/taskbarPicked"
+        app:layout_constraintEnd_toEndOf="@+id/taskbarPicked"
+        app:layout_constraintStart_toStartOf="@+id/taskbarPicked"
+        app:layout_constraintTop_toBottomOf="@+id/line4"
+        app:layout_constraintVertical_bias="0.24000001"
         app:srcCompat="@drawable/button_stats" />
 
     <ImageButton
         android:id="@+id/button_arrow_right"
         android:layout_width="47dp"
         android:layout_height="49dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="3dp"
+        android:layout_marginTop="4dp"
+        android:background="@null"
         android:scaleType="fitCenter"
         android:tint="@color/Green"
-        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
         app:layout_constraintEnd_toStartOf="@+id/button_information"
-        app:layout_constraintHorizontal_bias="0.466"
-        app:layout_constraintStart_toStartOf="@+id/date"
-        app:layout_constraintTop_toBottomOf="@+id/greenbox"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/date"
+        app:layout_constraintTop_toTopOf="@+id/date"
         app:srcCompat="@android:drawable/ic_media_play" />
 
     <ImageButton
         android:id="@+id/button_arrow_left"
         android:layout_width="47dp"
         android:layout_height="49dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="3dp"
+        android:layout_marginTop="6dp"
+        android:background="@null"
         android:rotation="180"
         android:scaleType="fitCenter"
         android:tint="@color/Green"
-        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
         app:layout_constraintEnd_toStartOf="@+id/date"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button_switch"
         app:layout_constraintTop_toBottomOf="@+id/greenbox"
         app:srcCompat="@android:drawable/ic_media_play" />
 
@@ -458,6 +449,7 @@
         android:layout_height="59dp"
         android:layout_marginTop="19dp"
         android:layout_marginBottom="18dp"
+        android:background="@null"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toTopOf="@+id/line3"
         app:layout_constraintEnd_toStartOf="@+id/toggleText"
@@ -487,6 +479,8 @@
         android:id="@+id/stats_button_text"
         android:layout_width="86dp"
         android:layout_height="23dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginBottom="1dp"
         android:autoText="false"
         android:fontFamily="@font/ibm_plex_sans_regular"
         android:gravity="center"
@@ -496,9 +490,8 @@
         android:textStyle="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.47"
         app:layout_constraintStart_toStartOf="@+id/taskbarPicked"
         app:layout_constraintTop_toBottomOf="@+id/button_stats"
-        app:layout_constraintVertical_bias="0.98" />
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
