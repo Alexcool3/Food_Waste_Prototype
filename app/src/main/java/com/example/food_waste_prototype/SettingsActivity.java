@@ -70,7 +70,7 @@ public class SettingsActivity extends AppCompatActivity {
         indstillinger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SwitchActivity("Same");
+                SwitchActivity("same");
             }
         });
         nulstil.setOnClickListener(new View.OnClickListener() {
@@ -123,13 +123,13 @@ public class SettingsActivity extends AppCompatActivity {
         if (string == "delete") {
             Toast.makeText(SettingsActivity.this,
                     "Din bruger er sletet", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(this, SettingsActivity.class);
+            Intent intent = new Intent(this, LoginActivity.class);
 
             startActivity(intent);
         }
         if (string == "same") {
             Intent intent = new Intent(this, SettingsActivity.class);
-
+            finish();
             startActivity(intent);
         }
     }
