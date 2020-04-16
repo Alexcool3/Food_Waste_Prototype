@@ -38,7 +38,10 @@ public class SettingsActivity extends AppCompatActivity {
         ImageButton inputtaskbarbutton = findViewById(R.id.button_input5);
         ImageButton statsbutton = findViewById(R.id.button_stats5);
         ImageButton backbutton = findViewById(R.id.backbutton);
-
+        Button logoff = findViewById(R.id.logout);
+        Button indstillinger = findViewById(R.id.change);
+        Button nulstil = findViewById(R.id.erase);
+        Button slet = findViewById(R.id.delete);
 
         inputtaskbarbutton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +61,35 @@ public class SettingsActivity extends AppCompatActivity {
                 SwitchActivity("back");
             }
         });
+        logoff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SwitchActivity("login");
+            }
+        });
+        indstillinger.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SwitchActivity("back");
+            }
+        });
+        nulstil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SwitchActivity("Warning");
+            }
+        });
+        slet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SwitchActivity("login");
+            }
+        });
+
+
+
+
+
     }
     private void SwitchActivity(String string) {
         if (string == "input") {
@@ -72,6 +104,25 @@ public class SettingsActivity extends AppCompatActivity {
         }
         if (string == "back") {
             Intent intent = new Intent(this, InputActivity.class);
+
+            startActivity(intent);
+        }
+        if (string == "login") {
+            Toast.makeText(SettingsActivity.this,
+                    "Failed", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(this, LoginActivity.class);
+
+            startActivity(intent);
+        }
+        if (string == "warning") {
+            Toast.makeText(SettingsActivity.this,
+                    "Failed", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(this, SettingsActivity.class);
+
+            startActivity(intent);
+        }
+        if (string == "same") {
+            Intent intent = new Intent(this, SettingsActivity.class);
 
             startActivity(intent);
         }
