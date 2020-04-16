@@ -116,9 +116,9 @@ public class SettingsActivity extends AppCompatActivity {
             Toast.makeText(SettingsActivity.this,
                     "Failed", Toast.LENGTH_LONG).show();
 
-            Intent intent = new Intent(this, SettingsActivity.class);
+           // Intent intent = new Intent(this, SettingsActivity.class);
 
-            startActivity(intent);
+            //startActivity(intent);
         }
         if (string == "delete") {
             Toast.makeText(SettingsActivity.this,
