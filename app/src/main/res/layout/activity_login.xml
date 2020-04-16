@@ -11,10 +11,6 @@
         android:id="@+id/orangeFrame"
         android:layout_width="409dp"
         android:layout_height="308dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginLeft="1dp"
-        android:layout_marginRight="1dp"
-        android:layout_marginStart="1dp"
         android:background="#F7921E"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,7 +22,7 @@
     </FrameLayout>
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/etPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="200dp"
@@ -35,7 +31,6 @@
         android:fontFamily="@font/ibmplex"
         android:hint="Password"
         android:inputType="textPersonName"
-        android:text="Password"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -43,7 +38,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/etBrugernavn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="300dp"
@@ -52,7 +47,6 @@
         android:fontFamily="@font/ibmplex"
         android:hint="Brugernavn"
         android:inputType="textPersonName"
-        android:text="E-mail"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
