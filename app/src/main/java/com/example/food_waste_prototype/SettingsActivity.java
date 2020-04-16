@@ -19,7 +19,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 
-
 public class SettingsActivity extends AppCompatActivity {
     ArrayList<String> names = new ArrayList<>();
     ArrayList<String> prices = new ArrayList<>();
@@ -27,19 +26,13 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.settings_activity);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+        setContentView(R.layout.activity_stats);
+        final Context context = SettingsActivity.this;
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); // make the app fullscreen
+        TaskBarButtons(); // activate the taskbar buttons
     }
 
-    public static class SettingsFragment extends PreferenceFragmentCompat {
-        @Override
-        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            setPreferencesFromResource(R.xml.root_preferences, rootKey);
-        }
-    }
+
     private void TaskBarButtons() {
 
 
