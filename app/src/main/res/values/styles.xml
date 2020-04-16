@@ -1,24 +1,24 @@
 <resources>
 
-    <!-- Base application theme. -->
+    <!-- Base application theme.
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+        Customize your theme here.
         <item name="colorPrimary">@color/Orange</item>
         <item name="colorPrimaryDark">@color/Orange</item>
         <item name="colorAccent">@color/Orange</item>
     </style>
+    -->
+
+    <style name="FoodWasteTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here.-->
+        <item name="colorPrimary">@color/Orange</item>
+        <item name="android:colorBackground">@color/Beige</item>
+        <item name="colorAccent">@color/Yellow</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <!--<item name="title">@font/ibm_plex_sans_regular</item> -->
+    </style>
 
 
-    <style name="FoodWasteTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorAccent">@color/Orange</item>
-        <item name="colorPrimary">@color/Beige</item>
-        <item name="color">@color/Yellow</item>
-        <!--   <item name="color">@color/Green</item>
-           <item name="color">@color/Red</item>
-           <item name="color">@color/Black</item>
-           <item name="color">@color/White</item>-->
-           <item name="android:fontFamily">@font/ibmplex</item>
-           <!-- <item name="title">@font/ibmplexsansregular</item> -->
-       </style>
+
    </resources>
