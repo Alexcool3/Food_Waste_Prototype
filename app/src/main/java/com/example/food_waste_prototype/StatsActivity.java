@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,6 +56,31 @@ public class StatsActivity extends AppCompatActivity {
                 SwitchActivity();
             }
         });
+    }
+
+    private void ToggleButton() {
+
+
+        final ImageButton toggle = findViewById(R.id.button_toggle);
+        final TableLayout table = findViewById(R.id.tableLayout);
+        final TextView toggletext= findViewById(R.id.toggleText);
+        toggle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SwitchToggle(toggle,table,toggletext);
+            }
+
+
+        });
+    }
+
+    private void SwitchToggle(ImageButton toggle, TableLayout table, TextView toggletext){
+        foodwastetoggle=!foodwastetoggle;
+            if (foodwastetoggle){
+                toggletext.setText("Mad Spild");
+            } else {
+            toggletext.setText("Mad Affald");
+        }
     }
 
     private void FillTable() {
