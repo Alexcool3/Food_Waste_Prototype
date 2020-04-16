@@ -76,7 +76,7 @@ public class SettingsActivity extends AppCompatActivity {
         nulstil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SwitchActivity("Warning");
+                SwitchActivity("warning");
             }
         });
         slet.setOnClickListener(new View.OnClickListener() {
@@ -118,9 +118,9 @@ public class SettingsActivity extends AppCompatActivity {
             Toast.makeText(SettingsActivity.this,
                     "Failed", Toast.LENGTH_LONG).show();
 
-            Intent intent = new Intent(this, SettingsActivity.class);
+           // Intent intent = new Intent(this, SettingsActivity.class);
 
-            startActivity(intent);
+            //startActivity(intent);
         }
         if (string == "same") {
             Intent intent = new Intent(this, SettingsActivity.class);
