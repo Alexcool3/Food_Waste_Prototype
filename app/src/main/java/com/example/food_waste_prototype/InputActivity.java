@@ -3,6 +3,7 @@ package com.example.food_waste_prototype;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -83,7 +84,7 @@ public class InputActivity extends AppCompatActivity{
             return name;
         }
 
-        ImageButton foodButton;
+        Button foodButton;
     }
 
     // List containing all food category instances
@@ -102,7 +103,7 @@ public class InputActivity extends AppCompatActivity{
         int width = size.x;
         int height = size.y;
 
-        ImageButton addButton = findViewById(R.id.addButton);
+        Button addButton = findViewById(R.id.addButton);
 
         // Add new category button + dialog
         addButton.setOnClickListener(new View.OnClickListener() {
@@ -112,7 +113,7 @@ public class InputActivity extends AppCompatActivity{
 
                 // Set the title of the dialog
                 final Context context = alertDialogBuilder.getContext();
-                LinearLayout linearLayout = new LinearLayout(context);
+                final LinearLayout linearLayout = new LinearLayout(context);
                 linearLayout.setOrientation(LinearLayout.VERTICAL);
 
                 alertDialogBuilder.setTitle("Ny Kategori");
@@ -138,10 +139,16 @@ public class InputActivity extends AppCompatActivity{
                     public void onClick(DialogInterface dialog, int which) {
                         Food food = new Food(foodCategoryName.getText().toString());
                         food.SetPricePerUnit(price.getText().toString().matches("") ? 0.0f : Float.valueOf(price.getText().toString()));
-                        //Log.d("New Category Test", "name: " + food.GetName() + "price per unit: " + food.GetPricePerUnit());
-                        food.foodButton = new ImageButton(InputActivity.this);
-                        //food.foodButton.setImageDrawable();
-                        //food.foodButton.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                        Log.d("New Category Test", "name: " + food.GetName() + "price per unit: " + food.GetPricePerUnit());
+                        food.foodButton = new Button(InputActivity.this);
+                        /*
+                        food.foodButton.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                        linearLayout.addView(food.foodButton);
+                         */
+                        ConstraintLayout cl = (ConstraintLayout) findViewById(R.id.input_layout);
+                        ConstraintLayout.LayoutParams lp = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+                        cl.addView(food.foodButton, lp);
+
                         foodCategories.add(food);
                     }
                 });

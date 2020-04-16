@@ -3,25 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:name="com.example.food_waste_prototype/com.example.food_waste_prototype.InputActivity"
+    android:id="@+id/input_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".InputActivity">
 
-
-
-    <ImageButton
+    <Button
         android:id="@+id/addButton"
-        android:layout_width="61dp"
-        android:layout_height="55dp"
+        android:layout_width="60dp"
+        android:layout_height="76dp"
         android:background="#FFFFFF"
         android:drawableTop="@drawable/ic_add_box_black_24dp"
-        android:src="@drawable/ic_add_box_black_24dp"
-        android:text="Ny kategori"
+        android:text="Ny Kategori"
+        android:textColor="#000000"
+        android:textSize="8sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.063" />
+        app:layout_constraintVertical_bias="0.023" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
