@@ -100,6 +100,7 @@
         android:layout_marginEnd="12dp"
         android:layout_marginRight="12dp"
         android:scrollbarSize="4dp"
+        android:scrollbarStyle="insideInset"
         android:spinnerMode="dialog"
         app:layout_constraintBottom_toBottomOf="@+id/greenbox"
         app:layout_constraintEnd_toEndOf="@+id/greenbox"
@@ -493,5 +494,16 @@
         app:layout_constraintStart_toStartOf="@+id/taskbarPicked"
         app:layout_constraintTop_toBottomOf="@+id/button_stats"
         app:layout_constraintVertical_bias="1.0" />
+
+    <ImageView
+        android:id="@+id/piechart"
+        android:layout_width="260dp"
+        android:layout_height="263dp"
+        android:layout_marginTop="21dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tableLayout"
+        app:layout_constraintTop_toBottomOf="@+id/date"
+        app:srcCompat="@drawable/piechart" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
