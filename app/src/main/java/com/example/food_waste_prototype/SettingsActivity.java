@@ -93,9 +93,6 @@ public class SettingsActivity extends AppCompatActivity {
     public void openDialog() {
         final AlertDialog.Builder AlertDialog = new AlertDialog.Builder(this); // Context, this, etc.
         View newView = getLayoutInflater().inflate(R.layout.dialog_activity, null);
-        //String dialog_title = "Bekræft";
-
-       // dialog.setTitle(dialog_title);
         AlertDialog.setView(newView);
         final AlertDialog dialog = AlertDialog.create();
         dialog.show();
@@ -124,8 +121,9 @@ public class SettingsActivity extends AppCompatActivity {
             startActivity(intent);
         }
         if (string == "warning") {
+            openDialog();
             Toast.makeText(SettingsActivity.this,
-                    "Failed", Toast.LENGTH_LONG).show();
+                    "Din data er blevet nulstillet", Toast.LENGTH_LONG).show();
 
            // Intent intent = new Intent(this, SettingsActivity.class);
 
@@ -134,12 +132,13 @@ public class SettingsActivity extends AppCompatActivity {
         if (string == "delete") {
             openDialog();
             Toast.makeText(SettingsActivity.this,
-                    "Din bruger er sletet", Toast.LENGTH_LONG).show();
+                    "Din bruger er slettet", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(this, LoginActivity.class);
 
             startActivity(intent);
         }
         if (string == "same") {
+
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
         }

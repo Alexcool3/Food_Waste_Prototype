@@ -40,7 +40,7 @@
         android:layout_height="60dp"
         android:background="@color/Yellow"
         android:padding="10dp"
-        android:text="Hvis du bekræfter bliver din bruger slettet."
+        android:text="Din bruger / data kan ikke blive gendannet"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dialog_title" />
