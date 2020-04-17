@@ -42,8 +42,8 @@
 
     <TextView
         android:id="@+id/date"
-        android:layout_width="89dp"
-        android:layout_height="54dp"
+        android:layout_width="116dp"
+        android:layout_height="51dp"
         android:layout_marginStart="12dp"
         android:layout_marginLeft="12dp"
         android:layout_marginEnd="1dp"
@@ -52,7 +52,7 @@
         android:background="@color/Beige"
         android:fontFamily="@font/ibm_plex_sans_regular"
         android:gravity="center"
-        android:text="August"
+        android:text="December"
         android:textAllCaps="false"
         android:textSize="24sp"
         android:textStyle="normal"
@@ -93,19 +93,35 @@
         app:layout_constraintStart_toStartOf="@+id/greenbox"
         app:layout_constraintTop_toTopOf="@+id/greenbox" />
 
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:layout_marginBottom="32dp"
+        android:src="@drawable/spinner_arrow"
+        app:layout_constraintBottom_toBottomOf="@+id/greenbox"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.91"
+        app:layout_constraintStart_toEndOf="@+id/greenbox"
+        app:layout_constraintTop_toTopOf="@+id/dropdown" />
+
     <Spinner
         android:id="@+id/dropdown"
-        android:layout_width="148dp"
-        android:layout_height="41dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginRight="12dp"
-        android:scrollbarSize="4dp"
-        android:scrollbarStyle="insideInset"
-        android:spinnerMode="dialog"
+        android:layout_width="204dp"
+        android:layout_height="87dp"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:spinnerMode="dropdown"
         app:layout_constraintBottom_toBottomOf="@+id/greenbox"
         app:layout_constraintEnd_toEndOf="@+id/greenbox"
-        app:layout_constraintTop_toTopOf="@+id/greenbox"
-        app:layout_constraintVertical_bias="0.509" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/line2" />
 
     <View
         android:id="@+id/line"
@@ -356,10 +372,10 @@
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toTopOf="@+id/tableLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.904"
+        app:layout_constraintHorizontal_bias="0.889"
         app:layout_constraintStart_toEndOf="@+id/date"
         app:layout_constraintTop_toBottomOf="@+id/greenbox"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.23"
         app:srcCompat="@drawable/button_information" />
 
     <ImageButton
@@ -379,10 +395,11 @@
         android:id="@+id/button_switch"
         android:layout_width="33dp"
         android:layout_height="36dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="16dp"
         android:background="@null"
         android:scaleType="fitCenter"
         app:layout_constraintEnd_toStartOf="@+id/date"
+        app:layout_constraintHorizontal_bias="0.157"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/greenbox"
         app:srcCompat="@drawable/button_stats" />
@@ -440,6 +457,7 @@
         android:scaleType="fitCenter"
         android:tint="@color/Green"
         app:layout_constraintEnd_toStartOf="@+id/date"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/button_switch"
         app:layout_constraintTop_toBottomOf="@+id/greenbox"
         app:srcCompat="@android:drawable/ic_media_play" />
@@ -495,15 +513,15 @@
         app:layout_constraintTop_toBottomOf="@+id/button_stats"
         app:layout_constraintVertical_bias="1.0" />
 
-    <ImageView
-        android:id="@+id/piechart"
-        android:layout_width="260dp"
-        android:layout_height="263dp"
-        android:layout_marginTop="21dp"
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/pieChart"
+        android:layout_width="355dp"
+        android:layout_height="283dp"
         android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/tableLayout"
-        app:layout_constraintTop_toBottomOf="@+id/date"
-        app:srcCompat="@drawable/piechart" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.82" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
