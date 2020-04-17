@@ -3,10 +3,12 @@ package com.example.food_waste_prototype;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.text.InputType;
@@ -18,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -83,7 +86,7 @@ public class InputActivity extends AppCompatActivity{
             return name;
         }
 
-        ImageButton foodButton;
+        Button foodButton;
     }
 
     // List containing all food category instances
@@ -102,7 +105,7 @@ public class InputActivity extends AppCompatActivity{
         int width = size.x;
         int height = size.y;
 
-        ImageButton addButton = findViewById(R.id.addButton);
+        Button addButton = findViewById(R.id.addButton);
 
         // Add new category button + dialog
         addButton.setOnClickListener(new View.OnClickListener() {
@@ -112,7 +115,7 @@ public class InputActivity extends AppCompatActivity{
 
                 // Set the title of the dialog
                 final Context context = alertDialogBuilder.getContext();
-                LinearLayout linearLayout = new LinearLayout(context);
+                final LinearLayout linearLayout = new LinearLayout(context);
                 linearLayout.setOrientation(LinearLayout.VERTICAL);
 
                 alertDialogBuilder.setTitle("Ny Kategori");
@@ -136,12 +139,46 @@ public class InputActivity extends AppCompatActivity{
                 alertDialogBuilder.setPositiveButton("Bekræft", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Food food = new Food(foodCategoryName.getText().toString());
+                        final Food food = new Food(foodCategoryName.getText().toString());
                         food.SetPricePerUnit(price.getText().toString().matches("") ? 0.0f : Float.valueOf(price.getText().toString()));
-                        //Log.d("New Category Test", "name: " + food.GetName() + "price per unit: " + food.GetPricePerUnit());
-                        food.foodButton = new ImageButton(InputActivity.this);
-                        //food.foodButton.setImageDrawable();
-                        //food.foodButton.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                        Log.d("New Category Test", "name: " + food.GetName() + "price per unit: " + food.GetPricePerUnit());
+                        food.foodButton = new Button(InputActivity.this);
+                        /*
+                        android:layout_width="60dp"
+                        android:layout_height="76dp"
+                        android:background="#FFFFFF"
+                        android:drawableTop="@drawable/ic_add_box_black_24dp"
+                        android:text="Ny Kategori"
+                        android:textColor="#000000"
+                        android:textSize="8sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.304"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.024"
+                         */
+                        food.foodButton.setWidth(60);
+                        food.foodButton.setWidth(76);
+                        food.foodButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                                final Context context = alertDialogBuilder.getContext();
+                                final LinearLayout linearLayout = new LinearLayout(context);
+                                linearLayout.setOrientation(LinearLayout.VERTICAL);
+                                alertDialogBuilder.setTitle(food.GetName());
+
+                            }
+                        });
+                        ConstraintLayout cl = findViewById(R.id.input_layout);
+                        ConstraintLayout.LayoutParams lp = new ConstraintLayout.LayoutParams(food.foodButton.getWidth(), food.foodButton.getHeight());
+                        food.foodButton.setText(food.GetName());
+                        food.foodButton.setTextSize(8);
+                        food.foodButton.setTextColor(Color.BLACK);
+
+                        //cl.addView(food.foodButton, lp);
+
                         foodCategories.add(food);
                     }
                 });
