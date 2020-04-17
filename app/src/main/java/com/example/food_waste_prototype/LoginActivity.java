@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.app.Activity;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -40,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void validate(String inputBrugernavn, String inputPassword) {
-        if((inputBrugernavn == "Nikolaj") && (inputPassword == "ersej")){
+        if((inputBrugernavn.equals("Nikolaj") && (inputPassword.equals("ersej")))){
             Intent intent = new Intent(LoginActivity.this, InputActivity.class);
             startActivity(intent);
         }
