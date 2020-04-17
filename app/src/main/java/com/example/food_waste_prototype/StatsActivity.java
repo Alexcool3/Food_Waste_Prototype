@@ -53,6 +53,7 @@ public class StatsActivity extends AppCompatActivity {
         ImageButton rightArrow =  findViewById(R.id.button_arrow_right);
         ImageButton inputtaskbarbutton = findViewById(R.id.button_input);
         final ImageButton switchbutton = findViewById(R.id.button_switch);
+        final ImageButton helpbutton = findViewById(R.id.button_information);
         final TableLayout table = findViewById(R.id.tableLayout);
         final ImageButton settingsButton = findViewById(R.id.button_options);
         final ImageButton toggle = findViewById(R.id.button_toggle);
@@ -121,6 +122,14 @@ public class StatsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 SwitchActivity("settings");
+            }
+        });
+
+        // help button
+        helpbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               Help();;
             }
         });
     }
@@ -204,6 +213,11 @@ public class StatsActivity extends AppCompatActivity {
 
     private void FillTable() {
         TextView employeeName, employeeSalary;
+
+    }
+
+    private void Help() {
+        HelpDialog hd = new HelpDialog(StatsActivity.this, "hej med dig bo, hvad så der svend");
 
     }
 
