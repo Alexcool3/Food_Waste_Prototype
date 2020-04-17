@@ -43,8 +43,6 @@ public class LoginActivity extends AppCompatActivity {
         if((inputBrugernavn == "Nikolaj") && (inputPassword == "ersej")){
             Intent intent = new Intent(LoginActivity.this, InputActivity.class);
             startActivity(intent);
-        } else {
-            login.setEnabled(false);
         }
     }
 
