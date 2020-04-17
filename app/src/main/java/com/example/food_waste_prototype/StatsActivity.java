@@ -22,6 +22,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONArray;
+import org.w3c.dom.Text;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -55,6 +57,47 @@ public class StatsActivity extends AppCompatActivity {
         String[] items = new String[]{"Dag", "Måned", "År"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
         dropdown.setAdapter(adapter);
+       // Arrows(dropdown)
+    }
+
+    private void Arrows(Spinner dropdown) {
+        String[] days = new String[]{"Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag", "Søndag"};
+        String[] months = new String[]{"Januar", "Februar", "Marts", "April", "Maj", "Juni", "Juli","August", "September", "Oktober", "November", "December" };
+        String[] years = new String[]{"2020", "2019", "2018", "2017", "2016"};
+        TextView date = findViewById(R.id.date);
+        ImageButton leftArrow =  findViewById(R.id.button_arrow_left);
+        ImageButton rightArrow =  findViewById(R.id.button_arrow_right);
+        final String[] targetarray;
+
+        String text = dropdown.getSelectedItem().toString();
+
+        if(text=="Dag"){
+            targetarray=days;
+        } else if(text=="Måned"){
+            targetarray=months;
+        } else{
+            targetarray=years;
+        }
+
+        leftArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+              //  SwitchActivity("left", targetarray);
+            }
+        });
+        rightArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+          //      SwitchActivity("rigth" , targetarray[]);
+            }
+        });
+
+    }
+
+    private void setDate(String direction, String[] array){
+        TextView date = findViewById(R.id.date);
+        Spinner dropdown = findViewById(R.id.dropdown);
+
     }
 
 

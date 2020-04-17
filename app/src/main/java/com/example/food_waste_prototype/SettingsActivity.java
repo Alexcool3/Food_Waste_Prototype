@@ -1,5 +1,6 @@
 package com.example.food_waste_prototype;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -14,7 +15,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import java.io.IOException;
 import java.io.InputStream;
@@ -91,10 +91,13 @@ public class SettingsActivity extends AppCompatActivity {
 
     }
     public void openDialog() {
-        final Dialog dialog = new Dialog(this); // Context, this, etc.
-        String dialog_title = "Bekræft";
-        dialog.setContentView(R.layout.dialog_activity);
-        dialog.setTitle(dialog_title);
+        final AlertDialog.Builder AlertDialog = new AlertDialog.Builder(this); // Context, this, etc.
+        View newView = getLayoutInflater().inflate(R.layout.dialog_activity, null);
+        //String dialog_title = "Bekræft";
+
+       // dialog.setTitle(dialog_title);
+        AlertDialog.setView(newView);
+        final AlertDialog dialog = AlertDialog.create();
         dialog.show();
     }
 
