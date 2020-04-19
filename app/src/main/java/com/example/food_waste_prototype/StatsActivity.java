@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -12,8 +13,12 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.Toast;
+
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.PieData;
@@ -21,7 +26,11 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class StatsActivity extends AppCompatActivity {
 
@@ -29,9 +38,10 @@ public class StatsActivity extends AppCompatActivity {
     ArrayList<String> names = new ArrayList<>();
     ArrayList<String> prices = new ArrayList<>();
     ArrayList<String> amounts = new ArrayList<>();
-    String[] days = new String[]{"Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag", "Søndag"};
-    String[] months = new String[]{"Januar", "Februar", "Marts", "April", "Maj", "Juni", "Juli","August", "September", "Oktober", "November", "December" };
-    String[] years = new String[]{"2016", "2017", "2018", "2019", "2020"};
+    Calendar cal = Calendar.getInstance();
+    Calendar currentSet = Calendar.getInstance();
+    DataBase db;
+
 
     public StatsActivity() {
 
@@ -43,15 +53,22 @@ public class StatsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_stats);
         final Context context = StatsActivity.this;
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); // make the app fullscreen
+        db = DataBase.getInstance(context);
         SetupButtons();
         FillTable();
+        db.CreateCategory("ost", 33);
+        db.CreateCategory("kød", 33);
+        db.AddFoodWaste("ost", 500, false);
+        db.AddFoodWaste("kød", 250, false);
+        db.AddFoodWaste("kød", 250, true);
     }
 
-    private void SetupButtons(){
+    private void SetupButtons() {
 
-        ImageButton leftArrow =  findViewById(R.id.button_arrow_left);
-        ImageButton rightArrow =  findViewById(R.id.button_arrow_right);
+        ImageButton leftArrow = findViewById(R.id.button_arrow_left);
+        ImageButton rightArrow = findViewById(R.id.button_arrow_right);
         ImageButton inputtaskbarbutton = findViewById(R.id.button_input);
+        final TextView date = findViewById(R.id.date);
         final ImageButton switchbutton = findViewById(R.id.button_switch);
         final ImageButton helpbutton = findViewById(R.id.button_information);
         final TableLayout table = findViewById(R.id.tableLayout);
@@ -63,15 +80,16 @@ public class StatsActivity extends AppCompatActivity {
 
         //setup the dropdown
         String[] items = new String[]{"Dag", "Måned", "År"};
-        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(StatsActivity.this, R.layout.spinner_text, items );
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(StatsActivity.this, R.layout.spinner_text, items);
         adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
         dropdown.setAdapter(adapter);
         dropdown.setOnItemSelectedListener(
                 new OnItemSelectedListener() {
                     public void onItemSelected(
                             AdapterView<?> parent, View view, int position, long id) {
-                        setDate("left", dropdown);
+                        setDate("left", dropdown, date);
                     }
+
                     public void onNothingSelected(AdapterView<?> parent) {
                         // showToast("Spinner1: unselected");
                     }
@@ -81,7 +99,7 @@ public class StatsActivity extends AppCompatActivity {
         leftArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setDate("left", dropdown);
+                setDate("left", dropdown, date);
             }
         });
 
@@ -89,7 +107,7 @@ public class StatsActivity extends AppCompatActivity {
         rightArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setDate("rigth" , dropdown);
+                setDate("rigth", dropdown, date);
             }
         });
 
@@ -105,7 +123,7 @@ public class StatsActivity extends AppCompatActivity {
         toggle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SwitchToggle(toggle, toggletext);
+                SwitchToggle(toggle, toggletext, pieChart, dropdown);
             }
         });
 
@@ -113,7 +131,7 @@ public class StatsActivity extends AppCompatActivity {
         switchbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SwitchTable(switchbutton, table, pieChart);
+                SwitchTable(switchbutton, table, pieChart, dropdown);
             }
         });
 
@@ -129,65 +147,90 @@ public class StatsActivity extends AppCompatActivity {
         helpbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               Help();;
+                Help();
+                ;
             }
         });
     }
 
-    private void setDate(String direction, Spinner dropdown){
+    private boolean TimeFrame(Calendar inputday, Spinner dd) {
+
+        //TODO: make the inputs user the same time format
+
+        String text = dd.getSelectedItem().toString();
+        Calendar startDate = Calendar.getInstance();
+        Calendar endDate = Calendar.getInstance();
+        endDate=currentSet;
+        if(text.equals("Dag")){
+            startDate=currentSet;
+
+        } else if(text.equals("Måned")){
+            startDate.set(Calendar.DAY_OF_MONTH, 1);
+        } else{
+            startDate.set(Calendar.DAY_OF_YEAR, 1);
+        }
+
+        return inputday.after(startDate.getTime()) && inputday.before(endDate.getTime());
+    }
+
+    private void setDate(String direction, Spinner dropdown, TextView date) {
 
         // get the current selected item from dropdown
         String text = dropdown.getSelectedItem().toString();
 
-        // array to contain days, months or years based on dropdown
-        final String[] targetarray;
-
-        // current position in array
-        int pos = 0;
 
         // label between the arrows
-        TextView date = findViewById(R.id.date);
 
-        if(text.equals("Dag")){
-            targetarray=days;
-        } else if(text.equals("Måned")){
-            targetarray=months;
-        } else{
-            targetarray=years;
+        SimpleDateFormat dayFormat = new SimpleDateFormat("dd/MM");
+        SimpleDateFormat monthFormat = new SimpleDateFormat("MMMM");
+        SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
+
+        if(date.getText().equals("December")){
+            cal.add(Calendar.DAY_OF_MONTH, 1);
+            date.setText(dayFormat.format(cal.getTime()));
+
         }
 
-        // find out whats in the label and set the current pos to that
-        for(int i = 0; i < targetarray.length; i++) {
-            if (date.getText().equals(targetarray[i])){
-                pos=i;
+
+        if (text.equals("Dag")) {
+            // move the entry to the left one
+            if (direction.equals("left")) {
+                cal.add(Calendar.DAY_OF_MONTH, -1);
+                currentSet=cal;
+                date.setText(dayFormat.format(cal.getTime()));
+
+            } else {
+                cal.add(Calendar.DAY_OF_MONTH, +1);
+                currentSet=cal;
+                date.setText(dayFormat.format(cal.getTime()));
             }
-        }
-
-        // move the entry to the left one
-        if(direction.equals("left")){
-            if(pos>-1){
-                if(pos==0){
-                    pos=targetarray.length;
-                }
-                date.setText(targetarray[pos-1]);
+        } else if (text.equals("Måned")) {
+            if (direction.equals("left")) {
+                cal.add(Calendar.MONTH, -1);
+                currentSet=cal;
+                date.setText(monthFormat.format(cal.getTime()));
+            } else {
+                cal.add(Calendar.MONTH, +1);
+                currentSet=cal;
+                date.setText(monthFormat.format(cal.getTime()));
             }
-        }
-        // move the entry to the right one
-        else {
-            if (pos < targetarray.length) {
-
-                if (pos == targetarray.length - 1) {
-                    pos = -1;
-                }
-                date.setText(targetarray[pos + 1]);
+        } else if (text.equals("År")) {
+            if (direction.equals("left")) {
+                cal.add(Calendar.YEAR, -1);
+                currentSet=cal;
+                date.setText(yearFormat.format(cal.getTime()));
+            } else {
+                cal.add(Calendar.YEAR, +1);
+                currentSet=cal;
+                date.setText(yearFormat.format(cal.getTime()));
             }
         }
     }
 
-    private void SwitchTable(ImageButton switchy, TableLayout table, PieChart pieChart) {
+    private void SwitchTable(ImageButton switchy, TableLayout table, PieChart pieChart, Spinner dd) {
 
 
-        drawChart((pieChart));
+        drawChart(pieChart,dd);
 
         if (table.getVisibility() == View.VISIBLE) {
             table.setVisibility(View.INVISIBLE);
@@ -199,7 +242,7 @@ public class StatsActivity extends AppCompatActivity {
         }
     }
 
-    private void SwitchToggle(ImageButton toggle, TextView toggletext) {
+    private void SwitchToggle(ImageButton toggle, TextView toggletext, PieChart pie, Spinner dd) {
         foodwastetoggle = !foodwastetoggle;
 
         if (foodwastetoggle) {
@@ -209,6 +252,8 @@ public class StatsActivity extends AppCompatActivity {
             toggletext.setText("Mad Spild");
             toggle.setImageResource(R.drawable.button_toggle);
         }
+
+        drawChart(pie,dd);
     }
 
     private void FillTable() {
@@ -237,21 +282,37 @@ public class StatsActivity extends AppCompatActivity {
         }
     }
 
-    private void drawChart(PieChart pieChart) {
+    private void drawChart(PieChart pieChart, Spinner dd) {
 
+        //TODO: iteratre over the inputs instead and use the TimeFrame() function to make sure they are within the requested date
+        pieChart.clear();
         pieChart.setUsePercentValues(true);
 
+        ArrayList<DataBase.Category> cat = db.GetAllCategories();
         ArrayList<PieEntry> yvalues = new ArrayList<PieEntry>();
-        yvalues.add(new PieEntry(8f, "January", 0));
-        yvalues.add(new PieEntry(15f, "February", 1));
-        yvalues.add(new PieEntry(12f, "March", 2));
-        yvalues.add(new PieEntry(25f, "April", 3));
-        yvalues.add(new PieEntry(23f, "May", 4));
-        yvalues.add(new PieEntry(17f, "June", 5));
+        PieDataSet dataSet;
+        for (int i = 0; i < cat.size(); i++) {
+            DataBase.Category ca = cat.get(i);
 
-        PieDataSet dataSet = new PieDataSet(yvalues, "ost");
+            if (foodwastetoggle) {
+                if (ca.GetAmountFW() == 0) {
+                    continue;
+                }
+                yvalues.add(new PieEntry(ca.GetAmountFW(), ca.GetName(), i));
+            } else {
+                if (ca.GetAmountFS() == 0) {
+                    continue;
+                }
+                yvalues.add(new PieEntry(ca.GetAmountFS(), ca.GetName(), i));
+            }
+        }
+        if (foodwastetoggle) {
+            dataSet = new PieDataSet(yvalues, "Mad Affald");
+        } else {
+            dataSet = new PieDataSet(yvalues, "Mad Spild");
+        }
+
         PieData data = new PieData(dataSet);
-
         data.setValueFormatter(new PercentFormatter());
         pieChart.setData(data);
         Description description = new Description();

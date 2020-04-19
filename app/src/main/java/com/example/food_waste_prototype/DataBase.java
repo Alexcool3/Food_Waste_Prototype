@@ -3,6 +3,7 @@ package com.example.food_waste_prototype;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.widget.Button;
 
@@ -24,13 +25,23 @@ import static android.content.ContentValues.TAG;
 
 public class DataBase {
 
-    //public static final DataBase instance = new DataBase();
+    public static  DataBase instance;
+
     private ArrayList<Category> categories = new ArrayList<>(); // contains a list of all the current categories and how much waste has been input into them
     private ArrayList<Input> inputs = new ArrayList<>(); // contains a list of all the past inputs
     private ArrayList<User> users = new ArrayList<>(); // contains a list of all users and the current user
 
-    DataBase(Context context){
-          //  ReadAllDate(context);
+    private DataBase(Context context){
+
+    }
+
+    public static DataBase getInstance(Context context)
+    {
+        if (instance == null)
+        {
+            instance = new DataBase(context);
+        }
+        return instance;
     }
 
 
@@ -245,7 +256,7 @@ public class DataBase {
 
     //region The inner classes
 
-    private class Category{
+    public class Category{
         // this class should represent a category.
         // it should be read from upon startup to create the categories
 
@@ -262,16 +273,20 @@ public class DataBase {
             this.amountFS=0;
         }
 
-        private String GetName(){
+        public String GetName(){
             return name;
         }
 
-        private float GetPricePerUnit(){
+        public float GetPricePerUnit(){
             return pricePerUnit;
         }
 
-        public float GetAmountFW(float price){
+        public float GetAmountFW(){
             return amountFW;
+        }
+
+        public float GetAmountFS(){
+            return amountFS;
         }
 
         private void SetName(String name) {
@@ -289,6 +304,8 @@ public class DataBase {
         private void AddFS(float amount) {
             amountFS+=amount;
         }
+
+
 
         Button foodButton;
     }
