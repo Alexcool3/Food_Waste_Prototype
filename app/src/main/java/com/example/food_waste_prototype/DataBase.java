@@ -1,7 +1,22 @@
 package com.example.food_waste_prototype;
 
+import android.app.Activity;
+import android.app.Application;
+import android.content.Context;
 import android.util.Log;
 import android.widget.Button;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -9,21 +24,21 @@ import static android.content.ContentValues.TAG;
 
 public class DataBase {
 
-    public static final DataBase instance = new DataBase();
-    private ArrayList<Category> categories = new ArrayList<>(); // contains a list of all the current categories
+    //public static final DataBase instance = new DataBase();
+    private ArrayList<Category> categories = new ArrayList<>(); // contains a list of all the current categories and how much waste has been input into them
     private ArrayList<Input> inputs = new ArrayList<>(); // contains a list of all the past inputs
-    private ArrayList<User> users = new ArrayList<>(); // contains a list of all current users
+    private ArrayList<User> users = new ArrayList<>(); // contains a list of all users and the current user
 
-    DataBase(){
-       // ReadDataFromFile();
+    DataBase(Context context){
+            ReadAllDate(context);
     }
 
 
     //region Methods to do with users
 
-    public void NewUser(String userName, String password, boolean remember){
+    public void NewUser(String userName, String password, boolean remember, boolean currentUser){
         // the idea is to call this when a new is created
-        User user = new User(userName,password,remember);
+        User user = new User(userName,password,remember, currentUser);
         users.add(user);
     }
 
@@ -32,12 +47,22 @@ public class DataBase {
         for(int i = 0; i < users.size(); i++) {
             User user = users.get(i);
             if(username.equals(user.GetUserName()) && password.equals(user.GetPassword())) {
+                user.isCurrentUser=true;
                 return true;
             }
         }
-
         return false;
     }
+
+    public void DeleteCurrentUser(){
+        for(int i = 0; i < users.size(); i++) {
+            User user = users.get(i);
+            if(user.isCurrentUser){
+                users.remove(user);
+            }
+        }
+    }
+
     //endregion
 
     //region Methods to do with categories
@@ -91,6 +116,7 @@ public class DataBase {
         return null;
     }
     //endregion
+
     //region  Methods to do with the input class
 
     private Input CreateInput(String name, Float amount, boolean foodScraps){
@@ -118,14 +144,102 @@ public class DataBase {
     }
     //endregion
 
-    //region Methods to do with saving and reading data
+    //region Methods to do with saving, reading and deleting data
+    // NOTE: I did not test if these functions work so fuck it
 
-    public void SaveDataToFile(){
-        //TODO: save the category list to a file
+    public void SaveAllDataToFile(Context context){
+        // I did not test if it works :)
+        JSONArray cat = new JSONArray(categories);
+        JSONArray in = new JSONArray(inputs);
+        JSONArray use = new JSONArray(users);
+
+        save(cat, context, "Categories");
+        save(in, context, "Inputs");
+        save(use, context, "Users");
     }
 
-    public void ReadDataFromFile(){
-        //TODO: Read the data upon startup;
+
+    public void ReadAllDate(Context context){
+        read("Categories", categories, context);
+        read("Inputs", inputs, context);
+        read("Users", users, context);
+    }
+
+    private <T> void read(String filename, ArrayList<T> arraylist, Context context) {
+        String data = ReadDataFromFile(context,filename);
+        try {
+            JSONArray jsonArr = new JSONArray(data);
+
+            for (int i = 0; i < jsonArr.length(); i++) {
+                JSONObject jsonObj = jsonArr.getJSONObject(i);
+                arraylist.add((T) jsonObj); // im amazed if this works
+
+            }
+        } catch (JSONException e) {
+            Log.d(TAG, "read: Failed to read file");
+        }
+    }
+
+    private void save(JSONArray ja,Context context, String fileName){
+        String json = ja.toString();
+        boolean isFilePresent = isFilePresent(context, json);
+        if(isFilePresent) {
+            String jsonString = ReadDataFromFile(context, json);
+            // TODO:delete the file? or parse it and add the new stuff
+        } else {
+            boolean isFileCreated = CreateFile(context, fileName);
+            if(isFileCreated) {
+                Log.d(TAG, "save: filed saved succesfully");
+            } else {
+                Log.d(TAG, "save: failed saving file");
+            }
+        }
+    }
+
+    private boolean CreateFile(Context context, String fileName){
+        String jsonString="{}";
+        try {
+            FileOutputStream fos = context.openFileOutput(fileName,Context.MODE_PRIVATE);
+            fos.write(jsonString.getBytes());
+            fos.close();
+            return true;
+        } catch (FileNotFoundException fileNotFound) {
+            return false;
+        } catch (IOException ioException) {
+            return false;
+        }
+    }
+
+    private boolean isFilePresent(Context context, String fileName) {
+        String path = context.getFilesDir().getAbsolutePath() + "/" + fileName;
+        File file = new File(path);
+        return file.exists();
+    }
+
+    public void DeleteAllData(){
+        users.clear();
+        categories.clear();
+        users.clear();
+        //TODO: delete the saved files
+    }
+
+
+    private String ReadDataFromFile(Context context, String fileName) {
+        try {
+            FileInputStream fis = context.openFileInput(fileName);
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader bufferedReader = new BufferedReader(isr);
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                sb.append(line);
+            }
+            return sb.toString();
+        } catch (FileNotFoundException fileNotFound) {
+            return null;
+        } catch (IOException ioException) {
+            return null;
+        }
     }
     //endregion
 
@@ -184,11 +298,13 @@ public class DataBase {
         private String userName;
         private String password;
         private boolean rememberLogin;
+        private boolean isCurrentUser;
 
-        User(String userName, String password, boolean remember){
+        User(String userName, String password, boolean remember, boolean isCurrentUser){
             this.userName=userName;
             this.password=password;
             this.rememberLogin=remember;
+            this.isCurrentUser = isCurrentUser;
         }
 
         private void setUserName(String name){
