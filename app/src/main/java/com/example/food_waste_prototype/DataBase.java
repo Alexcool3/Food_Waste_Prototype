@@ -30,7 +30,7 @@ public class DataBase {
     private ArrayList<User> users = new ArrayList<>(); // contains a list of all users and the current user
 
     DataBase(Context context){
-            ReadAllDate(context);
+          //  ReadAllDate(context);
     }
 
 
@@ -117,7 +117,7 @@ public class DataBase {
     }
     //endregion
 
-    //region  Methods to do with the input class
+    //region  Methods to do with inputs
 
     private Input CreateInput(String name, Float amount, boolean foodScraps){
         Input ip = new Input(Calendar.getInstance().getTime(), name, amount, foodScraps);
@@ -159,7 +159,7 @@ public class DataBase {
     }
 
 
-    public void ReadAllDate(Context context){
+    private void ReadAllDate(Context context){
         read("Categories", categories, context);
         read("Inputs", inputs, context);
         read("Users", users, context);
@@ -262,11 +262,11 @@ public class DataBase {
             this.amountFS=0;
         }
 
-        public String GetName(){
+        private String GetName(){
             return name;
         }
 
-        public float GetPricePerUnit(){
+        private float GetPricePerUnit(){
             return pricePerUnit;
         }
 
@@ -274,19 +274,19 @@ public class DataBase {
             return amountFW;
         }
 
-        public void SetName(String name) {
+        private void SetName(String name) {
             this.name = name;
         }
 
-        public void SetPricePerUnit(float amount) {
+        private void SetPricePerUnit(float amount) {
             this.pricePerUnit = amount;
         }
 
-        public void AddFW(float amount) {
+        private void AddFW(float amount) {
             amountFW+=amount;
         }
 
-        public void AddFS(float amount) {
+        private void AddFS(float amount) {
             amountFS+=amount;
         }
 
@@ -321,6 +321,14 @@ public class DataBase {
 
         private String GetPassword(){
             return password;
+        }
+
+        private boolean GetSsCurrentUser(){
+            return isCurrentUser;
+        }
+
+        private boolean GetRememberLogin(){
+            return rememberLogin;
         }
     }
 
