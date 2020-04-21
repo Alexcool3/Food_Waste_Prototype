@@ -29,7 +29,7 @@
         android:drawableLeft="@drawable/password_icon"
         android:ems="10"
         android:fontFamily="@font/ibm_plex_sans_regular"
-        android:hint="Password"
+        android:hint="Kodeord"
         android:inputType="textPersonName"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"

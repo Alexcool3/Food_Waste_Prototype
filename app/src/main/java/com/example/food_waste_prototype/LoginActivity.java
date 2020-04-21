@@ -2,6 +2,7 @@ package com.example.food_waste_prototype;
 
 
 import android.app.AppComponentFactory;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.app.Activity;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.app.Dialog;
+import android.content.DialogInterface;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,6 +21,11 @@ public class LoginActivity extends AppCompatActivity {
     private EditText password;
     private Button login;
     private Button registrer;
+
+    //private TextView tv_brugernavn;
+    //private TextView tv_kodeord;
+    //private Button button;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +46,18 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
+        registrer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openDialog();
+            }
+        });
+
+    }
+
+    public void openDialog() {
+        nyBrugerDialog nyBrugerDialog = new nyBrugerDialog();
+        nyBrugerDialog.show(getSupportFragmentManager(),"example dialog");
     }
 
     private void validate(String inputBrugernavn, String inputPassword) {
@@ -46,6 +66,15 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(LoginActivity.this, InputActivity.class);
             startActivity(intent);
         }
+        else {
+            Context context = getApplicationContext();
+            CharSequence text = "Brugernavnet eller kodeordet findes ikke";
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
     }
+
+
 
 }
