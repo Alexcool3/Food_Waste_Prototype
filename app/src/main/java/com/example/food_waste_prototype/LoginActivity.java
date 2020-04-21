@@ -26,7 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     //private TextView tv_kodeord;
     //private Button button;
 
-
+    /*
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,5 +76,5 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-
+    */
 }
