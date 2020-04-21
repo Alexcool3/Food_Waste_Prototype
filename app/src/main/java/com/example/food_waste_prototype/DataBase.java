@@ -84,13 +84,13 @@ public class DataBase {
         return cg;
     }
 
-    public Category EditCategory(Category cg, String newName, float pricePerunit){
+    public Category EditCategory(Category cg, String newName, float pricePerUnit){
         // the idea is to call this function upon pressing the edit category button
         if (!(cg.GetName().equals(newName))){
             cg.SetName(newName);
         }
-        if(!(cg.GetPricePerUnit()==pricePerunit)){
-            cg.SetPricePerUnit(pricePerunit);
+        if(!(cg.GetPricePerUnit()==pricePerUnit)){
+            cg.SetPricePerUnit(pricePerUnit);
         }
         return cg;
         // how should this function interact with the list?
@@ -130,7 +130,7 @@ public class DataBase {
 
     //region  Methods to do with inputs
 
-    private Input CreateInput(String name, Float amount, boolean foodScraps){
+    private Input CreateInput(String name, float amount, boolean foodScraps){
         Input ip = new Input(Calendar.getInstance().getTime(), name, amount, foodScraps);
         return  ip;
     }
@@ -191,8 +191,8 @@ public class DataBase {
         }
     }
 
-    private void save(JSONArray ja,Context context, String fileName){
-        String json = ja.toString();
+    private void save(JSONArray jArray,Context context, String fileName){
+        String json = jArray.toString();
         boolean isFilePresent = isFilePresent(context, json);
         if(isFilePresent) {
             String jsonString = ReadDataFromFile(context, json);
@@ -328,8 +328,8 @@ public class DataBase {
             this.userName=name;
         }
 
-        private void setPassword(String word){
-            this.password=word;
+        private void setPassword(String passCode){
+            this.password=passCode;
         }
 
         private String GetUserName(){
@@ -353,10 +353,10 @@ public class DataBase {
         // The idea is this class should be used to in combination with the history/edit popups
         private Date  time;
         private String name;
-        private Float amount;
+        private float amount;
         private boolean foodScraps;
 
-        Input(Date  time, String name, Float amount, boolean foodScraps){
+        Input(Date  time, String name, float amount, boolean foodScraps){
             this.time= time;
             this.name=name;
             this.amount=amount;
