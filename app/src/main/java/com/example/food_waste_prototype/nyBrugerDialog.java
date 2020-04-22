@@ -21,20 +21,20 @@ public class nyBrugerDialog  extends  AlertDialog{
     private EditText editTextKodeord;
     private Button button;
 
-    protected nyBrugerDialog(Context context, String text) {
+    protected nyBrugerDialog(Context context) {
         super(context);
-        OpenDialog(context, text);
+        OpenDialog(context);
     }
 
-    public void OpenDialog(Context context, String text) {
+    public void OpenDialog(Context context) {
         final AlertDialog.Builder AlertDialog = new AlertDialog.Builder(context); // Context, this, etc.
-        View newView = getLayoutInflater().inflate(R.layout.dialog_help, null);
+        View newView = getLayoutInflater().inflate(R.layout.nybrugerdialog, null);
         AlertDialog.setView(newView);
         final AlertDialog dialog = AlertDialog.create();
         dialog.show();
 
-        TextView explainer = newView.findViewById(R.id.dialog_info);
-        explainer.setText((text));
+        //TextView explainer = newView.findViewById(R.id.dialog_info);
+       // explainer.setText((text));
 
         editTextBrugernavn = newView.findViewById(R.id.edit_brugernavn);
         editTextKodeord = newView.findViewById(R.id.edit_kodeord);

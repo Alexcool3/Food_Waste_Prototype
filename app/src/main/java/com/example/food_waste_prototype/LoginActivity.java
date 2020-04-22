@@ -27,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     //private TextView tv_kodeord;
     //private Button button;
 
-    /*
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void openDialog() {
     
-      //  nyBrugerDialog nyBrugerDialog = new nyBrugerDialog();
+        nyBrugerDialog nyBrugerDialog = new nyBrugerDialog(LoginActivity.this);
        // nyBrugerDialog.show(getSupportFragmentManager(),"example dialog");
     }
 
@@ -78,5 +78,5 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    */
+
 }
