@@ -104,12 +104,16 @@ public class DataBase {
 
     public void AddFoodWaste(String categoryName, float amount, boolean foodScraps){
         Category cg= GetCategory(categoryName);
-        if (foodScraps){
-            cg.AddFS(amount);
-        } else{
-            cg.AddFW(amount);
+        if(!(cg ==null)) {
+
+
+            if (foodScraps) {
+                cg.AddFS(amount);
+            } else {
+                cg.AddFW(amount);
+            }
+            inputs.add(CreateInput(categoryName, amount, foodScraps));
         }
-        inputs.add( CreateInput(categoryName, amount, foodScraps));
     }
 
     public ArrayList<Category> GetAllCategories(){
@@ -131,7 +135,8 @@ public class DataBase {
     //region  Methods to do with inputs
 
     private Input CreateInput(String name, float amount, boolean foodScraps){
-        Input ip = new Input(Calendar.getInstance().getTime(), name, amount, foodScraps);
+        Calendar time = Calendar.getInstance();
+        Input ip = new Input(time.getTime(), name, amount, foodScraps);
         return  ip;
     }
 
@@ -349,9 +354,9 @@ public class DataBase {
         }
     }
 
-    private class Input{
+    public class Input{
         // The idea is this class should be used to in combination with the history/edit popups
-        private Date  time;
+        private Date time;
         private String name;
         private float amount;
         private boolean foodScraps;
@@ -365,6 +370,18 @@ public class DataBase {
 
         public String getName() {
             return name;
+        }
+
+        public Date getTime(){
+            return time;
+        }
+
+        public float amount(){
+            return amount;
+        }
+
+        public boolean getfoodScraps(){
+            return foodScraps;
         }
     }
     //endregion

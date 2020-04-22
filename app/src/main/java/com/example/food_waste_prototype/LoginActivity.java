@@ -1,6 +1,7 @@
 package com.example.food_waste_prototype;
 
 
+import android.app.AlertDialog;
 import android.app.AppComponentFactory;
 import android.content.Context;
 import android.content.Intent;
@@ -26,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     //private TextView tv_kodeord;
     //private Button button;
 
-    /*
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,8 +57,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void openDialog() {
-        nyBrugerDialog nyBrugerDialog = new nyBrugerDialog();
-        nyBrugerDialog.show(getSupportFragmentManager(),"example dialog");
+    
+        nyBrugerDialog nyBrugerDialog = new nyBrugerDialog(LoginActivity.this);
+       // nyBrugerDialog.show(getSupportFragmentManager(),"example dialog");
     }
 
     private void validate(String inputBrugernavn, String inputPassword) {
@@ -76,5 +78,5 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    */
+
 }
