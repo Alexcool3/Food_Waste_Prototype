@@ -20,58 +20,51 @@ import androidx.constraintlayout.widget.ConstraintLayout ;
 
 public class TaskBarView extends ConstraintLayout implements View.OnClickListener{
     Context context2;
+    ImageButton inputtaskbarbutton;
+    ImageButton statstaskbarbutton;
+
     public TaskBarView(Context context) {
         super(context);
         context2=context;
         inflate(context, R.layout.taskbar_view, this);
-        Log.d("task", "did 3");
-        DetermineColor(context);
-        SetupButtons(context);
         // TODO Auto-generated constructor stub
     }
 
     public TaskBarView(Context context, AttributeSet attrs) {
         super(context, attrs);
-
         inflate(context, R.layout.taskbar_view, this);
-
-
-
-
         TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.HistoryView);
-        //imageView.setImageDrawable(attributes.getDrawable(R.styleable.BenefitView_image))
-        //textView.text = attributes.getString(R.styleable.BenefitView_text)
         attributes.recycle();
-
-
     }
 
     public TaskBarView(Context context, AttributeSet attrs, int defStyle){
         super(context, attrs, defStyle);
     }
 
-    public void SetClickListener(OnClickListener listener){
-
-        ImageButton inputtaskbarbutton = findViewById(R.id.button_input4);
-        ImageButton statstaskbarbutton = findViewById(R.id.button_stats2);
-
-        inputtaskbarbutton.setOnClickListener(listener);
-
-        statstaskbarbutton.setOnClickListener(listener);
+    public void taskings(Context context){
+        Log.d("task", "did 3");
+        DetermineColor(context);
+        SetupButtons(context);
     }
 
-    public void SetupButtons(Context context){
-
+    public void SetupButtons(final Context context){
         Log.d("task", "did 4");
-        ImageButton inputtaskbarbutton = findViewById(R.id.button_input4);
-        ImageButton statstaskbarbutton = findViewById(R.id.button_stats2);
-
+        ImageButton inputtaskbarbutton = this.findViewById(R.id.button_input4);
+        ImageButton statstaskbarbutton = this.findViewById(R.id.button_stats2);
 
         statstaskbarbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d("task", "did 2");
-                SwitchActivity("stats", context2);
+                SwitchActivity("stats", context);
+            }
+        });
+
+        inputtaskbarbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("task", "did 2");
+                SwitchActivity("input", context);
             }
         });
     }
@@ -86,17 +79,19 @@ public class TaskBarView extends ConstraintLayout implements View.OnClickListene
     }
 
     private void DetermineColor(Context context){
-       // ImageView statsback = findViewById(R.id.background_stats);
-       // ImageView inputback = findViewById(R.id.backgroundInput);
+        ImageView statsback = findViewById(R.id.background_stats);
+       ImageView inputback = findViewById(R.id.backgroundInput);
         if(context instanceof StatsActivity){
-
-          //  inputback.setBackgroundColor(getResources().getColor(R.color.Beige));
+            inputback.setBackgroundColor(getResources().getColor(R.color.Beige));
+        } else if(context instanceof InputActivity){
+            statsback.setBackgroundColor(getResources().getColor(R.color.Beige));
         } else{
-            //statsback.setBackgroundColor(getResources().getColor(R.color.Beige));
+            statsback.setBackgroundColor(getResources().getColor(R.color.Beige));
+            inputback.setBackgroundColor(getResources().getColor(R.color.Beige));
         }
     }
 
-    private void SwitchActivity(String target, Context context) {
+    public void SwitchActivity(String target, Context context) {
 
         if (target == "stats") {
 
@@ -107,7 +102,6 @@ public class TaskBarView extends ConstraintLayout implements View.OnClickListene
         if (target == "input") {
 
             Intent intent = new Intent(context, InputActivity.class);
-
             context.startActivity(intent);
         }
     }

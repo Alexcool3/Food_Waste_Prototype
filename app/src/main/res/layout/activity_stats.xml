@@ -65,19 +65,10 @@
         class="androidx.appcompat.widget.ActionMenuView"
         android:layout_width="410dp"
         android:layout_height="96dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="12dp"
         android:background="@color/Green"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/explainer" />
-
-    <view
-        android:id="@+id/taskbarPicked"
-        class="androidx.appcompat.widget.ActionMenuView"
-        android:layout_width="204dp"
-        android:layout_height="69dp"
-        android:background="@color/Orange"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/toggleText"
@@ -145,7 +136,6 @@
         android:outlineAmbientShadowColor="#000000"
         app:layout_constraintBottom_toTopOf="@+id/greenbox"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <View
@@ -158,20 +148,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/greenbox" />
 
-    <View
-        android:id="@+id/line4"
-        android:layout_width="409dp"
-        android:layout_height="1dp"
-        android:background="@color/Black"
-        android:clickable="false"
-        android:outlineAmbientShadowColor="#000000"
-        app:layout_constraintBottom_toTopOf="@+id/button_input"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tableLayout"
-        app:layout_constraintVertical_bias="1.0" />
-
     <TableLayout
         android:id="@+id/tableLayout"
         android:layout_width="414dp"
@@ -182,12 +158,10 @@
         android:fadeScrollbars="true"
         android:scrollbars="none"
         android:showDividers="none"
-        app:layout_constraintBottom_toTopOf="@+id/button_input"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/date"
-        app:layout_constraintVertical_bias="0.504">
+        app:layout_constraintTop_toBottomOf="@+id/date">
 
         <TableRow
             android:id="@+id/SixthRow"
@@ -405,35 +379,6 @@
         app:srcCompat="@drawable/button_stats" />
 
     <ImageButton
-        android:id="@+id/button_input"
-        android:layout_width="56dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:layout_marginBottom="23dp"
-        android:background="@null"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/taskbarPicked"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/button_input" />
-
-    <ImageButton
-        android:id="@+id/button_stats"
-        android:layout_width="48dp"
-        android:layout_height="39dp"
-        android:background="@null"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="@+id/taskbarPicked"
-        app:layout_constraintEnd_toEndOf="@+id/taskbarPicked"
-        app:layout_constraintStart_toStartOf="@+id/taskbarPicked"
-        app:layout_constraintTop_toBottomOf="@+id/line4"
-        app:layout_constraintVertical_bias="0.24000001"
-        app:srcCompat="@drawable/button_stats" />
-
-    <ImageButton
         android:id="@+id/button_arrow_right"
         android:layout_width="47dp"
         android:layout_height="49dp"
@@ -476,43 +421,6 @@
         app:layout_constraintTop_toTopOf="@+id/greenbox"
         app:srcCompat="@drawable/button_toggle" />
 
-    <TextView
-        android:id="@+id/input_button_text"
-        android:layout_width="86dp"
-        android:layout_height="23dp"
-        android:autoText="false"
-        android:fontFamily="@font/ibm_plex_sans_regular"
-        android:gravity="center"
-        android:text="Indtastning"
-        android:textAllCaps="false"
-        android:textSize="12sp"
-        android:textStyle="normal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/taskbarPicked"
-        app:layout_constraintHorizontal_bias="0.453"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/button_input"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <TextView
-        android:id="@+id/stats_button_text"
-        android:layout_width="86dp"
-        android:layout_height="23dp"
-        android:layout_marginTop="19dp"
-        android:layout_marginBottom="1dp"
-        android:autoText="false"
-        android:fontFamily="@font/ibm_plex_sans_regular"
-        android:gravity="center"
-        android:text="Statistik"
-        android:textAllCaps="false"
-        android:textSize="12sp"
-        android:textStyle="normal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/taskbarPicked"
-        app:layout_constraintTop_toBottomOf="@+id/button_stats"
-        app:layout_constraintVertical_bias="1.0" />
-
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/pieChart"
         android:layout_width="355dp"
@@ -523,5 +431,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.82" />
+
+    <com.example.food_waste_prototype.TaskBarView
+        android:id="@+id/taskBarView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="parent"></com.example.food_waste_prototype.TaskBarView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

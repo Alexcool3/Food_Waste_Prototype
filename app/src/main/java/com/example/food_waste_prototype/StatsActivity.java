@@ -54,7 +54,7 @@ public class StatsActivity extends AppCompatActivity {
         final Context context = StatsActivity.this;
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); // make the app fullscreen
         db = DataBase.getInstance(context);
-        SetupButtons();
+        SetupButtons(context);
         FillTable();
        // db.CreateCategory("ost", 33);
       ///  db.CreateCategory("kød", 33);
@@ -63,11 +63,13 @@ public class StatsActivity extends AppCompatActivity {
        // db.AddFoodWaste("kød", 250, true);
     }
 
-    private void SetupButtons() {
+    private void SetupButtons(Context context) {
+
+        final TaskBarView taskbar = findViewById(R.id.taskBarView);
+        taskbar.taskings(context);
 
         ImageButton leftArrow = findViewById(R.id.button_arrow_left);
         ImageButton rightArrow = findViewById(R.id.button_arrow_right);
-        ImageButton inputtaskbarbutton = findViewById(R.id.button_input);
         final TextView date = findViewById(R.id.date);
         final ImageButton switchbutton = findViewById(R.id.button_switch);
         final ImageButton helpbutton = findViewById(R.id.button_information);
@@ -111,13 +113,6 @@ public class StatsActivity extends AppCompatActivity {
             }
         });
 
-        // button that leads to inputpage
-        inputtaskbarbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SwitchActivity("input");
-            }
-        });
 
         // food waste - food scraps toogle
         toggle.setOnClickListener(new View.OnClickListener() {
@@ -148,7 +143,6 @@ public class StatsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Help();
-                ;
             }
         });
     }

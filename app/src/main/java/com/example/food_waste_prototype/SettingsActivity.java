@@ -32,32 +32,21 @@ public class SettingsActivity extends AppCompatActivity {
         final Context context = SettingsActivity.this;
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); // make the app fullscreen
         TaskBarButtons(); // activate the taskbar buttons
+        final TaskBarView taskbar = findViewById(R.id.taskBarView);
+        taskbar.taskings(context);
     }
 
 
     private void TaskBarButtons() {
 
 
-        ImageButton inputtaskbarbutton = findViewById(R.id.button_input5); //input button
-        ImageButton statsbutton = findViewById(R.id.button_stats5); //stats button
+
         ImageButton backbutton = findViewById(R.id.backbutton); //back button
         Button logoff = findViewById(R.id.logout);  //log off button
         Button indstillinger = findViewById(R.id.change); //change button
         Button slet = findViewById(R.id.erase); //nulstil button
         Button nulstil = findViewById(R.id.delete); //slet button
 
-        inputtaskbarbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SwitchActivity("input");
-            }
-        });
-        statsbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SwitchActivity("stats");
-            }
-        });
         backbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -12,85 +12,62 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
 import java.util.ArrayList;
 
 public class InputActivity extends AppCompatActivity {
 
     DataBase db;
-    int currenrowindex= 0;
+    int currenrowindex = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input);
         final Context context = InputActivity.this;
-        final TaskBarView taskbar= findViewById(R.id.taskBarView);
 
 
         db = DataBase.getInstance(context);
         db.clearArays();
         db.CreateCategory("ost", 500, context);
 
-
-      //  addButton(context);
-        // Add new category button + dialog
-        //TableLayout tb = findViewById(R.id.tableLayout);
-       // tb.removeAllViews();
-       // populate(context, tb);
+        TableLayout tb = findViewById(R.id.tableLayout);
+        tb.removeAllViews();
+        populate(context, tb);
         SetupButtons();
+        final TaskBarView taskbar = findViewById(R.id.taskBarView);
+        taskbar.taskings(context);
 
-       taskbar.SetClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               Log.d("task", "hej");
-           }
-       });
+
     }
 
-
-    private void SetupButtons(){
-       // final ImageButton settingsButton = findViewById(R.id.button_options2);
-       /* settingsButton.setOnClickListener(new View.OnClickListener() {
+    private void SetupButtons() {
+        final ImageButton settingsButton = findViewById(R.id.button_options2);
+        settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(InputActivity.this, SettingsActivity.class);
                 startActivity(intent);
             }
-        });*/
+        });
     }
 
     private void populate(Context context, TableLayout tb) {
 
         removeParents(tb);
         tb.removeAllViews();
-        Log.d("ost",String.valueOf(tb.getChildCount()));
-
-
         ArrayList<Category> cats = db.GetAllCategories();
-
-
-
         TableRow row = new TableRow(context);
         row.removeAllViews();
         for (int number = 0; number < cats.size(); number++) {
             if (tb.getChildAt(currenrowindex) != null) {
                 row = new TableRow(context);
-
             }
-            int ost = row.getChildCount();
-            if (row.getChildCount() == 3 || row.getChildCount() >3) {
-                // if(currenrowindex!=0){
+            if (row.getChildCount() == 3 || row.getChildCount() > 3) {
                 tb.addView(row);
-                // }
                 currenrowindex++;
                 row = new TableRow(context);
             }
-
             row.setLayoutParams((new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT)));
             // row.setGravity(Gravity.LEFT);
@@ -99,109 +76,89 @@ public class InputActivity extends AppCompatActivity {
             cg.MakeLayout(context);
             //    Category  cg= new  Category(context);
             Log.d("ost", "Created category " + cg.GetName());
-            TableRow tr= (TableRow) cg.getParent();
-            if(!(tr==null)){
+            TableRow tr = (TableRow) cg.getParent();
+            if (!(tr == null)) {
                 tr.removeView(cg);
             }
-
             row.addView(cg);
-
         }
-        if (row.getChildCount() >2) {
-
+        if (row.getChildCount() > 2) {
             tb.addView(row);
             row = new TableRow(context);
             addTheAddButton(row, tb, context);
-        }else {
-            //Log.d("ost", "ost2" +String.valueOf(row.getChildCount()));
-            addTheAddButton(row, tb,context);
+        } else {
+            addTheAddButton(row, tb, context);
         }
     }
 
-    private void removeParents(TableLayout tl){
+    private void removeParents(TableLayout tl) {
         for (int number = 0; number < tl.getChildCount(); number++) {
-            TableRow tr= (TableRow) tl.getChildAt(number);
+            TableRow tr = (TableRow) tl.getChildAt(number);
             tr.removeAllViews();
         }
     }
 
     private void addTheAddButton(TableRow row, final TableLayout tb, final Context context) {
-       // Log.d("ost", "i was here");
 
         ImageButton ib = new ImageButton(context);
-
-       ib.setImageResource(R.drawable.ic_add_box_black_24dp);
-       ib.setBackground(null);
-
-        //  ConstraintLayout cl = findViewById(R.id.input_layout);
-        // cl.removeView(imb);
+        ib.setImageResource(R.drawable.ic_add_box_black_24dp);
+        ib.setBackground(null);
         row.addView(ib);
-
-        //Log.d("ost", "ost2" + String.valueOf(row.getChildCount()));
         tb.addView(row);
-
-
         ib.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                newCategory(context,tb);
+                newCategory(context, tb);
             }
         });
     }
 
 
+    private void newCategory(final Context context, final TableLayout tb) {
+        final Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.new_category_dialog);
+        final EditText nameInput = dialog.findViewById(R.id.name_input);
+        final EditText priceInput = dialog.findViewById(R.id.price_input);
+        Button confrimButton = dialog.findViewById(R.id.confirm_button);
+        Button cancelButton = dialog.findViewById(R.id.cancel_button);
+        dialog.show();
 
-    private void newCategory(final Context context, final TableLayout tb){
-                tb.removeAllViews();
-                final Dialog dialog = new Dialog(context);
-                dialog.setContentView(R.layout.new_category_dialog);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+                populate(context, tb);
+            }
+        });
 
-                final EditText nameInput = dialog.findViewById(R.id.name_input);
-                final EditText priceInput = dialog.findViewById(R.id.price_input);
-                Button confrimButton = dialog.findViewById(R.id.confirm_button);
-                Button cancelButton = dialog.findViewById(R.id.cancel_button);
-                // Cancel Button
+        confrimButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-                dialog.show();
+                if (nameInput.getText().toString().equals("") || priceInput.getText().toString().equals("")) {
 
-                cancelButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.cancel();
-                        populate(context, tb);
+                    if (nameInput.getText().toString().equals("")) {
+                        Log.d("nameInput", "is Called");
+                        nameInput.setText("");
+                        nameInput.setHint("Indtast navn");
                     }
-                });
 
-                confrimButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        if (nameInput.getText().toString().matches("") || Float.valueOf(priceInput.getText().toString()) == 0.0f){
-
-                            if (nameInput.getText().toString().matches("")){
-                                Log.d("nameInput", "is Called");
-                                nameInput.setText("");
-                                nameInput.setHint("Indtast navn");
-                            }
-
-                            if (priceInput.getText().toString().matches("")){
-                                Log.d("priceInput", "is Called");
-                                priceInput.setText("");
-                                priceInput.setHint("Indtast pris per kilo");
-                            }
-                            return;
-                        }
-
-                        //Log.d("priceInput", "is Called");
-
-                        db.CreateCategory(nameInput.getText().toString(), Float.valueOf(priceInput.getText().toString()), context);
-                        populate(context, tb);
-                        dialog.dismiss();
-
+                    if (priceInput.getText().toString().equals("")) {
+                        Log.d("priceInput", "is Called");
+                       // priceInput.setText("");
+                        priceInput.setHint("Indtast pris per kilo");
                     }
-                });
+                    return;
+                }
+
+                db.CreateCategory(nameInput.getText().toString(), Float.valueOf(priceInput.getText().toString()), context);
+                populate(context, tb);
+                dialog.dismiss();
 
             }
-        };
+        });
+
+    }
+};
 
 
