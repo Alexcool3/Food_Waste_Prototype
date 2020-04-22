@@ -31,7 +31,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".InputActivity"></activity>
+        <activity android:name=".InputActivity" android:label="Input">
+
+            <intent-filter>
+                <action android:name="android.inten.ation.Main"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
         <activity android:name=".StatsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

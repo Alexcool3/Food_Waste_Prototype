@@ -97,7 +97,13 @@ public class SettingsActivity extends AppCompatActivity {
         final AlertDialog dialog = AlertDialog.create();
         dialog.show();
     }
-
+    public void openDialoglog() {
+        final AlertDialog.Builder AlertDialog = new AlertDialog.Builder(this); // Context, this, etc.
+        View newView = getLayoutInflater().inflate(R.layout.dialog_activity, null);
+        AlertDialog.setView(newView);
+        final AlertDialog dialog = AlertDialog.create();
+        dialog.show();
+    }
     private void SwitchActivity(String string) {
         if (string == "input") {
             Intent intent = new Intent(this, InputActivity.class);
