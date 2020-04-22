@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 
+import static com.example.food_waste_prototype.DataBase.*;
+
 
 public class InputActivity extends AppCompatActivity{
 
@@ -20,6 +22,8 @@ public class InputActivity extends AppCompatActivity{
 
         Button addButton = findViewById(R.id.addButton);
         // Add new category button + dialog
+        final DataBase db;
+        db = DataBase.getInstance(context);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,8 +65,8 @@ public class InputActivity extends AppCompatActivity{
                             return;
                         }
 
-                        //Log.d("priceInput", "is Called");
-                        //DataBase.instance.CreateCategory(nameInput.getText().toString(), Float.valueOf(priceInput.getText().toString());
+                        db.CreateCategory(nameInput.getText().toString(), Float.valueOf(priceInput.getText().toString()));
+
                         dialog.dismiss();
 
                     }
