@@ -8,6 +8,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/FoodWasteTheme">
+        <activity android:name=".loadingScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,11 +38,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".InputActivity" android:label="Input">
-
+        <activity
+            android:name=".InputActivity"
+            android:label="Input">
             <intent-filter>
-                <action android:name="android.inten.ation.Main"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.inten.ation.Main" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".StatsActivity">
