@@ -262,7 +262,7 @@ public class StatsActivity extends AppCompatActivity {
     }
 
     private void Help() {
-        HelpDialog hd = new HelpDialog(StatsActivity.this, "hej med dig bo, hvad så der svend");
+        HistoryDialog hd = new HistoryDialog(StatsActivity.this, db);
 
     }
 
