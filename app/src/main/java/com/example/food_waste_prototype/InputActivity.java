@@ -29,7 +29,7 @@ public class InputActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input);
         final Context context = InputActivity.this;
-        final TaskBarView taskbar= new TaskBarView(context);
+        final TaskBarView taskbar= findViewById(R.id.taskBarView);
 
 
         db = DataBase.getInstance(context);
@@ -39,30 +39,29 @@ public class InputActivity extends AppCompatActivity {
 
       //  addButton(context);
         // Add new category button + dialog
-        TableLayout tb = findViewById(R.id.tableLayout);
-        tb.removeAllViews();
-        populate(context, tb);
+        //TableLayout tb = findViewById(R.id.tableLayout);
+       // tb.removeAllViews();
+       // populate(context, tb);
         SetupButtons();
 
-        View.OnClickListener mListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                taskbar.Hej();
-            }
-        };
-        taskbar.setOnClickListener(mListener);
+       taskbar.SetClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Log.d("task", "hej");
+           }
+       });
     }
 
 
     private void SetupButtons(){
-        final ImageButton settingsButton = findViewById(R.id.button_options2);
-        settingsButton.setOnClickListener(new View.OnClickListener() {
+       // final ImageButton settingsButton = findViewById(R.id.button_options2);
+       /* settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(InputActivity.this, SettingsActivity.class);
                 startActivity(intent);
             }
-        });
+        });*/
     }
 
     private void populate(Context context, TableLayout tb) {

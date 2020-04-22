@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout ;
 
-public class TaskBarView extends LinearLayout implements View.OnClickListener{
+public class TaskBarView extends ConstraintLayout implements View.OnClickListener{
     Context context2;
     public TaskBarView(Context context) {
         super(context);
@@ -50,27 +50,28 @@ public class TaskBarView extends LinearLayout implements View.OnClickListener{
         super(context, attrs, defStyle);
     }
 
-    public void Hej(){
-        Log.d("task", "bar");
+    public void SetClickListener(OnClickListener listener){
+
+        ImageButton inputtaskbarbutton = findViewById(R.id.button_input4);
+        ImageButton statstaskbarbutton = findViewById(R.id.button_stats2);
+
+        inputtaskbarbutton.setOnClickListener(listener);
+
+        statstaskbarbutton.setOnClickListener(listener);
     }
 
     public void SetupButtons(Context context){
+
+        Log.d("task", "did 4");
         ImageButton inputtaskbarbutton = findViewById(R.id.button_input4);
         ImageButton statstaskbarbutton = findViewById(R.id.button_stats2);
-        Log.d("task", "did 4");
-        inputtaskbarbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("task", "did 1");
-                SwitchActivity("input", context2);
-            }
-        });
+
 
         statstaskbarbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d("task", "did 2");
-                SwitchActivity("input", context2);
+                SwitchActivity("stats", context2);
             }
         });
     }
@@ -85,22 +86,22 @@ public class TaskBarView extends LinearLayout implements View.OnClickListener{
     }
 
     private void DetermineColor(Context context){
-        ImageView statsback = findViewById(R.id.background_stats);
-        ImageView inputback = findViewById(R.id.backgroundInput);
+       // ImageView statsback = findViewById(R.id.background_stats);
+       // ImageView inputback = findViewById(R.id.backgroundInput);
         if(context instanceof StatsActivity){
 
-            inputback.setBackgroundColor(getResources().getColor(R.color.Beige));
+          //  inputback.setBackgroundColor(getResources().getColor(R.color.Beige));
         } else{
-            statsback.setBackgroundColor(getResources().getColor(R.color.Beige));
+            //statsback.setBackgroundColor(getResources().getColor(R.color.Beige));
         }
     }
 
     private void SwitchActivity(String target, Context context) {
 
-        if (target == "settings") {
+        if (target == "stats") {
 
-            Intent intent = new Intent(context, SettingsActivity.class);
-
+            Intent intent = new Intent(context, StatsActivity.class);
+            context.startActivity(intent);
 
         }
         if (target == "input") {
