@@ -99,7 +99,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
     public void openDialoglog() {
         final AlertDialog.Builder AlertDialog = new AlertDialog.Builder(this); // Context, this, etc.
-        View newView = getLayoutInflater().inflate(R.layout.dialog_activity, null);
+        View newView = getLayoutInflater().inflate(R.layout.nybrugerdialog, null);
         AlertDialog.setView(newView);
         final AlertDialog dialog = AlertDialog.create();
         dialog.show();
@@ -144,7 +144,7 @@ public class SettingsActivity extends AppCompatActivity {
             startActivity(intent);
         }
         if (string == "same") {
-
+            openDialoglog();
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
         }
