@@ -37,11 +37,19 @@ public class DataBase {
 
     public static DataBase getInstance(Context context)
     {
+
+
         if (instance == null)
         {
             instance = new DataBase(context);
         }
         return instance;
+    }
+
+    public void clearArays(){
+        users.clear();
+        categories.clear();
+        inputs.clear();
     }
 
 
@@ -78,10 +86,11 @@ public class DataBase {
 
     //region Methods to do with categories
 
-    public Category CreateCategory(String name, float pricePerUnit){
-        Category cg = new Category(name, pricePerUnit);
+    public Category CreateCategory(String name, float pricePerUnit, Context context){
+        Category cg = new Category(context, name, pricePerUnit);
         categories.add((cg));
         return cg;
+
     }
 
     public Category EditCategory(Category cg, String newName, float pricePerUnit){
@@ -261,59 +270,7 @@ public class DataBase {
 
     //region The inner classes
 
-    public class Category{
-        // this class should represent a category.
-        // it should be read from upon startup to create the categories
 
-        private String name;
-        private float pricePerUnit;
-        private float amountFW;
-        private float amountFS;
-
-
-        // Constructor
-        Category(String name, float pricePerUnit){
-            this.name = name;
-            this.amountFW=0;
-            this.amountFS=0;
-        }
-
-        public String GetName(){
-            return name;
-        }
-
-        public float GetPricePerUnit(){
-            return pricePerUnit;
-        }
-
-        public float GetAmountFW(){
-            return amountFW;
-        }
-
-        public float GetAmountFS(){
-            return amountFS;
-        }
-
-        private void SetName(String name) {
-            this.name = name;
-        }
-
-        private void SetPricePerUnit(float amount) {
-            this.pricePerUnit = amount;
-        }
-
-        private void AddFW(float amount) {
-            amountFW+=amount;
-        }
-
-        private void AddFS(float amount) {
-            amountFS+=amount;
-        }
-
-
-
-        Button foodButton;
-    }
 
     private class User{
         // Should represent a user

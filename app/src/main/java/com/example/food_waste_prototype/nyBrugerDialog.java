@@ -32,7 +32,7 @@ public class nyBrugerDialog  extends  AlertDialog{
         AlertDialog.setView(newView);
         final AlertDialog dialog = AlertDialog.create();
         dialog.show();
-        
+
         editTextBrugernavn = newView.findViewById(R.id.edit_brugernavn);
         editTextKodeord = newView.findViewById(R.id.edit_kodeord);
 

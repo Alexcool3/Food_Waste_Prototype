@@ -5,4 +5,8 @@
         <attr name="amount" format="integer"/>
         <attr name="time" format="string"/>
     </declare-styleable>
+    <declare-styleable name="CategoryView">
+        <attr name="Catname" format="string" />
+        <attr name="Catamount" format="integer"/>
+    </declare-styleable>
 </resources>

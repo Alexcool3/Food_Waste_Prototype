@@ -27,10 +27,10 @@ public class HistoryDialog extends AlertDialog {
     public HistoryDialog(Context context, DataBase db) {
         super(context);
 
-        db.AddFoodWaste("ost",500,false);
-        db.AddFoodWaste("ked",500,false);
-        db.CreateCategory("freds tårer", 500);
-        db.AddFoodWaste("freds tårer",500,false);
+       // db.AddFoodWaste("ost",500,false);
+       // db.AddFoodWaste("ked",500,false);
+      //  db.CreateCategory("freds tårer", 500);
+      //  db.AddFoodWaste("freds tårer",500,false);
         OpenDialog(context, db);
 
     }

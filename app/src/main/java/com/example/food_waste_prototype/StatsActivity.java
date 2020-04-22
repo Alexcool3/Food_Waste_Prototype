@@ -56,11 +56,11 @@ public class StatsActivity extends AppCompatActivity {
         db = DataBase.getInstance(context);
         SetupButtons();
         FillTable();
-        db.CreateCategory("ost", 33);
-        db.CreateCategory("kød", 33);
-        db.AddFoodWaste("ost", 500, false);
-        db.AddFoodWaste("kød", 250, false);
-        db.AddFoodWaste("kød", 250, true);
+       // db.CreateCategory("ost", 33);
+      ///  db.CreateCategory("kød", 33);
+       // db.AddFoodWaste("ost", 500, false);
+      //  db.AddFoodWaste("kød", 250, false);
+       // db.AddFoodWaste("kød", 250, true);
     }
 
     private void SetupButtons() {
@@ -288,11 +288,11 @@ public class StatsActivity extends AppCompatActivity {
         pieChart.clear();
         pieChart.setUsePercentValues(true);
 
-        ArrayList<DataBase.Category> cat = db.GetAllCategories();
+        ArrayList<Category> cat = db.GetAllCategories();
         ArrayList<PieEntry> yvalues = new ArrayList<PieEntry>();
         PieDataSet dataSet;
         for (int i = 0; i < cat.size(); i++) {
-            DataBase.Category ca = cat.get(i);
+            Category ca = cat.get(i);
 
             if (foodwastetoggle) {
                 if (ca.GetAmountFW() == 0) {
