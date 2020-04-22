@@ -18,18 +18,16 @@ import android.content.DialogInterface;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity {
+    DataBase DB;
     private EditText brugernavn;
     private EditText password;
     private Button login;
     private Button registrer;
 
-    //private TextView tv_brugernavn;
-    //private TextView tv_kodeord;
-    //private Button button;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        DB = DataBase.getInstance(LoginActivity.this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -59,12 +57,11 @@ public class LoginActivity extends AppCompatActivity {
     public void openDialog() {
     
         nyBrugerDialog nyBrugerDialog = new nyBrugerDialog(LoginActivity.this);
-       // nyBrugerDialog.show(getSupportFragmentManager(),"example dialog");
     }
 
     private void validate(String inputBrugernavn, String inputPassword) {
-
         if((inputBrugernavn.equals("nikolaj") && (inputPassword.equals("ersej")))){
+            DB.loggedIn = true;
             Intent intent = new Intent(LoginActivity.this, InputActivity.class);
             startActivity(intent);
         }
@@ -76,7 +73,4 @@ public class LoginActivity extends AppCompatActivity {
             toast.show();
         }
     }
-
-
-
 }

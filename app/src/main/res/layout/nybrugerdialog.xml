@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="98dp"
+        android:layout_marginTop="10dp"
         android:hint="Indtast brugernavn" />
 
     <EditText
@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="179dp"
+        android:layout_marginTop="80dp"
         android:hint="Indtast kodeord"
         android:inputType="textPassword" />
 
@@ -26,9 +26,9 @@
         android:id="@+id/button"
         android:layout_width="138dp"
         android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/edit_kodeord"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="188dp"
+        android:layout_marginTop="50dp"
         android:background="#B9D986"
         android:text="Opret ny bruger" />
 
