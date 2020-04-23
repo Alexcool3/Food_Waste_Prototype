@@ -7,11 +7,15 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class Category extends LinearLayout{
 
@@ -24,7 +28,7 @@ public class Category extends LinearLayout{
     public Category(Context context) {
         super(context);
        // inflate(context, R.layout.category_view, this);
-        MakeLayout(context);
+        //MakeLayout(context);
         Log.d("cat", "cat"+ this.name);
         // TODO Auto-generated constructor stub
     }
@@ -89,7 +93,7 @@ public class Category extends LinearLayout{
         amountFS+=amount;
     }
 
-    public void MakeLayout(final Context context){
+    public void MakeLayout(final Context context, final ConstraintLayout cl){
         if(!inflated) {
             inflated = true;
             Log.d("cat", "cat" + this.name);
@@ -98,11 +102,29 @@ public class Category extends LinearLayout{
             TextView text = findViewById(R.id.name);
             text.setText(name);
 
-            ImageButton image = this.findViewById(R.id.image);
+            final ImageButton image = this.findViewById(R.id.image);
             image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     new InputDialog(context, Category.this );
+                }
+            });
+
+            image.setOnLongClickListener(new OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    Toast.makeText(context,"ost",Toast.LENGTH_LONG).show();
+                    HistoryView hv = new HistoryView(context, true);
+
+                    RelativeLayout.LayoutParams  lp = new RelativeLayout.LayoutParams(
+                            ViewGroup.LayoutParams.WRAP_CONTENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT);
+                    lp.addRule(RelativeLayout.ABOVE, image.getId());
+                    int[] location = new int[2];
+                    image.getLocationOnScreen(location);
+                    hv.setPadding(location[0], location[1]-100, 0, 0);
+                    cl.addView(hv, lp);
+                    return true;
                 }
             });
         }

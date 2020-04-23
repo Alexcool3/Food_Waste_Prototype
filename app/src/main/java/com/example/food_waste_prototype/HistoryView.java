@@ -4,9 +4,10 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class HistoryView extends LinearLayout {
+public class HistoryView extends RelativeLayout {
 
     public HistoryView(Context context) {
         super(context);
@@ -14,7 +15,16 @@ public class HistoryView extends LinearLayout {
         // TODO Auto-generated constructor stub
     }
 
-    public HistoryView(Context context, AttributeSet attrs) {
+    public HistoryView(Context context, boolean smallpopup) {
+        super(context);
+        inflate(context, R.layout.dialog_history, this);
+        TextView textView= findViewById(R.id.name);
+        textView.setVisibility(GONE);
+        // TODO Auto-generated constructor stub
+    }
+
+
+    /*public HistoryView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         inflate(context, R.layout.dialog_history, this);
@@ -28,7 +38,7 @@ public class HistoryView extends LinearLayout {
         attributes.recycle();
 
 
-    }
+    }*/
 
     public HistoryView(Context context, AttributeSet attrs, int defStyle){
         super(context, attrs, defStyle);

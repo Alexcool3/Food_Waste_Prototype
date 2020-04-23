@@ -13,7 +13,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import java.util.ArrayList;
 
 public class InputActivity extends AppCompatActivity {
@@ -44,17 +48,26 @@ public class InputActivity extends AppCompatActivity {
 
     private void SetupButtons() {
         final ImageButton settingsButton = findViewById(R.id.button_options2);
-        settingsButton.setOnClickListener(new View.OnClickListener() {
+       /* settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(InputActivity.this, SettingsActivity.class);
                 startActivity(intent);
             }
-        });
+        });*/
+
+        settingsButton.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    Log.d("ost", "hej");
+                    Toast.makeText(InputActivity.this,"ost",Toast.LENGTH_LONG).show();
+                    return false;
+                }
+            });
     }
 
     private void populate(Context context, TableLayout tb) {
-
+        ConstraintLayout cl = findViewById(R.id.input_layout);
         removeParents(tb);
         tb.removeAllViews();
         ArrayList<Category> cats = db.GetAllCategories();
@@ -74,7 +87,7 @@ public class InputActivity extends AppCompatActivity {
             // row.setGravity(Gravity.LEFT);
             //row.setPadding(100, 0, 200, 100);
             Category cg = cats.get(number);
-            cg.MakeLayout(context);
+            cg.MakeLayout(context, cl);
             //    Category  cg= new  Category(context);
             Log.d("ost", "Created category " + cg.GetName());
             TableRow tr = (TableRow) cg.getParent();
