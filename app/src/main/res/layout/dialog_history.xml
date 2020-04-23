@@ -8,14 +8,23 @@
     android:gravity="right">
 
 
+    <View
+        android:id="@+id/line7"
+        android:layout_width="100dp"
+        android:layout_height="43dp"
+        android:background="@color/Black"
+        android:clickable="false"
+        android:outlineAmbientShadowColor="#000000" />
+
     <ImageButton
         android:id="@+id/editButton"
         android:layout_width="48dp"
         android:layout_height="41dp"
 
         android:background="@color/Orange"
+        android:cropToPadding="false"
         android:paddingLeft="15dp"
-        android:paddingTop="2dp"
+        android:paddingTop="5dp"
         android:paddingRight="15dp"
         android:paddingBottom="2dp"
         android:scaleType="centerCrop"
@@ -41,9 +50,27 @@
         android:layout_marginLeft="100dp"
         android:background="@color/Yellow"
         android:paddingLeft="20dp"
+        android:paddingTop="2dp"
         android:paddingRight="15dp"
         android:text="27/5 Ost 500 Kg FW"
         android:textSize="30sp" />
+
+    <View
+        android:id="@+id/line10"
+        android:layout_width="100dp"
+        android:layout_height="2dp"
+        android:background="@color/Black"
+        android:clickable="false"
+        android:outlineAmbientShadowColor="#000000" />
+
+    <View
+        android:id="@+id/line12"
+        android:layout_width="3dp"
+        android:layout_height="41dp"
+        android:background="@color/Black"
+        android:clickable="false"
+        android:outlineAmbientShadowColor="#000000"
+        android:rotation="180" />
 
 
 </RelativeLayout>

@@ -48,13 +48,13 @@ public class InputActivity extends AppCompatActivity {
 
     private void SetupButtons() {
         final ImageButton settingsButton = findViewById(R.id.button_options2);
-       /* settingsButton.setOnClickListener(new View.OnClickListener() {
+        settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(InputActivity.this, SettingsActivity.class);
                 startActivity(intent);
             }
-        });*/
+        });
 
         settingsButton.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
