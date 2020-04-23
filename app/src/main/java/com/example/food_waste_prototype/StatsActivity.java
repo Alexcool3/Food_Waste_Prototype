@@ -34,7 +34,6 @@ import java.util.Date;
 
 public class StatsActivity extends AppCompatActivity {
 
-    private boolean foodwastetoggle = false;
     ArrayList<String> names = new ArrayList<>();
     ArrayList<String> prices = new ArrayList<>();
     ArrayList<String> amounts = new ArrayList<>();
@@ -115,6 +114,11 @@ public class StatsActivity extends AppCompatActivity {
 
 
         // food waste - food scraps toogle
+        if (db.GetEnumToString().equals("Mad Affald")) {
+            toggle.setImageResource(R.drawable.button_toggle_reverse);
+        } else {
+            toggle.setImageResource(R.drawable.button_toggle);
+        }
         toggle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -237,16 +241,14 @@ public class StatsActivity extends AppCompatActivity {
     }
 
     private void SwitchToggle(ImageButton toggle, TextView toggletext, PieChart pie, Spinner dd) {
-        foodwastetoggle = !foodwastetoggle;
 
-        if (foodwastetoggle) {
-            toggletext.setText("Mad Affald");
+        db.flipEnum();
+        toggletext.setText(db.GetEnumToString());
+        if (db.GetEnumToString().equals("Mad Affald")) {
             toggle.setImageResource(R.drawable.button_toggle_reverse);
         } else {
-            toggletext.setText("Mad Spild");
             toggle.setImageResource(R.drawable.button_toggle);
         }
-
         drawChart(pie,dd);
     }
 
@@ -288,7 +290,7 @@ public class StatsActivity extends AppCompatActivity {
         for (int i = 0; i < cat.size(); i++) {
             Category ca = cat.get(i);
 
-            if (foodwastetoggle) {
+            if (db.GetEnumToString().equals("Mad Spild")) {
                 if (ca.GetAmountFW() == 0) {
                     continue;
                 }
@@ -300,12 +302,8 @@ public class StatsActivity extends AppCompatActivity {
                 yvalues.add(new PieEntry(ca.GetAmountFS(), ca.GetName(), i));
             }
         }
-        if (foodwastetoggle) {
-            dataSet = new PieDataSet(yvalues, "Mad Affald");
-        } else {
-            dataSet = new PieDataSet(yvalues, "Mad Spild");
-        }
 
+        dataSet = new PieDataSet(yvalues, db.GetEnumToString());
         PieData data = new PieData(dataSet);
         data.setValueFormatter(new PercentFormatter());
         pieChart.setData(data);

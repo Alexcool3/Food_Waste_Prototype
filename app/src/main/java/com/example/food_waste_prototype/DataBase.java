@@ -27,13 +27,34 @@ public class DataBase {
 boolean loggedIn = false;
 
     public static  DataBase instance;
-
+    public static WhichWaste waste = WhichWaste.foodwaste;
     private ArrayList<Category> categories = new ArrayList<>(); // contains a list of all the current categories and how much waste has been input into them
     private ArrayList<Input> inputs = new ArrayList<>(); // contains a list of all the past inputs
     private ArrayList<User> users = new ArrayList<>(); // contains a list of all users and the current user
 
     private DataBase(Context context){
 
+    }
+
+    public enum WhichWaste {
+        foodwaste,
+        foodscraps
+    }
+
+    public void flipEnum(){
+        if(waste.equals(WhichWaste.foodscraps)){
+            waste = WhichWaste.foodwaste;
+        } else{
+            waste = WhichWaste.foodscraps;
+        }
+    }
+
+    public String GetEnumToString(){
+        if(waste.equals(WhichWaste.foodscraps)){
+            return "Mad Affald";
+        } else{
+            return "Mad Spild";
+        }
     }
 
     public static DataBase getInstance(Context context)

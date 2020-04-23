@@ -16,36 +16,52 @@
         android:background="@color/Orange"
         android:fontFamily="@font/ibm_plex_sans_regular"
         android:gravity="center"
-        android:text="Ny Kategori"
-        android:textSize="20sp"
+        android:text="Ost"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/name_input"
+        android:id="@+id/waste_input"
         android:layout_width="0dp"
-        android:layout_height="60dp"
+        android:layout_height="108dp"
         android:background="@color/Yellow"
-        android:hint="Navn"
+        android:gravity="center"
+        android:hint="Kg"
+        android:inputType="numberDecimal"
         android:padding="10dp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dialog_title" />
 
-    <EditText
-        android:id="@+id/price_input"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="60dp"
-        android:background="@color/Yellow"
-        android:hint="Pris per kilo"
-        android:inputType="numberDecimal"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+    <ImageButton
+        android:id="@+id/button_toggle2"
+        android:layout_width="79dp"
+        android:layout_height="59dp"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/toggleText2"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_title" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.79"
+        app:srcCompat="@drawable/button_toggle" />
+
+    <TextView
+        android:id="@+id/toggleText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mad Spild"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.75" />
 
     <Button
         android:id="@+id/cancel_button"
@@ -57,8 +73,7 @@
         android:background="@color/Orange"
         android:text="Fortryd"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/price_input" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/confirm_button"
@@ -70,7 +85,6 @@
         android:background="@color/Orange"
         android:text="Bekræft"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/price_input" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

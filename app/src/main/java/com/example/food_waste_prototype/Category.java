@@ -1,15 +1,19 @@
 package com.example.food_waste_prototype;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class Category extends LinearLayout {
+public class Category extends LinearLayout{
 
     private String name;
     private float pricePerUnit;
@@ -85,13 +89,22 @@ public class Category extends LinearLayout {
         amountFS+=amount;
     }
 
-    public void MakeLayout(Context context){
+    public void MakeLayout(final Context context){
         if(!inflated) {
             inflated = true;
             Log.d("cat", "cat" + this.name);
             inflate(context, R.layout.category_view, this);
+
             TextView text = findViewById(R.id.name);
             text.setText(name);
+
+            ImageButton image = this.findViewById(R.id.image);
+            image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    new InputDialog(context, Category.this );
+                }
+            });
         }
     }
 }

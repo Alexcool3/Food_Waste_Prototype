@@ -42,10 +42,11 @@
 
     <TextView
         android:id="@+id/date"
-        android:layout_width="116dp"
+        android:layout_width="wrap_content"
         android:layout_height="51dp"
         android:layout_marginStart="12dp"
         android:layout_marginLeft="12dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="1dp"
         android:layout_marginRight="1dp"
         android:autoText="false"
@@ -152,8 +153,6 @@
         android:id="@+id/tableLayout"
         android:layout_width="414dp"
         android:layout_height="373dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginRight="1dp"
         android:clipToPadding="false"
         android:fadeScrollbars="true"
         android:scrollbars="none"
@@ -167,7 +166,7 @@
             android:id="@+id/SixthRow"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="25dp">
+            android:layout_marginTop="15dp">
 
             <TextView
                 android:id="@+id/fwnText6"
@@ -340,7 +339,7 @@
         android:id="@+id/button_information"
         android:layout_width="33dp"
         android:layout_height="36dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="24dp"
         android:layout_marginBottom="10dp"
         android:background="@null"
         android:scaleType="fitCenter"
@@ -382,7 +381,9 @@
         android:id="@+id/button_arrow_right"
         android:layout_width="47dp"
         android:layout_height="49dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
         android:background="@null"
         android:scaleType="fitCenter"
         android:tint="@color/Green"
@@ -396,7 +397,9 @@
         android:id="@+id/button_arrow_left"
         android:layout_width="47dp"
         android:layout_height="49dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="14dp"
         android:background="@null"
         android:rotation="180"
         android:scaleType="fitCenter"

@@ -24,7 +24,7 @@ import java.util.jar.Attributes;
 import static android.content.ContentValues.TAG;
 
 public class HistoryDialog extends AlertDialog {
-    
+
     public HistoryDialog(Context context, DataBase db) {
         super(context);
 
@@ -66,8 +66,6 @@ public class HistoryDialog extends AlertDialog {
             HistoryView hv = new HistoryView(context);
             hv.SetText(s.getName());
             row.addView(hv);
-
-
             tb.addView(row);
             // row.addView(hv);
             //hv.SetText("ost");

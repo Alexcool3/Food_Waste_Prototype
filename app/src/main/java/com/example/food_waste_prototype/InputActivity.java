@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -26,7 +27,7 @@ public class InputActivity extends AppCompatActivity {
         setContentView(R.layout.activity_input);
         final Context context = InputActivity.this;
 
-
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); // make the app fullscreen
         db = DataBase.getInstance(context);
         db.clearArays();
         db.CreateCategory("ost", 500, context);
