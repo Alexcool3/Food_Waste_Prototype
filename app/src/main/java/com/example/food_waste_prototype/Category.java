@@ -6,6 +6,7 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -24,6 +25,7 @@ public class Category extends LinearLayout{
     private float amountFW;
     private float amountFS;
     private boolean inflated = false;
+
 
     public Category(Context context) {
         super(context);
@@ -113,9 +115,24 @@ public class Category extends LinearLayout{
             image.setOnLongClickListener(new OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    Toast.makeText(context,"ost",Toast.LENGTH_LONG).show();
-                    HistoryView hv = new HistoryView(context, true);
-
+                    final HistoryView hv = new HistoryView(context, true);
+                    final View dummy = new View(context);
+                    RelativeLayout.LayoutParams  lp2 = new RelativeLayout.LayoutParams(
+                            ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.MATCH_PARENT);
+                    dummy.setLayoutParams(lp2);
+                    dummy.setOnTouchListener(new View.OnTouchListener() {
+                        @Override
+                        public boolean onTouch(View v, MotionEvent event) {
+                            if(event.getAction() == MotionEvent.ACTION_DOWN){
+                                //Toast.makeText(context,"ost",Toast.LENGTH_LONG).show();
+                                cl.removeView(hv);
+                                cl.removeView(dummy);
+                                return false;
+                            }
+                            return false;
+                        }
+                    });
                     RelativeLayout.LayoutParams  lp = new RelativeLayout.LayoutParams(
                             ViewGroup.LayoutParams.WRAP_CONTENT,
                             ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -123,10 +140,13 @@ public class Category extends LinearLayout{
                     int[] location = new int[2];
                     image.getLocationOnScreen(location);
                     hv.setPadding(location[0], location[1]-100, 0, 0);
+                    cl.addView(dummy);
                     cl.addView(hv, lp);
+
                     return true;
                 }
             });
+
         }
     }
 }

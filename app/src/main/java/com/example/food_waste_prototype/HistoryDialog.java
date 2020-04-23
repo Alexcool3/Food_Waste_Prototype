@@ -72,6 +72,10 @@ public class HistoryDialog extends AlertDialog {
             //tb.addView(row);
         }
     }
+
+    public void CloseDialog(AlertDialog dialog){
+        dialog.cancel();
+    }
 }
 
 
