@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -38,6 +39,7 @@ public class Category extends LinearLayout{
     public Category(Context context, String name, float pricePerUnit) {
         super(context);
         this.name = name;
+        this.pricePerUnit=pricePerUnit;
         this.amountFW=0;
         this.amountFS=0;
         Log.d("cat", "cat"+ this.name);
@@ -81,6 +83,10 @@ public class Category extends LinearLayout{
 
     public void SetName(String name) {
         this.name = name;
+        if(inflated){
+            TextView text = findViewById(R.id.name); // sets the label under the category picture
+            text.setText(name);
+        }
     }
 
     public void SetPricePerUnit(float amount) {
@@ -96,12 +102,12 @@ public class Category extends LinearLayout{
     }
 
     public void MakeLayout(final Context context, final ConstraintLayout cl){
-        if(!inflated) {
+        if(!inflated) { // if the category has not been inflated when loading the input page before
             inflated = true;
             Log.d("cat", "cat" + this.name);
-            inflate(context, R.layout.category_view, this);
+            View v = inflate(context, R.layout.category_view, this);
 
-            TextView text = findViewById(R.id.name);
+            TextView text = findViewById(R.id.name); // sets the label under the category picture
             text.setText(name);
 
             final ImageButton image = this.findViewById(R.id.image);
@@ -114,35 +120,9 @@ public class Category extends LinearLayout{
 
             image.setOnLongClickListener(new OnLongClickListener() {
                 @Override
-                public boolean onLongClick(View v) {
-                    final HistoryView hv = new HistoryView(context, true);
-                    final View dummy = new View(context);
-                    RelativeLayout.LayoutParams  lp2 = new RelativeLayout.LayoutParams(
-                            ViewGroup.LayoutParams.MATCH_PARENT,
-                            ViewGroup.LayoutParams.MATCH_PARENT);
-                    dummy.setLayoutParams(lp2);
-                    dummy.setOnTouchListener(new View.OnTouchListener() {
-                        @Override
-                        public boolean onTouch(View v, MotionEvent event) {
-                            if(event.getAction() == MotionEvent.ACTION_DOWN){
-                                //Toast.makeText(context,"ost",Toast.LENGTH_LONG).show();
-                                cl.removeView(hv);
-                                cl.removeView(dummy);
-                                return false;
-                            }
-                            return false;
-                        }
-                    });
-                    RelativeLayout.LayoutParams  lp = new RelativeLayout.LayoutParams(
-                            ViewGroup.LayoutParams.WRAP_CONTENT,
-                            ViewGroup.LayoutParams.WRAP_CONTENT);
-                    lp.addRule(RelativeLayout.ABOVE, image.getId());
-                    int[] location = new int[2];
-                    image.getLocationOnScreen(location);
-                    hv.setPadding(location[0], location[1]-100, 0, 0);
-                    cl.addView(dummy);
-                    cl.addView(hv, lp);
-
+                public boolean onLongClick(View v) { //when long click open the small menu above the view and start shaking
+                    v.startAnimation(AnimationUtils.loadAnimation(context,R.anim.shakeanim));
+                    new HistoryView(context, cl, image,v, Category.this);
                     return true;
                 }
             });

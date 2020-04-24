@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,8 +22,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import java.util.ArrayList;
 
 public class InputActivity extends AppCompatActivity {
-
+    public static InputActivity instance;
     DataBase db;
+    TableLayout tb;
     int currenrowindex = 0;
 
     @Override
@@ -30,20 +32,25 @@ public class InputActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input);
         final Context context = InputActivity.this;
-
+        instance = this;
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); // make the app fullscreen
         db = DataBase.getInstance(context);
         db.clearArays();
-        db.CreateCategory("ost", 500, context);
+        db.CreateCategory("ost", 50, context);
 
-        TableLayout tb = findViewById(R.id.tableLayout);
+        tb = findViewById(R.id.tableLayout);
         tb.removeAllViews();
-        populate(context, tb);
+        populate(context);
         SetupButtons();
         final TaskBarView taskbar = findViewById(R.id.taskBarView);
         taskbar.taskings(context);
 
 
+    }
+
+    public static InputActivity getInstance()
+    {
+        return instance;
     }
 
     private void SetupButtons() {
@@ -66,7 +73,7 @@ public class InputActivity extends AppCompatActivity {
             });
     }
 
-    private void populate(Context context, TableLayout tb) {
+    public void populate(Context context) {
         ConstraintLayout cl = findViewById(R.id.input_layout);
         removeParents(tb);
         tb.removeAllViews();
@@ -141,7 +148,7 @@ public class InputActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 dialog.cancel();
-                populate(context, tb);
+                populate(context);
             }
         });
 
@@ -166,13 +173,15 @@ public class InputActivity extends AppCompatActivity {
                 }
 
                 db.CreateCategory(nameInput.getText().toString(), Float.valueOf(priceInput.getText().toString()), context);
-                populate(context, tb);
+                populate(context);
                 dialog.dismiss();
 
             }
         });
 
     }
+
+
 };
 
 

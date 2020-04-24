@@ -39,7 +39,6 @@ public class HistoryDialog extends AlertDialog {
     public void OpenDialog(Context context, DataBase db) {
         final AlertDialog.Builder AlertDialog = new AlertDialog.Builder(context); // Context, this, etc.
         View newView = getLayoutInflater().inflate(R.layout.dialog_history2, null);
-
         AlertDialog.setView(newView);
         final AlertDialog dialog = AlertDialog.create();
         dialog.show();
