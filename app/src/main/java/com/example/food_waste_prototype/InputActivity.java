@@ -1,16 +1,19 @@
 package com.example.food_waste_prototype;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -20,6 +23,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.ArrayList;
+
+import static android.view.View.inflate;
 
 public class InputActivity extends AppCompatActivity {
     public static InputActivity instance;
@@ -48,8 +53,7 @@ public class InputActivity extends AppCompatActivity {
 
     }
 
-    public static InputActivity getInstance()
-    {
+    public static InputActivity getInstance() {
         return instance;
     }
 
@@ -64,13 +68,13 @@ public class InputActivity extends AppCompatActivity {
         });
 
         settingsButton.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    Log.d("ost", "hej");
-                    Toast.makeText(InputActivity.this,"ost",Toast.LENGTH_LONG).show();
-                    return false;
-                }
-            });
+            @Override
+            public boolean onLongClick(View v) {
+                Log.d("ost", "hej");
+                Toast.makeText(InputActivity.this, "ost", Toast.LENGTH_LONG).show();
+                return false;
+            }
+        });
     }
 
     public void populate(Context context) {
@@ -121,17 +125,20 @@ public class InputActivity extends AppCompatActivity {
 
     private void addTheAddButton(TableRow row, final TableLayout tb, final Context context) {
 
-        ImageButton ib = new ImageButton(context);
-        ib.setImageResource(R.drawable.ic_add_box_black_24dp);
-        ib.setBackground(null);
-        row.addView(ib);
-        tb.addView(row);
+
+        //ConstraintLayout scv = (ConstraintLayout) ((Activity) context).findViewById(R.id.input_layout);
+        AddCategoryView add = new AddCategoryView(context);
+        ImageButton ib = add.findViewById(R.id.image);
+
         ib.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 newCategory(context, tb);
             }
         });
+
+        row.addView(add);
+        tb.addView(row);
     }
 
 
@@ -166,7 +173,7 @@ public class InputActivity extends AppCompatActivity {
 
                     if (priceInput.getText().toString().equals("")) {
                         Log.d("priceInput", "is Called");
-                       // priceInput.setText("");
+                        // priceInput.setText("");
                         priceInput.setHint("Indtast pris per kilo");
                     }
                     return;
