@@ -22,10 +22,30 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 public class HistoryView extends RelativeLayout {
 
     private DataBase db;
-    public HistoryView(Context context) {
+    public HistoryView(final Context context, final DataBase.Input input, final HistoryDialog hd) {
         super(context);
 
         inflate(context, R.layout.dialog_history, this);
+        db = DataBase.getInstance(context);
+        ImageButton delete = findViewById(R.id.deleteButton);
+        ImageButton edit = findViewById(R.id.editButton);
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                db.DeleteInput(input);
+                hd.Populate(context, db);
+
+            }
+        });
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+             //   EditCategory(context, cg);
+              //  RemoveSmallMenu(cl, newView, dummy, categoryView);
+                //Toast.makeText(context, "Edit this category", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     public HistoryView(final Context context, final ConstraintLayout cl, ImageButton image, final View categoryView, final Category cg) {

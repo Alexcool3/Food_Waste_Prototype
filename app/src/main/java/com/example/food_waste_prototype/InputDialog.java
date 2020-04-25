@@ -90,10 +90,12 @@ public class InputDialog extends AlertDialog {
         }
         String foodwaste;
         if (db.GetEnumToString().equals("Mad Affald")) {
-            cg.AddFS(Float.valueOf(waste.getText().toString()));
+            cg.AddFS(Float.parseFloat(waste.getText().toString()));
+            db.CreateInput(cg.GetName(), (Float.parseFloat(waste.getText().toString())), true);
             foodwaste=" Mad Affald ";
         } else {
-            cg.AddFW(Float.valueOf(waste.getText().toString()));
+            cg.AddFW(Float.parseFloat(waste.getText().toString()));
+            db.CreateInput(cg.GetName(), (Float.parseFloat(waste.getText().toString())), false);
             foodwaste=" Mad Spild ";
         }
 

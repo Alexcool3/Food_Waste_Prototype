@@ -27,29 +27,31 @@ import static android.content.ContentValues.TAG;
 
 public class HistoryDialog extends AlertDialog {
 
+    View thisview = null;
+
     public HistoryDialog(Context context, DataBase db) {
         super(context);
 
-        db.AddFoodWaste("ost",500,false);
-       // db.AddFoodWaste("ked",500,false);
-      //  db.CreateCategory("freds tårer", 500);
-      //  db.AddFoodWaste("freds tårer",500,false);
+        db.AddFoodWaste("ost", 500, false);
+        // db.AddFoodWaste("ked",500,false);
+        //  db.CreateCategory("freds tårer", 500);
+        //  db.AddFoodWaste("freds tårer",500,false);
         OpenDialog(context, db);
 
     }
 
     public void OpenDialog(Context context, DataBase db) {
         final AlertDialog.Builder AlertDialog = new AlertDialog.Builder(context); // Context, this, etc.
-        View newView = getLayoutInflater().inflate(R.layout.dialog_history2, null);
+        thisview = getLayoutInflater().inflate(R.layout.dialog_history2, null);
 
-        ImageButton back = newView.findViewById(R.id.back_button);
-        AlertDialog.setView(newView);
+        ImageButton back = thisview.findViewById(R.id.back_button);
+        AlertDialog.setView(thisview);
         final AlertDialog dialog = AlertDialog.create();
         dialog.show();
-        Populate(newView, context, db);
+        Populate(context, db);
 
-       // Button okButton = newView.findViewById(R.id.dialog_cancel);
-       back.setOnClickListener(new View.OnClickListener() {
+        // Button okButton = newView.findViewById(R.id.dialog_cancel);
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 CloseDialog(dialog);
@@ -57,20 +59,34 @@ public class HistoryDialog extends AlertDialog {
         });
     }
 
-    private void Populate(View view, Context context, DataBase db) {
-        TableLayout tb = view.findViewById(R.id.tableLayout);
+    public void Populate(Context context, DataBase db) {
+        TableLayout tb = thisview.findViewById(R.id.tableLayout);
+        tb.removeAllViews();
         ArrayList<DataBase.Input> inputs = db.GetInputs();
-        for (DataBase.Input s : inputs) {
-            Log.d(TAG, "hej");
+
+        if (inputs.size() == 0) {
+            TableRow row = new TableRow(context);
+            TextView words = new TextView(context);
+            words.setTextSize(20);
+            words.setText("Der er ingen indtastninger");
+            row.addView(words);
+            tb.addView(row);
+            return;
+        }
+
+        for (int i = db.GetInputs().size()-1; i > -1; i--) {
+            DataBase.Input s = db.GetInputs().get(i);
+
+            Log.d("ost", s.getName());
             TableRow row = new TableRow(context);
             row.setLayoutParams((new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT)));
             row.setGravity(Gravity.LEFT);
-            row.setPadding(0,10,0,5);
-            HistoryView hv = new HistoryView(context);
+            row.setPadding(0, 10, 0, 5);
+            HistoryView hv = new HistoryView(context, s, HistoryDialog.this);
             SimpleDateFormat timeformat = new SimpleDateFormat("dd/MM");
 
-            hv.SetText(timeformat.format(s.getTime()) + " " + (int)(s.getamount()) +" Kg " + s.getName() );
+            hv.SetText(timeformat.format(s.getTime()) + " " + (int) (s.getamount()) + " Kg " + s.getName());
             row.addView(hv);
             tb.addView(row);
             // row.addView(hv);
@@ -79,10 +95,10 @@ public class HistoryDialog extends AlertDialog {
         }
     }
 
-    public void CloseDialog(AlertDialog dialog){
+    public void CloseDialog(AlertDialog dialog) {
         dialog.cancel();
     }
 }
 
 
-   //}
+//}

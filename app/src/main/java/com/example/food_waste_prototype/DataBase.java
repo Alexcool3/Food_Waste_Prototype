@@ -166,15 +166,23 @@ boolean loggedIn = false;
 
     //region  Methods to do with inputs
 
-    private Input CreateInput(String name, float amount, boolean foodScraps){
+    public Input CreateInput(String name, float amount, boolean foodScraps){
         Calendar time = Calendar.getInstance();
         Input ip = new Input(time.getTime(), name, amount, foodScraps);
+        inputs.add(ip);
         return  ip;
     }
 
-    public void DeleteInput(int index){
+    public void DeleteInput(Input input){
         //delete a single input based on the number in the list
-        inputs.remove(index);
+        Category cg = GetCategory(input.getName());
+        if(input.getfoodScraps()){
+            cg.AddFS(-input.getamount());
+        } else{
+            cg.AddFW(-input.getamount());
+        }
+        inputs.remove(input);
+
     }
 
     public void DeleteInputs(String nameOfCategory){
