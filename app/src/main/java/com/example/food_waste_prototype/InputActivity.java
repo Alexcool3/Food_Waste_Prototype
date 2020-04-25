@@ -32,6 +32,7 @@ public class InputActivity extends AppCompatActivity {
     TableLayout tb;
     int currenrowindex = 0;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,21 +78,24 @@ public class InputActivity extends AppCompatActivity {
         });
 
         final ImageButton dotsbutton = findViewById(R.id.button_3dots);
-        final ConstraintLayout[] cl = {findViewById(R.id.input_layout)};
-        final View[] dotview = new View[1]; // can not assign value to final dotview, do you want to turn dotview into final one element array? wtf
+        final ConstraintLayout cl = findViewById(R.id.input_layout);
+        final DotsMenuView dots = new DotsMenuView(context);
         dotsbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Toast.makeText(context, String.valueOf(dots.isopen), Toast.LENGTH_LONG).show();
+                if (!(dots.isopen)) {
+                    dots.MakeView(context, cl, dotsbutton);
 
-                if(dotview[0] ==null){
-                    DotsMenuView dots = new DotsMenuView(context);
-                    dotview[0] = dots.MakeView(context, cl[0], dotsbutton);
-                } else{
-                    cl[0].removeView(dotview[0]);
-                    dotview[0] =null;
+
+                } else {
+                    dots.RemoveView(cl);
+
+
                 }
             }
         });
+
 
     }
 
@@ -151,7 +155,7 @@ public class InputActivity extends AppCompatActivity {
         ib.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                newCategory(context, tb);
+                newCategory(context);
             }
         });
 
@@ -160,7 +164,7 @@ public class InputActivity extends AppCompatActivity {
     }
 
 
-    private void newCategory(final Context context, final TableLayout tb) {
+    public void newCategory(final Context context) {
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.new_category_dialog);
         final EditText nameInput = dialog.findViewById(R.id.name_input);
@@ -188,6 +192,22 @@ public class InputActivity extends AppCompatActivity {
                         nameInput.setText("");
                         nameInput.setHint("Indtast navn");
                     }
+
+                    ArrayList<Category> cats = db.GetAllCategories();
+                    for (int number = 0; number < cats.size(); number++) {
+                        Category cg = cats.get(number);
+                        if (nameInput.getText().toString().toLowerCase().equals(cg.GetName().toLowerCase())) {
+                            Toast.makeText(context, "Kategorien eksisterer allerede", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                    }
+
+                    if (nameInput.getText().toString().equals("")) {
+                        Log.d("nameInput", "is Called");
+                        nameInput.setText("");
+                        nameInput.setHint("Indtast navn");
+                    }
+
 
                     if (priceInput.getText().toString().equals("")) {
                         Log.d("priceInput", "is Called");

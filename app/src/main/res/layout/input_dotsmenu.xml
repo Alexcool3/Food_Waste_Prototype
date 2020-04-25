@@ -6,7 +6,7 @@
     android:background="#000000">
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/historyText"
         android:layout_width="162dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="35dp"
@@ -21,7 +21,7 @@
         android:textSize="14sp" />
 
     <ImageButton
-        android:id="@+id/imageButton4"
+        android:id="@+id/historybutton"
         android:layout_width="30dp"
         android:layout_height="32dp"
         android:layout_marginStart="2dp"
@@ -36,7 +36,7 @@
         app:srcCompat="@drawable/button_history" />
 
     <ImageButton
-        android:id="@+id/imageButton3"
+        android:id="@+id/addbutton"
         android:layout_width="30dp"
         android:layout_height="32dp"
         android:layout_marginStart="2dp"
@@ -52,7 +52,7 @@
         app:srcCompat="@android:drawable/ic_input_add" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/addtext"
         android:layout_width="162dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="35dp"
@@ -67,7 +67,7 @@
         android:textSize="14sp" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/deletetext"
         android:layout_width="162dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="35dp"
@@ -82,7 +82,7 @@
         android:textSize="14sp" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/deletebutton"
         android:layout_width="30dp"
         android:layout_height="32dp"
         android:layout_marginStart="2dp"
@@ -97,7 +97,7 @@
         app:srcCompat="@drawable/button_delete" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/editbutton"
         android:layout_width="30dp"
         android:layout_height="32dp"
         android:layout_marginStart="2dp"
@@ -112,7 +112,7 @@
         app:srcCompat="@drawable/button_edit" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/edittext"
         android:layout_width="162dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="35dp"
