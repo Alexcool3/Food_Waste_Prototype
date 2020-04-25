@@ -25,7 +25,7 @@
         android:background="@color/Orange"
         android:fontFamily="@font/ibm_plex_sans_regular"
         android:gravity="center"
-        android:text="Input"
+        android:text="Indtastning"
         android:textAllCaps="true"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -61,6 +61,21 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/button_3dots"
+                android:layout_width="0dp"
+                android:layout_height="65dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:background="@null"
+                android:longClickable="true"
+                android:scaleType="fitCenter"
+                app:layout_constraintBottom_toTopOf="@+id/tableLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/explainer2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/button_3dots" />
 
             <TextView
                 android:id="@+id/explainer2"

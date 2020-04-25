@@ -105,7 +105,7 @@ public class Category extends LinearLayout{
         if(!inflated) { // if the category has not been inflated when loading the input page before
             inflated = true;
             Log.d("cat", "cat" + this.name);
-            View v = inflate(context, R.layout.category_view, this);
+            final View catview = inflate(context, R.layout.category_view, this);
 
             TextView text = findViewById(R.id.name); // sets the label under the category picture
             text.setText(name);
@@ -121,8 +121,8 @@ public class Category extends LinearLayout{
             image.setOnLongClickListener(new OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) { //when long click open the small menu above the view and start shaking
-                    v.startAnimation(AnimationUtils.loadAnimation(context,R.anim.shakeanim));
-                    new HistoryView(context, cl, image,v, Category.this);
+                    catview.startAnimation(AnimationUtils.loadAnimation(context,R.anim.shakeanim));
+                    new HistoryView(context, cl, image,catview, Category.this);
                     return true;
                 }
             });

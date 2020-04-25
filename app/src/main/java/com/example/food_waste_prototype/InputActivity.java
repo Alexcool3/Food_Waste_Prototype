@@ -46,7 +46,7 @@ public class InputActivity extends AppCompatActivity {
         tb = findViewById(R.id.tableLayout);
         tb.removeAllViews();
         populate(context);
-        SetupButtons();
+        SetupButtons(context);
         final TaskBarView taskbar = findViewById(R.id.taskBarView);
         taskbar.taskings(context);
 
@@ -57,7 +57,7 @@ public class InputActivity extends AppCompatActivity {
         return instance;
     }
 
-    private void SetupButtons() {
+    private void SetupButtons(final Context context) {
         final ImageButton settingsButton = findViewById(R.id.button_options2);
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +75,24 @@ public class InputActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        final ImageButton dotsbutton = findViewById(R.id.button_3dots);
+        final ConstraintLayout[] cl = {findViewById(R.id.input_layout)};
+        final View[] dotview = new View[1]; // can not assign value to final dotview, do you want to turn dotview into final one element array? wtf
+        dotsbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(dotview[0] ==null){
+                    DotsMenuView dots = new DotsMenuView(context);
+                    dotview[0] = dots.MakeView(context, cl[0], dotsbutton);
+                } else{
+                    cl[0].removeView(dotview[0]);
+                    dotview[0] =null;
+                }
+            }
+        });
+
     }
 
     public void populate(Context context) {
