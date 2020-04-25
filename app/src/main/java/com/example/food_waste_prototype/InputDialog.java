@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.PieChart;
 
@@ -87,11 +88,16 @@ public class InputDialog extends AlertDialog {
             waste.setHint("Indtast spild i Kilo");
             return;
         }
+        String foodwaste;
         if (db.GetEnumToString().equals("Mad Affald")) {
             cg.AddFS(Float.valueOf(waste.getText().toString()));
+            foodwaste=" Mad Affald ";
         } else {
             cg.AddFW(Float.valueOf(waste.getText().toString()));
+            foodwaste=" Mad Spild ";
         }
+
+        Toast.makeText(getContext(), "Indtastede " + waste.getText().toString() + " Kg " + foodwaste + " i " + cg.GetName(), Toast.LENGTH_LONG).show();
         dialog.dismiss();
     }
 }

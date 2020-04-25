@@ -112,6 +112,7 @@ public class Category extends LinearLayout {
             image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    StopShaking(context);
                     final Dialog dialog = new Dialog(context);
                     dialog.setContentView(R.layout.new_category_dialog);
                     final EditText nameInput = dialog.findViewById(R.id.name_input);
@@ -160,6 +161,7 @@ public class Category extends LinearLayout {
             image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    StopShaking(context);
                     DataBase.getInstance(context).DeleteCategory(GetName());
                     //  cl.removeView(categoryView);
                     InputActivity.getInstance().populate(context);

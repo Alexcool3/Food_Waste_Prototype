@@ -5,22 +5,25 @@
     android:id="@+id/rl"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_marginLeft="2dp"
+    android:layout_marginTop="2dp"
+    android:layout_marginBottom="2dp"
     android:background="@drawable/border"
     android:gravity="right">
 
 
     <View
         android:id="@+id/line7"
-        android:layout_width="100dp"
-        android:layout_height="43dp"
+        android:layout_width="60dp"
+        android:layout_height="29dp"
         android:background="@color/Black"
         android:clickable="false"
         android:outlineAmbientShadowColor="#000000" />
 
     <ImageButton
         android:id="@+id/editButton"
-        android:layout_width="48dp"
-        android:layout_height="41dp"
+        android:layout_width="28dp"
+        android:layout_height="27dp"
 
         android:background="@color/Orange"
         android:cropToPadding="false"
@@ -33,9 +36,9 @@
 
     <ImageButton
         android:id="@+id/deleteButton"
-        android:layout_width="48dp"
-        android:layout_height="41dp"
-        android:layout_marginLeft="50dp"
+        android:layout_width="28dp"
+        android:layout_height="27dp"
+        android:layout_marginLeft="30dp"
         android:background="@color/Red"
         android:paddingLeft="15dp"
         android:paddingTop="2dp"
@@ -46,19 +49,20 @@
 
     <TextView
         android:id="@+id/name"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="100dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="2dp"
         android:background="@color/Yellow"
         android:paddingLeft="20dp"
         android:paddingTop="2dp"
         android:paddingRight="15dp"
         android:text="27/5 Ost 500 Kg FW"
-        android:textSize="30sp" />
+        android:textSize="18sp" />
 
     <View
         android:id="@+id/line10"
-        android:layout_width="100dp"
+        android:layout_width="61dp"
         android:layout_height="2dp"
         android:background="@color/Black"
         android:clickable="false"
@@ -67,7 +71,7 @@
     <View
         android:id="@+id/line12"
         android:layout_width="3dp"
-        android:layout_height="41dp"
+        android:layout_height="29dp"
         android:background="@color/Black"
         android:clickable="false"
         android:outlineAmbientShadowColor="#000000"

@@ -18,6 +18,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -355,7 +356,7 @@ boolean loggedIn = false;
             return time;
         }
 
-        public float amount(){
+        public float getamount(){
             return amount;
         }
 

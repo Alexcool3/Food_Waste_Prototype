@@ -41,15 +41,12 @@ public class InputActivity extends AppCompatActivity {
         instance = this;
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); // make the app fullscreen
         db = DataBase.getInstance(context);
-        db.clearArays();
-        db.CreateCategory("ost", 50, context);
-
         tb = findViewById(R.id.tableLayout);
         tb.removeAllViews();
         populate(context);
         SetupButtons(context);
         final TaskBarView taskbar = findViewById(R.id.taskBarView);
-        taskbar.taskings(context);
+       // taskbar.taskings(context);
 
 
     }
@@ -216,6 +213,7 @@ public class InputActivity extends AppCompatActivity {
                     }
                     return;
                 }
+
 
                 db.CreateCategory(nameInput.getText().toString(), Float.valueOf(priceInput.getText().toString()), context);
                 populate(context);

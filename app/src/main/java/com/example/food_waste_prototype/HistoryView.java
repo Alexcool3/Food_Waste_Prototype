@@ -83,7 +83,7 @@ public class HistoryView extends RelativeLayout {
 
         int[] location = new int[2];  // create new int array to store position of window
         image.getLocationOnScreen(location); // gets pos of the button on the category view
-        setPadding(location[0]-25, location[1] - 100, 0, 0); // sets the padding of the small buttons view to be slighty above the category
+        setPadding(location[0]+20, location[1] - 80, 0, 0); // sets the padding of the small buttons view to be slighty above the category
 
         cl.addView(dummy); // add the views to the constrant view at the base on input page
         cl.addView(newView);

@@ -131,7 +131,8 @@ public class DotsMenuView extends RelativeLayout {
             @Override
             public void onClick(View view) {
 
-                //Toast.makeText(context, "Edit this category", Toast.LENGTH_LONG).show();
+                HistoryDialog hd = new HistoryDialog(context, db);
+                RemoveView(cl);
             }
         });
 
@@ -165,7 +166,8 @@ public class DotsMenuView extends RelativeLayout {
             @Override
             public void onClick(View view) {
 
-                //Toast.makeText(context, "Edit this category", Toast.LENGTH_LONG).show();
+                HistoryDialog hd = new HistoryDialog(context, db);
+                RemoveView(cl);
             }
         });
 

@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.jar.Attributes;
 
@@ -39,17 +41,20 @@ public class HistoryDialog extends AlertDialog {
     public void OpenDialog(Context context, DataBase db) {
         final AlertDialog.Builder AlertDialog = new AlertDialog.Builder(context); // Context, this, etc.
         View newView = getLayoutInflater().inflate(R.layout.dialog_history2, null);
+
+        ImageButton back = newView.findViewById(R.id.back_button);
         AlertDialog.setView(newView);
         final AlertDialog dialog = AlertDialog.create();
         dialog.show();
         Populate(newView, context, db);
 
        // Button okButton = newView.findViewById(R.id.dialog_cancel);
-       /*okButton.setOnClickListener(new View.OnClickListener() {
+       back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CloseDialog(dialog);            }
-        });*/
+                CloseDialog(dialog);
+            }
+        });
     }
 
     private void Populate(View view, Context context, DataBase db) {
@@ -63,7 +68,9 @@ public class HistoryDialog extends AlertDialog {
             row.setGravity(Gravity.LEFT);
             row.setPadding(0,10,0,5);
             HistoryView hv = new HistoryView(context);
-            hv.SetText(s.getName());
+            SimpleDateFormat timeformat = new SimpleDateFormat("dd/MM");
+
+            hv.SetText(timeformat.format(s.getTime()) + " " + (int)(s.getamount()) +" Kg " + s.getName() );
             row.addView(hv);
             tb.addView(row);
             // row.addView(hv);
