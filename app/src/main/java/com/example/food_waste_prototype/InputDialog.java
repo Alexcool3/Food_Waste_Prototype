@@ -24,6 +24,63 @@ public class InputDialog extends AlertDialog {
         OpenDialog(context, cg);
     }
 
+    public InputDialog(Context context, final DataBase.Input input, final HistoryDialog hd) {
+        super(context);
+        db = DataBase.getInstance(context);
+        final AlertDialog.Builder AlertDialog = new AlertDialog.Builder(context); // Context, this, etc.
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View newView = inflater.inflate(R.layout.dialog_input, null);
+        AlertDialog.setView(newView);
+        final AlertDialog dialog = AlertDialog.create();
+        dialog.show();
+
+        TextView title = newView.findViewById(R.id.dialog_title);
+        title.setText(("Rediger " + input.getName()));
+
+        final EditText amountInput = dialog.findViewById(R.id.waste_input);
+        amountInput.setHint(String.valueOf(input.getamount()));
+        Button cancel_button = newView.findViewById(R.id.cancel_button);
+        cancel_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CloseDialog(dialog);
+            }
+        });
+
+        Button confirm_button = newView.findViewById(R.id.confirm_button);
+        confirm_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               EditInput(dialog, amountInput, input, hd);
+            }
+        });
+
+
+        final TextView toggleText = newView.findViewById(R.id.toggleText2);
+        toggleText.setText(db.GetEnumToString());
+
+        final ImageButton toggle = newView.findViewById(R.id.button_toggle2);
+
+        if (db.GetEnumToString().equals("Mad Affald")) {
+            toggle.setImageResource(R.drawable.button_toggle_reverse);
+        } else {
+            toggle.setImageResource(R.drawable.button_toggle);
+        }
+        toggle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                db.flipEnum();
+                toggleText.setText(db.GetEnumToString());
+                if (db.GetEnumToString().equals("Mad Affald")) {
+                    toggle.setImageResource(R.drawable.button_toggle_reverse);
+                } else {
+                    toggle.setImageResource(R.drawable.button_toggle);
+                }
+
+            }
+        });
+    }
+
 
     public void OpenDialog(Context context, final Category cg) {
         final AlertDialog.Builder AlertDialog = new AlertDialog.Builder(context); // Context, this, etc.
@@ -92,14 +149,51 @@ public class InputDialog extends AlertDialog {
         if (db.GetEnumToString().equals("Mad Affald")) {
             cg.AddFS(Float.parseFloat(waste.getText().toString()));
             db.CreateInput(cg.GetName(), (Float.parseFloat(waste.getText().toString())), true);
-            foodwaste=" Mad Affald ";
+            foodwaste = " Mad Affald ";
         } else {
             cg.AddFW(Float.parseFloat(waste.getText().toString()));
             db.CreateInput(cg.GetName(), (Float.parseFloat(waste.getText().toString())), false);
-            foodwaste=" Mad Spild ";
+            foodwaste = " Mad Spild ";
         }
 
         Toast.makeText(getContext(), "Indtastede " + waste.getText().toString() + " Kg " + foodwaste + " i " + cg.GetName(), Toast.LENGTH_LONG).show();
         dialog.dismiss();
+    }
+
+    private void EditInput(AlertDialog dialog, EditText waste, DataBase.Input input, final HistoryDialog hd){
+
+        if(input.getfoodScraps()) {
+            db.GetCategory(input.getName()).AddFS(-input.getamount());
+        } else {
+            db.GetCategory(input.getName()).AddFW(-input.getamount());
+        }
+
+        if (waste.getText().toString().equals("")) {
+            if (db.GetEnumToString().equals("Mad Affald")) {
+                input.SetfoodScraps(true);
+                db.GetCategory(input.getName()).AddFS(input.getamount());
+                //db.GetCategory(input.getName()).AddFS(Float.parseFloat(waste.getText().toString()));
+            } else {
+                input.SetfoodScraps(false);
+                db.GetCategory(input.getName()).AddFW(input.getamount());
+            }
+            hd.Populate(getContext(),db);
+            dialog.dismiss();
+            return;
+        }
+
+        if (db.GetEnumToString().equals("Mad Affald")) {
+            input.SetfoodScraps(true);
+            input.SetAmount(Float.parseFloat(waste.getText().toString()));
+            db.GetCategory(input.getName()).AddFS(Float.parseFloat(waste.getText().toString()));
+        } else {
+            input.SetfoodScraps(false);
+            input.SetAmount(Float.parseFloat(waste.getText().toString()));
+            db.GetCategory(input.getName()).AddFW(Float.parseFloat(waste.getText().toString()));
+        }
+
+        hd.Populate(getContext(),db);
+        dialog.dismiss();
+        return;
     }
 }

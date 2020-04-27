@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,10 +28,12 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class StatsActivity extends AppCompatActivity {
 
@@ -40,7 +43,7 @@ public class StatsActivity extends AppCompatActivity {
     Calendar cal = Calendar.getInstance();
     Calendar currentSet = Calendar.getInstance();
     DataBase db;
-
+    Context context;
 
     public StatsActivity() {
 
@@ -50,16 +53,19 @@ public class StatsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats);
-        final Context context = StatsActivity.this;
+        context = StatsActivity.this;
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); // make the app fullscreen
         db = DataBase.getInstance(context);
+        db.CreateInput("ost", 40, true);
+        db.CreateInput("ost", 40, false);
+
         SetupButtons(context);
         FillTable();
-       // db.CreateCategory("ost", 33);
-      ///  db.CreateCategory("kød", 33);
-       // db.AddFoodWaste("ost", 500, false);
-      //  db.AddFoodWaste("kød", 250, false);
-       // db.AddFoodWaste("kød", 250, true);
+        // db.CreateCategory("ost", 33);
+        ///  db.CreateCategory("kød", 33);
+        // db.AddFoodWaste("ost", 500, false);
+        //  db.AddFoodWaste("kød", 250, false);
+        // db.AddFoodWaste("kød", 250, true);
     }
 
     private void SetupButtons(Context context) {
@@ -122,7 +128,7 @@ public class StatsActivity extends AppCompatActivity {
         toggle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SwitchToggle(toggle, toggletext, pieChart, dropdown);
+                SwitchToggle(toggle, toggletext, dropdown);
             }
         });
 
@@ -151,25 +157,39 @@ public class StatsActivity extends AppCompatActivity {
         });
     }
 
-    private boolean TimeFrame(Calendar inputday, Spinner dd) {
-
-        //TODO: make the inputs user the same time format
+    public boolean TimeFrame(Calendar inputday, Spinner dd) {
 
         String text = dd.getSelectedItem().toString();
-        Calendar startDate = Calendar.getInstance();
-        Calendar endDate = Calendar.getInstance();
-        endDate=currentSet;
-        if(text.equals("Dag")){
-            startDate=currentSet;
-
-        } else if(text.equals("Måned")){
-            startDate.set(Calendar.DAY_OF_MONTH, 1);
-        } else{
-            startDate.set(Calendar.DAY_OF_YEAR, 1);
+        int difference = 0;
+        if (text.equals("Dag")) {
+            difference = 1;
+        }
+        if (text.equals("Måned")) {
+            difference = 31;
+        }
+        if (text.equals("År")) {
+            difference = 365;
         }
 
-        return inputday.after(startDate.getTime()) && inputday.before(endDate.getTime());
+        long end = currentSet.getTimeInMillis();
+        long start = inputday.getTimeInMillis();
+        return (difference < TimeUnit.MILLISECONDS.toDays(Math.abs(end - start)));
     }
+        /*
+
+        Calendar startDate = currentSet;
+        Calendar endDate = currentSet;
+
+
+       // Log.d("hej", "difference:"+ String.valueOf(difference));
+        Log.d("hej", "end date:"+ endDate.getTime().toString());
+        Log.d("hej", "input date:"+ inputday.getTime().toString());
+        startDate.set(Calendar.DATE,difference);
+        Log.d("hej", "start date:"+ startDate.getTime().toString());
+        Log.d("hej", "results "+ (inputday.after(startDate.getTime()) && inputday.before(endDate.getTime())));
+        return (inputday.after(startDate.getTime()) && inputday.before(endDate.getTime()));
+    }*/
+
 
     private void setDate(String direction, Spinner dropdown, TextView date) {
 
@@ -183,64 +203,74 @@ public class StatsActivity extends AppCompatActivity {
         SimpleDateFormat monthFormat = new SimpleDateFormat("MMMM");
         SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
 
-        if(date.getText().equals("December")){
-            cal.add(Calendar.DAY_OF_MONTH, 1);
-            date.setText(dayFormat.format(cal.getTime()));
+        //  if(date.getText().equals("December")){
+        //     cal.add(Calendar.DAY_OF_MONTH, 1);
+        //     date.setText(dayFormat.format(cal.getTime()));
 
-        }
-
-
+        // }
+        Calendar time = Calendar.getInstance();
+        int year = time.get(Calendar.YEAR);
         if (text.equals("Dag")) {
+            cal.set(Calendar.MONTH, time.getTime().getMonth());
+            cal.set(Calendar.YEAR, year);
             // move the entry to the left one
             if (direction.equals("left")) {
                 cal.add(Calendar.DAY_OF_MONTH, -1);
-                currentSet=cal;
+                currentSet = cal;
                 date.setText(dayFormat.format(cal.getTime()));
 
             } else {
                 cal.add(Calendar.DAY_OF_MONTH, +1);
-                currentSet=cal;
+                currentSet = cal;
                 date.setText(dayFormat.format(cal.getTime()));
             }
         } else if (text.equals("Måned")) {
+            cal.set(Calendar.DATE, time.getTime().getDate());
+            cal.set(Calendar.YEAR, year);
             if (direction.equals("left")) {
                 cal.add(Calendar.MONTH, -1);
-                currentSet=cal;
+                currentSet = cal;
                 date.setText(monthFormat.format(cal.getTime()));
             } else {
                 cal.add(Calendar.MONTH, +1);
-                currentSet=cal;
+                currentSet = cal;
                 date.setText(monthFormat.format(cal.getTime()));
             }
         } else if (text.equals("År")) {
+            cal.set(Calendar.MONTH, time.getTime().getMonth());
+            cal.set(Calendar.DATE, time.getTime().getDay());
             if (direction.equals("left")) {
                 cal.add(Calendar.YEAR, -1);
-                currentSet=cal;
+                currentSet = cal;
                 date.setText(yearFormat.format(cal.getTime()));
             } else {
                 cal.add(Calendar.YEAR, +1);
-                currentSet=cal;
+                currentSet = cal;
                 date.setText(yearFormat.format(cal.getTime()));
             }
         }
+        drawChart(dropdown);
     }
 
     private void SwitchTable(ImageButton switchy, TableLayout table, PieChart pieChart, Spinner dd) {
 
 
-        drawChart(pieChart,dd);
+        drawChart(dd);
 
         if (table.getVisibility() == View.VISIBLE) {
             table.setVisibility(View.INVISIBLE);
             pieChart.setVisibility(View.VISIBLE);
+            switchy.setImageResource(R.drawable.button_table);
 
         } else {
             pieChart.setVisibility(View.INVISIBLE);
             table.setVisibility(View.VISIBLE);
+            switchy.setImageResource(R.drawable.button_stats);
+
         }
     }
 
-    private void SwitchToggle(ImageButton toggle, TextView toggletext, PieChart pie, Spinner dd) {
+    private void SwitchToggle(ImageButton toggle, TextView toggletext, Spinner dd) {
 
         db.flipEnum();
         toggletext.setText(db.GetEnumToString());
@@ -249,7 +279,7 @@ public class StatsActivity extends AppCompatActivity {
         } else {
             toggle.setImageResource(R.drawable.button_toggle);
         }
-        drawChart(pie,dd);
+        drawChart(dd);
     }
 
     private void FillTable() {
@@ -278,29 +308,68 @@ public class StatsActivity extends AppCompatActivity {
         }
     }
 
-    private void drawChart(PieChart pieChart, Spinner dd) {
-
+    private void drawChart(Spinner dd) {
+        final PieChart pieChart = findViewById(R.id.pieChart);
         //TODO: iteratre over the inputs instead and use the TimeFrame() function to make sure they are within the requested date
         pieChart.clear();
         pieChart.setUsePercentValues(true);
 
-        ArrayList<Category> cat = db.GetAllCategories();
+        ArrayList<DataBase.Input> inputs = db.GetInputs();
+
         ArrayList<PieEntry> yvalues = new ArrayList<PieEntry>();
         PieDataSet dataSet;
-        for (int i = 0; i < cat.size(); i++) {
-            Category ca = cat.get(i);
+        for (int i = 0; i < inputs.size(); i++) {
+            DataBase.Input in = inputs.get(i);
+            TimeFrame(in.TimetoCalendar(), dd);
 
-            if (db.GetEnumToString().equals("Mad Spild")) {
-                if (ca.GetAmountFW() == 0) {
-                    continue;
-                }
-                yvalues.add(new PieEntry(ca.GetAmountFW(), ca.GetName(), i));
-            } else {
-                if (ca.GetAmountFS() == 0) {
-                    continue;
-                }
-                yvalues.add(new PieEntry(ca.GetAmountFS(), ca.GetName(), i));
+            if ((TimeFrame(in.TimetoCalendar(), dd))) {
+                continue;
             }
+            if (db.GetEnumToString().equals("Mad Spild")) {
+
+                if (!(in.GetWasteString().equals("Mad Spild"))) {
+                    continue;
+                }
+
+                if (in.getamount() == 0) {
+                    continue;
+                }
+
+                float amount = 0;
+                for (int j = 0; j < inputs.size(); j++) {
+                    DataBase.Input in2 = inputs.get(i);
+                    if (in2.getName().equals(in.getName())) {
+                        amount += in2.getamount();
+                    }
+                }
+
+                yvalues.add(new PieEntry(amount, in.getName(), i));
+            } else {
+                if (!(in.GetWasteString().equals("Mad Affald"))) {
+                    continue;
+                }
+
+                if (in.getamount() == 0) {
+                    continue;
+                }
+
+                float amount = 0;
+                for (int j = 0; j < inputs.size(); j++) {
+                    DataBase.Input in2 = inputs.get(i);
+                    if (in2.getName().equals(in.getName())) {
+                        amount += in2.getamount();
+                    }
+                }
+
+                yvalues.add(new PieEntry(amount, in.getName(), i));
+            }
+
+        }
+
+        if (yvalues.size() == 0) {
+            Toast.makeText(context, "Ikke nok indtastninger til at lave diagram", Toast.LENGTH_SHORT).show();
+            return;
+
         }
 
         dataSet = new PieDataSet(yvalues, db.GetEnumToString());
@@ -318,3 +387,4 @@ public class StatsActivity extends AppCompatActivity {
         data.setValueTextColor(Color.DKGRAY);
     }
 }
+

@@ -41,9 +41,8 @@ public class HistoryView extends RelativeLayout {
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-             //   EditCategory(context, cg);
-              //  RemoveSmallMenu(cl, newView, dummy, categoryView);
-                //Toast.makeText(context, "Edit this category", Toast.LENGTH_LONG).show();
+             InputDialog id = new InputDialog(context, input, hd);
+                hd.Populate(context, db);
             }
         });
     }

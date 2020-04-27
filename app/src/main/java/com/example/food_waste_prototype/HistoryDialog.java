@@ -86,7 +86,7 @@ public class HistoryDialog extends AlertDialog {
             HistoryView hv = new HistoryView(context, s, HistoryDialog.this);
             SimpleDateFormat timeformat = new SimpleDateFormat("dd/MM");
 
-            hv.SetText(timeformat.format(s.getTime()) + " " + (int) (s.getamount()) + " Kg " + s.getName());
+            hv.SetText(timeformat.format(s.getTime()) + " " + (int) (s.getamount()) + " Kg " + s.getName() + " " + s.GetWasteString());
             row.addView(hv);
             tb.addView(row);
             // row.addView(hv);

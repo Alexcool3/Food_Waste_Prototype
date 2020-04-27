@@ -52,12 +52,12 @@
 
         <TableLayout
             android:id="@+id/tableLayout"
-            android:layout_width="250dp"
+            android:layout_width="wrap_content"
             android:layout_height="250dp"
             android:layout_marginTop="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title2"/>
+            app:layout_constraintTop_toBottomOf="@+id/title2" />
 
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

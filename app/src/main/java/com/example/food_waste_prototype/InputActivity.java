@@ -41,15 +41,25 @@ public class InputActivity extends AppCompatActivity {
         instance = this;
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); // make the app fullscreen
         db = DataBase.getInstance(context);
+     //   db.ReadAllDate(context);
         tb = findViewById(R.id.tableLayout);
         tb.removeAllViews();
         populate(context);
         SetupButtons(context);
         final TaskBarView taskbar = findViewById(R.id.taskBarView);
-       // taskbar.taskings(context);
+        taskbar.taskings(context);
 
 
     }
+
+    /*@Override
+    protected void onPause() {
+        db.SaveAllDataToFile(InputActivity.this);
+        super.onPause();
+        super.onResume();
+        Toast.makeText(getApplicationContext(), "onPause called", Toast.LENGTH_LONG).show();
+
+    }*/
 
     public static InputActivity getInstance() {
         return instance;

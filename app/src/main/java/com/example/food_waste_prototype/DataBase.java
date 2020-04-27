@@ -78,9 +78,9 @@ boolean loggedIn = false;
 
     //region Methods to do with users
 
-    public void NewUser(String userName, String password, boolean remember, boolean currentUser){
+    public void NewUser(String userName, String password, String email, int days, boolean remember, boolean currentUser){
         // the idea is to call this when a new is created
-        User user = new User(userName,password,remember, currentUser);
+        User user = new User(userName,password,email,days,  remember, currentUser);
         users.add(user);
     }
 
@@ -144,7 +144,6 @@ boolean loggedIn = false;
             } else {
                 cg.AddFW(amount);
             }
-            inputs.add(CreateInput(categoryName, amount, foodScraps));
         }
     }
 
@@ -169,6 +168,7 @@ boolean loggedIn = false;
     public Input CreateInput(String name, float amount, boolean foodScraps){
         Calendar time = Calendar.getInstance();
         Input ip = new Input(time.getTime(), name, amount, foodScraps);
+        Log.d("hej", "input time at start:"+ ip.TimetoCalendar().getTime().toString() );
         inputs.add(ip);
         return  ip;
     }
@@ -206,6 +206,7 @@ boolean loggedIn = false;
     public void SaveAllDataToFile(Context context){
         // I did not test if it works :)
         JSONArray cat = new JSONArray(categories);
+        cat.put(CreateCategory("OST", 33, context));
         JSONArray in = new JSONArray(inputs);
         JSONArray use = new JSONArray(users);
 
@@ -215,10 +216,25 @@ boolean loggedIn = false;
     }
 
 
-    private void ReadAllDate(Context context){
-        read("Categories", categories, context);
-        read("Inputs", inputs, context);
-        read("Users", users, context);
+    public void ReadAllDate(Context context){
+        try{
+            read("Categories", categories, context);
+        } catch (NullPointerException e){
+            Log.d("load"," Failed to load categories");
+        }
+        try{
+            read("Inputs", inputs, context);
+        } catch (NullPointerException e){
+            Log.d("load"," Failed to load inputs");
+        }
+
+        try{
+            read("Users", users, context);
+        } catch (NullPointerException e){
+            Log.d("load"," Failed to load users");
+        }
+
+
     }
 
     private <T> void read(String filename, ArrayList<T> arraylist, Context context) {
@@ -245,7 +261,7 @@ boolean loggedIn = false;
         } else {
             boolean isFileCreated = CreateFile(context, fileName);
             if(isFileCreated) {
-                Log.d(TAG, "save: filed saved succesfully");
+                Log.d(TAG, "save: filed saved succesfully at ");
             } else {
                 Log.d(TAG, "save: failed saving file");
             }
@@ -307,12 +323,16 @@ boolean loggedIn = false;
         // Should represent a user
         private String userName;
         private String password;
+        private String email;
+        private  int days;
         private boolean rememberLogin;
         private boolean isCurrentUser;
 
-        User(String userName, String password, boolean remember, boolean isCurrentUser){
+        User(String userName, String password, String email, int days, boolean remember, boolean isCurrentUser){
             this.userName=userName;
             this.password=password;
+            this.email = email;
+            this.days=days;
             this.rememberLogin=remember;
             this.isCurrentUser = isCurrentUser;
         }
@@ -370,6 +390,28 @@ boolean loggedIn = false;
 
         public boolean getfoodScraps(){
             return foodScraps;
+        }
+
+        public void SetfoodScraps(boolean scraps){
+            foodScraps=scraps;
+        }
+
+        public void SetAmount(float amountings){
+            amount=amountings;
+        }
+
+        public String GetWasteString(){
+            if(foodScraps){
+                return "Mad Affald";
+            } else{
+                return "Mad Spild";
+            }
+        }
+
+        public Calendar TimetoCalendar(){
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(time);
+            return cal;
         }
     }
     //endregion

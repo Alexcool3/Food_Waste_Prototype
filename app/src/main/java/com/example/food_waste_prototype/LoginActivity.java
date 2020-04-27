@@ -48,19 +48,20 @@ public class LoginActivity extends AppCompatActivity {
         registrer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openDialog();
+                openDialog(DB);
             }
         });
 
     }
 
-    public void openDialog() {
+    public void openDialog(DataBase db) {
     
-        nyBrugerDialog nyBrugerDialog = new nyBrugerDialog(LoginActivity.this);
+        nyBrugerDialog nyBrugerDialog = new nyBrugerDialog(LoginActivity.this, db);
     }
 
     private void validate(String inputBrugernavn, String inputPassword) {
-        if((inputBrugernavn.equals("nikolaj") && (inputPassword.equals("ersej")))){
+
+        if(DB.ValidateUser(inputBrugernavn, inputPassword)){
             DB.loggedIn = true;
             Intent intent = new Intent(LoginActivity.this, InputActivity.class);
             startActivity(intent);
