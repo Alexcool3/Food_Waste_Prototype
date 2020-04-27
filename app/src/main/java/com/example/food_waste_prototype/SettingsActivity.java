@@ -56,34 +56,58 @@ public class SettingsActivity extends AppCompatActivity {
         logoff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SwitchActivity("login");
+                openDialog("login");
+               // SwitchActivity("login");
             }
         });
         indstillinger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SwitchActivity("same");
+               SwitchActivity("same");
             }
         });
         nulstil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SwitchActivity("warning");
+                openDialog("warning");
             }
         });
         slet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SwitchActivity("delete");
+                openDialog("delete");
             }
         });
 
     }
-    public void openDialog() {
+    public void openDialog(final String action) {
         final AlertDialog.Builder AlertDialog = new AlertDialog.Builder(this); // Context, this, etc.
         View newView = getLayoutInflater().inflate(R.layout.dialog_activity, null);
         AlertDialog.setView(newView);
+
+        Button bt = newView.findViewById(R.id.dialog_ok);
+        Button btno = newView.findViewById(R.id.dialog_cancel);
+        bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SwitchActivity(action);
+            }
+        });
         final AlertDialog dialog = AlertDialog.create();
+        btno.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.cancel();
+            }
+        });
+
+        if(action.equals("login")) {
+
+
+            TextView tv = newView.findViewById(R.id.dialog_info);
+            tv.setText("Er du sikker på du vil logge af?");
+        }
+
         dialog.show();
     }
     public void openDialoglog() {
@@ -108,7 +132,6 @@ public class SettingsActivity extends AppCompatActivity {
             finish();
         }
         if (string == "login") {
-            openDialog();
             Toast.makeText(SettingsActivity.this,
                     "Du af blevet logget af", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(this, LoginActivity.class);
@@ -116,7 +139,6 @@ public class SettingsActivity extends AppCompatActivity {
             startActivity(intent);
         }
         if (string == "warning") {
-            openDialog();
             Toast.makeText(SettingsActivity.this,
                     "Din data er blevet nulstillet", Toast.LENGTH_LONG).show();
 
@@ -125,7 +147,6 @@ public class SettingsActivity extends AppCompatActivity {
             //startActivity(intent);
         }
         if (string == "delete") {
-            openDialog();
             Toast.makeText(SettingsActivity.this,
                     "Din bruger er slettet", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(this, LoginActivity.class);
@@ -134,8 +155,8 @@ public class SettingsActivity extends AppCompatActivity {
         }
         if (string == "same") {
             openDialoglog();
-            Intent intent = new Intent(this, SettingsActivity.class);
-            startActivity(intent);
+            //Intent intent = new Intent(this, SettingsActivity.class);
+            //startActivity(intent);
         }
     }
 }
