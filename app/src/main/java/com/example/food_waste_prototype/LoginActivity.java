@@ -67,11 +67,7 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
         }
         else {
-            Context context = getApplicationContext();
-            CharSequence text = "Brugernavnet eller kodeordet findes ikke";
-            int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
+            Toast.makeText(getApplicationContext(), "Brugernavnet eller kodeordet findes ikke", Toast.LENGTH_SHORT).show();
         }
     }
 }
