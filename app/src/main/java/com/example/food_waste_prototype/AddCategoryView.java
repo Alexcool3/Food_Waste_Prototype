@@ -8,6 +8,6 @@ public class AddCategoryView extends ConstraintLayout {
 
         public AddCategoryView(Context context) {
             super(context);
-            inflate(context, R.layout.category_addButton, this);
+            inflate(context, R.layout.category_addbutton, this);
     }
 }

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -60,6 +61,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 openDialog(DB);
+                BackgroundTask backgroundTask = new BackgroundTask(getApplicationContext());
+                backgroundTask.execute("register", brugernavn.getText().toString(), password.getText().toString());
             }
         });
 
@@ -216,10 +219,12 @@ public class LoginActivity extends AppCompatActivity {
                     Intent intent = new Intent(context,InputActivity.class);
                     context.startActivity(intent);
                 }else{
-                    display("Login Failed...", "That email and password do not match our records :(.");
+                    //display("Login Failed...", "That email and password do not match our records :(.");
+                    Log.d("login failed", "login failed");
                 }
             }else{
-                display("Login Failed...","Something weird happened :(.");
+                //display("Login Failed...","Something weird happened :(.");
+                Log.d("login failed", "login failed");
             }
         }
 
