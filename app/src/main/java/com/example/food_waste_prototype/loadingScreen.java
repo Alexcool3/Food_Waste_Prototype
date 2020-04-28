@@ -18,6 +18,12 @@ DataBase DB;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading_screen);
         DB = DataBase.getInstance(loadingScreen.this);
+
+        DB.CreateCategory("Grøntsager", 5, loadingScreen.this);
+        DB.CreateCategory("Kød", 50, loadingScreen.this);
+        DB.CreateCategory("Brød", 5, loadingScreen.this);
+        DB.CreateCategory("Mælk", 5, loadingScreen.this);
+        DB.CreateCategory("Fisk", 5, loadingScreen.this);
         ImageView image = findViewById(R.id.imageView);
 
         image.startAnimation(AnimationUtils.loadAnimation(loadingScreen.this, R.anim.rotation));

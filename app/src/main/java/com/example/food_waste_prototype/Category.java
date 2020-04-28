@@ -1,23 +1,17 @@
 package com.example.food_waste_prototype;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -138,6 +132,13 @@ public class Category extends LinearLayout {
                         public void onClick(View v) {
 
 
+
+                            for (int i = 0; i < DataBase.getInstance(context).GetInputs().size(); i++)  {
+                                DataBase.Input in = DataBase.getInstance(context).GetInputs().get(i);
+                                if(in.getName().equals(GetName()) && !(nameInput.getText().toString().equals(""))){
+                                    in.SetName(nameInput.getText().toString());
+                                }
+                            }
                             if (nameInput.getText().toString().equals("")) {
                                 SetName(GetName());
                             } else {
@@ -191,10 +192,31 @@ public class Category extends LinearLayout {
             text.setText(name);
 
             final ImageButton image = this.findViewById(R.id.image);
+
+            switch (name.toLowerCase()){
+                case "grøntsager":
+                    image.setImageResource(R.drawable.greenybois);
+                    break;
+                case "mælk":
+                    image.setImageResource(R.drawable.milkers);
+                    break;
+                case "fisk":
+                    image.setImageResource(R.drawable.fisk);
+                    break;
+                case "brød":
+                    image.setImageResource(R.drawable.bread);
+                    break;
+                default:
+                    image.setImageResource(R.drawable.meat);
+                    break;
+            }
+
+
             image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    new InputDialog(context, Category.this);
+                   InputDialog id =  new InputDialog(context, Category.this);
+                   id.getWindow();
                 }
             });
 

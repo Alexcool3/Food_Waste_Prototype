@@ -41,7 +41,7 @@ public class InputActivity extends AppCompatActivity {
         instance = this;
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); // make the app fullscreen
         db = DataBase.getInstance(context);
-     //   db.ReadAllDate(context);
+        //   db.ReadAllDate(context);
         tb = findViewById(R.id.tableLayout);
         tb.removeAllViews();
         populate(context);
@@ -192,49 +192,42 @@ public class InputActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (nameInput.getText().toString().equals("") || priceInput.getText().toString().equals("")) {
 
-                    if (nameInput.getText().toString().equals("")) {
-                        Log.d("nameInput", "is Called");
-                        nameInput.setText("");
-                        nameInput.setHint("Indtast navn");
+                ArrayList<Category> cats = db.GetAllCategories();
+                for (int number = 0; number < cats.size(); number++) {
+                    Category cg = cats.get(number);
+                    if (nameInput.getText().toString().toLowerCase().equals(cg.GetName().toLowerCase())) {
+                        Toast.makeText(context, "Kategorien eksisterer allerede", Toast.LENGTH_LONG).show();
+                        return;
                     }
+                }
 
-                    ArrayList<Category> cats = db.GetAllCategories();
-                    for (int number = 0; number < cats.size(); number++) {
-                        Category cg = cats.get(number);
-                        if (nameInput.getText().toString().toLowerCase().equals(cg.GetName().toLowerCase())) {
-                            Toast.makeText(context, "Kategorien eksisterer allerede", Toast.LENGTH_LONG).show();
-                            return;
-                        }
-                    }
-
-                    if (nameInput.getText().toString().equals("")) {
-                        Log.d("nameInput", "is Called");
-                        nameInput.setText("");
-                        nameInput.setHint("Indtast navn");
-                    }
-
-
-                    if (priceInput.getText().toString().equals("")) {
-                        Log.d("priceInput", "is Called");
-                        // priceInput.setText("");
-                        priceInput.setHint("Indtast pris per kilo");
-                    }
-                    return;
+                if (nameInput.getText().toString().equals("")) {
+                    Log.d("nameInput", "is Called");
+                    nameInput.setText("");
+                    nameInput.setHint("Indtast navn");
                 }
 
 
-                db.CreateCategory(nameInput.getText().toString(), Float.valueOf(priceInput.getText().toString()), context);
+                if (priceInput.getText().toString().equals("")) {
+                    Log.d("priceInput", "is Called");
+                    // priceInput.setText("");
+                    priceInput.setHint("Indtast pris per kilo");
+                    return;
+
+                }
+
+
+                db.CreateCategory(nameInput.getText().toString(),Float.parseFloat(priceInput.getText().toString()), context);
+
                 populate(context);
                 dialog.dismiss();
 
             }
         });
-
     }
+}
 
 
-};
 
 

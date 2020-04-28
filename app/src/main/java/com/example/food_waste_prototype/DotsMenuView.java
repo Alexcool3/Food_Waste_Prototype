@@ -32,7 +32,9 @@ public class DotsMenuView extends RelativeLayout {
 
     public View MakeView(Context context, final ConstraintLayout cl, ImageButton button) {
         if (hasbeeninflated) {
+            dummy.setVisibility(VISIBLE);
             dots.setVisibility(VISIBLE);
+
             return dots;
         }
         hasbeeninflated = true;
@@ -69,7 +71,7 @@ public class DotsMenuView extends RelativeLayout {
 
     public void RemoveView(final ConstraintLayout cl) {
 
-        cl.removeView(dummy);
+        dummy.setVisibility(GONE);
         dots.setVisibility(GONE);
         isopen = false;
     }

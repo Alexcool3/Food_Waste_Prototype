@@ -69,7 +69,12 @@ boolean loggedIn = false;
         return instance;
     }
 
-    public void clearArays(){
+    public void clearData(){
+        categories.clear();
+        inputs.clear();
+    }
+
+    public void wipeinator(){
         users.clear();
         categories.clear();
         inputs.clear();
@@ -398,6 +403,10 @@ boolean loggedIn = false;
 
         public void SetAmount(float amountings){
             amount=amountings;
+        }
+
+        public void SetName(String name){
+            this.name=name;
         }
 
         public String GetWasteString(){
