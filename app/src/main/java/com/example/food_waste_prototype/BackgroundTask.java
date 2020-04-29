@@ -90,7 +90,7 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
                 OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream,"UTF-8");
                 BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
                 String myData = URLEncoder.encode("identifier_username","UTF-8")+"="+URLEncoder.encode(loginUsername,"UTF-8")+"&"
-                        +URLEncoder.encode("identifier_loginPassword","UTF-8")+"="+URLEncoder.encode(loginPassword,"UTF-8");
+                        +URLEncoder.encode("identifier_password","UTF-8")+"="+URLEncoder.encode(loginPassword,"UTF-8");
                 bufferedWriter.write(myData);
                 bufferedWriter.flush();
                 bufferedWriter.close();
@@ -142,7 +142,8 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
             String test = "false";
             String username = "";
             String password = "";
-            String[] serverResponse = s.split("[,]");
+            String[] serverResponse = s.split(",");
+            Log.d("serverResponse", serverResponse[0]);
             test = serverResponse[0];
             username = serverResponse[1];
             password = serverResponse[2];
@@ -156,7 +157,6 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
                 context.startActivity(intent);
             }else{
                 //display("Login Failed...", "That email and password do not match our records :(.");
-                Log.d("login failed", "login failed");
                 Toast.makeText(context, "Brugernavnet eller kodeordet findes ikke", Toast.LENGTH_SHORT).show();
             }
         }else{
