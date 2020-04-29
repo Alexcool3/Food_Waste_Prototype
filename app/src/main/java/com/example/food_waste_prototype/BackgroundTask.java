@@ -140,17 +140,17 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
         }
         if(flag.equals("login")){
             String test = "false";
-            String name = "";
-            String email = "";
+            String username = "";
+            String password = "";
             String[] serverResponse = s.split("[,]");
             test = serverResponse[0];
-            name = serverResponse[1];
-            email = serverResponse[2];
+            username = serverResponse[1];
+            password = serverResponse[2];
 
             if(test.equals("true")){
-                editor.putString("name",name);
+                editor.putString("username",username);
                 editor.commit();
-                editor.putString("email",email);
+                editor.putString("password",password);
                 editor.commit();
                 Intent intent = new Intent(context,InputActivity.class);
                 context.startActivity(intent);

@@ -56,9 +56,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void AllowAccess(){
         BackgroundTask backgroundTask = new BackgroundTask(getApplicationContext());
-        backgroundTask.execute("register", brugernavn.getText().toString(), password.getText().toString());
-        Intent intent = new Intent(LoginActivity.this, InputActivity.class);
-        startActivity(intent);
+        backgroundTask.execute("login", brugernavn.getText().toString(), password.getText().toString());
     }
 
     private void validate(String inputBrugernavn, String inputPassword) {
