@@ -1,31 +1,22 @@
 package com.example.food_waste_prototype;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDialogFragment;
 
 public class nyBrugerDialog extends AlertDialog {
     private EditText editTextBrugernavn;
     private EditText editTextKodeord;
     private Button button;
+    private Context context;
 
     protected nyBrugerDialog(Context context, DataBase db) {
         super(context);
@@ -39,7 +30,7 @@ public class nyBrugerDialog extends AlertDialog {
         final AlertDialog dialog = AlertDialog.create();
         dialog.show();
         SetupButtons(newView, dialog, db);
-
+        this.context = context;
 
     }
 
@@ -67,6 +58,7 @@ public class nyBrugerDialog extends AlertDialog {
             @Override
             public void onClick(View view) {
                 AcceptInput(email, editTextBrugernavn, editTextKodeord, dropdown, db, dialog);
+
             }
         });
 
@@ -98,6 +90,9 @@ public class nyBrugerDialog extends AlertDialog {
         }
         int days = Integer.parseInt(dropdown.getSelectedItem().toString());
         db.NewUser(username.getText().toString(),password.getText().toString(),email.getText().toString(), days, true, true);
+        BackgroundTask backgroundTask = new BackgroundTask(context);
+        backgroundTask.execute("register", username.getText().toString(), password.getText().toString());
+        Log.d("Register: ", "Username: " + username.getText().toString() + " Password: " + password.getText().toString());
         Toast.makeText(getContext(), "Ny bruger registeret", Toast.LENGTH_LONG).show();
         dialog.cancel();
         Intent intent = new Intent(getContext(), InputActivity.class);

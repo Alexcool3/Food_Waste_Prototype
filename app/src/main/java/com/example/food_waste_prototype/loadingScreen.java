@@ -1,13 +1,12 @@
 package com.example.food_waste_prototype;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class loadingScreen extends AppCompatActivity {
 DataBase DB;
@@ -30,7 +29,7 @@ DataBase DB;
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
-                if (DB.loggedIn == false) {
+                if (!DB.loggedIn) {
                     Intent intent = new Intent(loadingScreen.this, LoginActivity.class);
                     startActivity(intent);
                 }
