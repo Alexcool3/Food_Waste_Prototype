@@ -69,7 +69,7 @@ public class PurchaseView extends ConstraintLayout {
             }
         });
 
-    
+
     }
 
     private void CloseDialog(AlertDialog dialog) {
@@ -84,7 +84,8 @@ public class PurchaseView extends ConstraintLayout {
         String pricestring;
 
         db.purchases+= Float.parseFloat(price.getText().toString());
-        Toast.makeText(getContext(), "Indtastede " + price.getText().toString() + " Dkk" , Toast.LENGTH_LONG).show();
+        new CustomToast("Indtastede " + price.getText().toString() + " Dkk" , getContext());
+
         dialog.dismiss();
     }
 

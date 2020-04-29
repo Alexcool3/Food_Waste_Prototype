@@ -135,16 +135,14 @@ public class SettingsActivity extends AppCompatActivity {
             finish();
         }
         if (string == "login") {
-            Toast.makeText(SettingsActivity.this,
-                    "Du af blevet logget af", Toast.LENGTH_LONG).show();
+            new CustomToast("Du er blevet logget af", SettingsActivity.this);
             Intent intent = new Intent(this, LoginActivity.class);
 
             startActivity(intent);
         }
         if (string == "warning") {
             DataBase.getInstance(SettingsActivity.this).clearData();
-            Toast.makeText(SettingsActivity.this,
-                    "Din data er blevet nulstillet", Toast.LENGTH_LONG).show();
+            new CustomToast("Din data er blevet nulstillet", SettingsActivity.this);
 
            // Intent intent = new Intent(this, SettingsActivity.class);
 
@@ -152,8 +150,7 @@ public class SettingsActivity extends AppCompatActivity {
         }
         if (string == "delete") {
             DataBase.getInstance(SettingsActivity.this).wipeinator();
-            Toast.makeText(SettingsActivity.this,
-                    "Din bruger og data er blevet slettet", Toast.LENGTH_LONG).show();
+            new CustomToast("Din bruger og data er blevet slettet", SettingsActivity.this);
 
             Intent intent = new Intent(this, LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);

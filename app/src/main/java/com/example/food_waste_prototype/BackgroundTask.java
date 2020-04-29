@@ -154,6 +154,7 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
                 editor.putString("password",password);
                 editor.commit();
                 Intent intent = new Intent(context,InputActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }else{
                 //display("Login Failed...", "That email and password do not match our records :(.");

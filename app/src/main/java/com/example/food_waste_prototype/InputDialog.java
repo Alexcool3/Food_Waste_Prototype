@@ -169,8 +169,7 @@ public class InputDialog extends AlertDialog {
             db.CreateInput(cg.GetName(), (Float.parseFloat(waste.getText().toString())), false);
             foodwaste = " Mad Spild ";
         }
-
-        Toast.makeText(getContext(), "Indtastede " + waste.getText().toString() + " Kg " + foodwaste + " i " + cg.GetName(), Toast.LENGTH_LONG).show();
+        new CustomToast("Indtastede " + waste.getText().toString() + " Kg " + foodwaste + " i " + cg.GetName(), getContext());
         dialog.dismiss();
     }
 

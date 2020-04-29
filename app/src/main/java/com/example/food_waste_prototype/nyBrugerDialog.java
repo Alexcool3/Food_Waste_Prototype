@@ -93,7 +93,7 @@ public class nyBrugerDialog extends AlertDialog {
         BackgroundTask backgroundTask = new BackgroundTask(context);
         backgroundTask.execute("register", username.getText().toString(), password.getText().toString());
         Log.d("Register: ", "Username: " + username.getText().toString() + " Password: " + password.getText().toString());
-        Toast.makeText(getContext(), "Ny bruger registeret", Toast.LENGTH_LONG).show();
+        new CustomToast("Ny bruger registeret", getContext());
         dialog.cancel();
         Intent intent = new Intent(getContext(), InputActivity.class);
         getContext().startActivity(intent);

@@ -10,6 +10,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -233,7 +234,8 @@ public class Category extends LinearLayout {
                 @Override
                 public void onClick(View view) {
                    InputDialog id =  new InputDialog(context, Category.this);
-                   id.getWindow();
+                    hideBorder();
+                 //  id.getWindow();
                 }
             });
 
@@ -241,11 +243,19 @@ public class Category extends LinearLayout {
                 @Override
                 public boolean onLongClick(View v) { //when long click open the small menu above the view and start shaking
                     catview.startAnimation(AnimationUtils.loadAnimation(context, R.anim.shakeanim));
+                    hideBorder();
                     new HistoryView(context, cl, image, catview, Category.this);
                     return true;
                 }
             });
 
+        } else{
+            hideBorder();
         }
+    }
+
+    private void hideBorder(){
+        ImageView border = findViewById(R.id.border);
+        border.setVisibility(INVISIBLE);
     }
 }

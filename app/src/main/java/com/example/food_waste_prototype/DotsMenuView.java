@@ -102,7 +102,8 @@ public class DotsMenuView extends RelativeLayout {
                 StopAction(context, cl);
                 ArrayList<Category> cats = db.GetAllCategories();
                 if(cats.size()==0){
-                    Toast.makeText(context, "Ingen kategorier at slette", Toast.LENGTH_LONG).show();
+                    new CustomToast("Ingen kategorier at slette",context);
+
                     return;
                 }
                 for (int number = 0; number < cats.size(); number++) {
@@ -119,7 +120,8 @@ public class DotsMenuView extends RelativeLayout {
                 StopAction(context, cl);
                 ArrayList<Category> cats = db.GetAllCategories();
                 if(cats.size()==0){
-                    Toast.makeText(context, "Ingen kategorier at redigere", Toast.LENGTH_LONG).show();
+                    new CustomToast("Ingen kategorier at redigere", context);
+
                     return;
                 }
                 for (int number = 0; number < cats.size(); number++) {
