@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/Beige"
+    android:scrollbars="horizontal|vertical">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:autoText="false"
+        android:background="@color/Orange"
+        android:fontFamily="@font/ibm_plex_sans_regular"
+        android:gravity="center"
+        android:text="statistik"
+        android:textAllCaps="true"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/explainer"
+        android:layout_width="261dp"
+        android:layout_height="58dp"
+        android:autoText="false"
+        android:background="@color/Beige"
+        android:fontFamily="@font/ibm_plex_sans_regular"
+        android:gravity="center"
+        android:text="Vælg madspild eller madaffald samt dag, uge eller måned"
+        android:textAllCaps="false"
+        android:textSize="18sp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.436"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="51dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginRight="1dp"
+        android:autoText="false"
+        android:background="@color/Beige"
+        android:fontFamily="@font/ibm_plex_sans_regular"
+        android:gravity="center"
+        android:text="December"
+        android:textAllCaps="false"
+        android:textSize="24sp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toStartOf="@+id/button_arrow_right"
+        app:layout_constraintStart_toEndOf="@+id/button_arrow_left"
+        app:layout_constraintTop_toBottomOf="@+id/line3" />
+
+    <view
+        android:id="@+id/greenbox"
+        class="androidx.appcompat.widget.ActionMenuView"
+        android:layout_width="410dp"
+        android:layout_height="96dp"
+        android:layout_marginTop="12dp"
+        android:background="@color/Green"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/explainer" />
+
+    <TextView
+        android:id="@+id/toggleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="84dp"
+        android:layout_marginLeft="84dp"
+        android:text="Mad Spild"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/greenbox"
+        app:layout_constraintEnd_toStartOf="@+id/dropdown"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/greenbox"
+        app:layout_constraintTop_toTopOf="@+id/greenbox" />
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:layout_marginBottom="32dp"
+        android:src="@drawable/spinner_arrow"
+        app:layout_constraintBottom_toBottomOf="@+id/greenbox"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.91"
+        app:layout_constraintStart_toEndOf="@+id/greenbox"
+        app:layout_constraintTop_toTopOf="@+id/dropdown" />
+
+    <Spinner
+        android:id="@+id/dropdown"
+        android:layout_width="204dp"
+        android:layout_height="87dp"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:spinnerMode="dropdown"
+        app:layout_constraintBottom_toBottomOf="@+id/greenbox"
+        app:layout_constraintEnd_toEndOf="@+id/greenbox"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/line2" />
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="409dp"
+        android:layout_height="1dp"
+        android:background="@color/Black"
+        android:clickable="false"
+        android:outlineAmbientShadowColor="#000000"
+        app:layout_constraintBottom_toBottomOf="@+id/title"
+        app:layout_constraintEnd_toEndOf="@+id/title"
+        app:layout_constraintStart_toStartOf="@+id/title"
+        app:layout_constraintTop_toTopOf="@+id/title"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <View
+        android:id="@+id/line2"
+        android:layout_width="409dp"
+        android:layout_height="1dp"
+        android:background="@color/Black"
+        android:clickable="false"
+        android:outlineAmbientShadowColor="#000000"
+        app:layout_constraintBottom_toTopOf="@+id/greenbox"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:id="@+id/line3"
+        android:layout_width="409dp"
+        android:layout_height="1dp"
+        android:background="@color/Black"
+        android:clickable="false"
+        android:outlineAmbientShadowColor="#000000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/greenbox" />
+
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="414dp"
+        android:layout_height="373dp"
+        android:clipToPadding="false"
+        android:fadeScrollbars="true"
+        android:scrollbars="none"
+        android:showDividers="none"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/date">
+
+        <TableRow
+            android:id="@+id/SixthRow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="15dp">
+
+            <TextView
+                android:id="@+id/fwnText6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:scrollbarSize="0dp"
+                android:text="Miljø belastning:"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/fwnNum6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_horizontal|left"
+                android:gravity="right"
+                android:paddingLeft="10dp"
+                android:scrollbarSize="0dp"
+                android:text="0"
+                android:textSize="24sp"
+                android:visibility="gone" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/FifthRow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="25dp">
+
+            <TextView
+                android:id="@+id/fwnText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:scrollbarSize="0dp"
+                android:text="Food Waste Number:"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/fwnNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_horizontal|left"
+                android:gravity="right"
+                android:paddingLeft="10dp"
+                android:scrollbarSize="0dp"
+                android:text="0"
+                android:textSize="24sp" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/firstRow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="25dp"
+            android:scrollbarSize="0dp"
+            android:scrollbars="none"
+            android:showDividers="none">
+
+            <TextView
+                android:id="@+id/fwnText3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:scrollbarSize="0dp"
+                android:text="Vægt Per Kategori"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/fwnNum3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_horizontal|left"
+                android:gravity="right"
+                android:paddingLeft="10dp"
+                android:scrollbarSize="0dp"
+                android:text="0"
+                android:textSize="24sp" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/secondRow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="25dp">
+
+            <TextView
+                android:id="@+id/fwnText5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:scrollbarSize="0dp"
+                android:text="Total vægt for i dag:"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/fwnNum5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_horizontal|left"
+                android:gravity="right"
+                android:paddingLeft="10dp"
+                android:scrollbarSize="0dp"
+                android:text="0"
+                android:textSize="24sp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/ThirdRow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="25dp">
+
+            <TextView
+                android:id="@+id/fwnText2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:scrollbarSize="0dp"
+                android:text="Pris Per Kategori"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/fwnNum2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_horizontal|left"
+                android:gravity="right"
+                android:paddingLeft="10dp"
+                android:scrollbarSize="0dp"
+                android:text="0"
+                android:textSize="22sp" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/FourdRow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="25dp">
+
+            <TextView
+                android:id="@+id/fwnText4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:scrollbarSize="0dp"
+                android:text="Total pris for i dag:"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/fwnNum4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_horizontal|left"
+                android:gravity="right"
+                android:paddingLeft="10dp"
+                android:scrollbarSize="0dp"
+                android:text="0"
+                android:textSize="24sp" />
+
+        </TableRow>
+    </TableLayout>
+
+    <ImageButton
+        android:id="@+id/button_information"
+        android:layout_width="33dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="10dp"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.889"
+        app:layout_constraintStart_toEndOf="@+id/date"
+        app:layout_constraintTop_toBottomOf="@+id/greenbox"
+        app:layout_constraintVertical_bias="0.23"
+        app:srcCompat="@drawable/button_information" />
+
+    <ImageButton
+        android:id="@+id/button_options"
+        android:layout_width="36dp"
+        android:layout_height="40dp"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/line"
+        app:layout_constraintEnd_toEndOf="@+id/title"
+        app:layout_constraintHorizontal_bias="0.97"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/button_options" />
+
+    <ImageButton
+        android:id="@+id/button_switch"
+        android:layout_width="33dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="16dp"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toStartOf="@+id/date"
+        app:layout_constraintHorizontal_bias="0.157"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/greenbox"
+        app:srcCompat="@drawable/button_charterferie" />
+
+    <ImageButton
+        android:id="@+id/button_arrow_right"
+        android:layout_width="47dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        android:tint="@color/Green"
+        app:layout_constraintEnd_toStartOf="@+id/button_information"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/date"
+        app:layout_constraintTop_toTopOf="@+id/date"
+        app:srcCompat="@android:drawable/ic_media_play" />
+
+    <ImageButton
+        android:id="@+id/button_arrow_left"
+        android:layout_width="47dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="14dp"
+        android:background="@null"
+        android:rotation="180"
+        android:scaleType="fitCenter"
+        android:tint="@color/Green"
+        app:layout_constraintEnd_toStartOf="@+id/date"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/button_switch"
+        app:layout_constraintTop_toBottomOf="@+id/greenbox"
+        app:srcCompat="@android:drawable/ic_media_play" />
+
+    <ImageButton
+        android:id="@+id/button_toggle"
+        android:layout_width="79dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginBottom="18dp"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/line3"
+        app:layout_constraintEnd_toStartOf="@+id/toggleText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/greenbox"
+        app:srcCompat="@drawable/button_toggle" />
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/pieChart"
+        android:layout_width="0dp"
+        android:layout_height="283dp"
+        android:paddingRight="30dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.82" />
+
+    <com.example.food_waste_prototype.TaskBarView
+        android:id="@+id/taskBarView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="parent"></com.example.food_waste_prototype.TaskBarView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

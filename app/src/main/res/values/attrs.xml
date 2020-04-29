@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="HistoryView">
+        <attr name="name" format="string" />
+        <attr name="amount" format="integer"/>
+        <attr name="time" format="string"/>
+    </declare-styleable>
+    <declare-styleable name="CategoryView">
+        <attr name="Catname" format="string" />
+        <attr name="Catamount" format="integer"/>
+    </declare-styleable>
+</resources>
