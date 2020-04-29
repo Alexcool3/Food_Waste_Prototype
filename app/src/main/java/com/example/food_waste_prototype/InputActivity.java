@@ -113,6 +113,9 @@ public class InputActivity extends AppCompatActivity {
         ArrayList<Category> cats = db.GetAllCategories();
         TableRow row = new TableRow(context);
         row.removeAllViews();
+        addTheCartButton(row, tb, context);
+
+
         for (int number = 0; number < cats.size(); number++) {
             if (tb.getChildAt(currenrowindex) != null) {
                 row = new TableRow(context);
@@ -143,6 +146,8 @@ public class InputActivity extends AppCompatActivity {
         } else {
             addTheAddButton(row, tb, context);
         }
+
+
     }
 
     private void removeParents(TableLayout tl) {
@@ -168,6 +173,25 @@ public class InputActivity extends AppCompatActivity {
 
         row.addView(add);
         tb.addView(row);
+    }
+
+
+    private void addTheCartButton(TableRow row, final TableLayout tb, final Context context) {
+
+
+        //ConstraintLayout scv = (ConstraintLayout) ((Activity) context).findViewById(R.id.input_layout);
+        final PurchaseView add = new PurchaseView(context);
+        ImageButton ib = add.findViewById(R.id.image);
+
+        ib.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                add.OpenDialog(context);
+            }
+        });
+
+        row.addView(add);
+
     }
 
 
@@ -218,7 +242,7 @@ public class InputActivity extends AppCompatActivity {
                 }
 
 
-                db.CreateCategory(nameInput.getText().toString(),Float.parseFloat(priceInput.getText().toString()), context);
+                db.CreateCategory(nameInput.getText().toString(), Float.parseFloat(priceInput.getText().toString()), context);
 
                 populate(context);
                 dialog.dismiss();

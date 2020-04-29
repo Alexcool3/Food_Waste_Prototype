@@ -32,6 +32,7 @@ boolean loggedIn = false;
     private ArrayList<Category> categories = new ArrayList<>(); // contains a list of all the current categories and how much waste has been input into them
     private ArrayList<Input> inputs = new ArrayList<>(); // contains a list of all the past inputs
     private ArrayList<User> users = new ArrayList<>(); // contains a list of all users and the current user
+    public float purchases=0;
 
     private DataBase(Context context){
 

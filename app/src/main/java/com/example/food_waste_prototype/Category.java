@@ -22,8 +22,8 @@ public class Category extends LinearLayout {
     private float amountFW;
     private float amountFS;
     private boolean inflated = false;
-    private boolean edittarget = false;
-    private boolean deletetarget = false;
+    public boolean edittarget = false;
+    public boolean deletetarget = false;
 
 
     public Category(Context context) {
@@ -107,6 +107,10 @@ public class Category extends LinearLayout {
                 @Override
                 public void onClick(View view) {
                     StopShaking(context);
+                    for (int i = 0; i <= DataBase.getInstance(context).GetAllCategories().size()-1; i++) {
+                        Category cg = DataBase.getInstance(context).GetAllCategories().get(i);
+                        cg.StopShaking(context);
+                    }
                     final Dialog dialog = new Dialog(context);
                     dialog.setContentView(R.layout.new_category_dialog);
                     final EditText nameInput = dialog.findViewById(R.id.name_input);
@@ -164,8 +168,15 @@ public class Category extends LinearLayout {
                 public void onClick(View view) {
                     StopShaking(context);
                     DataBase.getInstance(context).DeleteCategory(GetName());
+
+                    for (int i = 0; i <= DataBase.getInstance(context).GetAllCategories().size()-1; i++) {
+                        Category cg = DataBase.getInstance(context).GetAllCategories().get(i);
+                        cg.StopShaking(context);
+                    }
+
                     //  cl.removeView(categoryView);
                     InputActivity.getInstance().populate(context);
+
                 }
             });
         }
@@ -173,7 +184,10 @@ public class Category extends LinearLayout {
 
     public void StopShaking(final Context context) {
         clearAnimation();
+        edittarget=false;
+        deletetarget=false;
         final ImageButton image = this.findViewById(R.id.image);
+        image.setOnClickListener(null);
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -206,8 +220,11 @@ public class Category extends LinearLayout {
                 case "brød":
                     image.setImageResource(R.drawable.bread);
                     break;
-                default:
+                case "kød":
                     image.setImageResource(R.drawable.meat);
+                    break;
+                default:
+                    image.setImageResource(R.drawable.button_default);
                     break;
             }
 

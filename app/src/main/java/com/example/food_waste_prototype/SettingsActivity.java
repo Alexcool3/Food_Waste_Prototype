@@ -154,8 +154,9 @@ public class SettingsActivity extends AppCompatActivity {
             DataBase.getInstance(SettingsActivity.this).wipeinator();
             Toast.makeText(SettingsActivity.this,
                     "Din bruger og data er blevet slettet", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(this, LoginActivity.class);
 
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
         }
         if (string == "same") {
