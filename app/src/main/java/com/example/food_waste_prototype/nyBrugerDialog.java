@@ -2,7 +2,6 @@ package com.example.food_waste_prototype;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -95,7 +94,5 @@ public class nyBrugerDialog extends AlertDialog {
         Log.d("Register: ", "Username: " + username.getText().toString() + " Password: " + password.getText().toString());
         Toast.makeText(getContext(), "Ny bruger registeret", Toast.LENGTH_LONG).show();
         dialog.cancel();
-        Intent intent = new Intent(getContext(), InputActivity.class);
-        getContext().startActivity(intent);
     }
 }
