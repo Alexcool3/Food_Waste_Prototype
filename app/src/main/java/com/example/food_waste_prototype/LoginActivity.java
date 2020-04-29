@@ -78,6 +78,7 @@ public class LoginActivity extends AppCompatActivity {
         if(DB.ValidateUser(inputBrugernavn, inputPassword)){
             DB.loggedIn = true;
             Intent intent = new Intent(LoginActivity.this, InputActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
         }
         else {

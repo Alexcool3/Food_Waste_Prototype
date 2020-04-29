@@ -22,6 +22,8 @@ import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -33,7 +35,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import static com.github.mikephil.charting.components.Legend.LegendPosition.RIGHT_OF_CHART;
 
 public class StatsActivity extends AppCompatActivity {
 
@@ -57,8 +62,8 @@ public class StatsActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); // make the app fullscreen
         db = DataBase.getInstance(context);
         //  Log.d("fre", "inputs:" + 0);
-        
         SetupButtons(context);
+        FillTable();
         // FillTable();
         // db.CreateCategory("ost", 33);
         ///  db.CreateCategory("kød", 33);
@@ -252,17 +257,16 @@ public class StatsActivity extends AppCompatActivity {
     private void SwitchTable(ImageButton switchy, TableLayout table, PieChart pieChart, Spinner dd) {
 
 
-        drawChart();
-
         if (table.getVisibility() == View.VISIBLE) {
             table.setVisibility(View.INVISIBLE);
             pieChart.setVisibility(View.VISIBLE);
             switchy.setImageResource(R.drawable.button_table);
-
+            drawChart();
         } else {
             pieChart.setVisibility(View.INVISIBLE);
             table.setVisibility(View.VISIBLE);
-            switchy.setImageResource(R.drawable.button_stats);
+            switchy.setImageResource(R.drawable.button_charterferie);
+            FillTable();
 
         }
     }
@@ -280,12 +284,81 @@ public class StatsActivity extends AppCompatActivity {
     }
 
     private void FillTable() {
-        TextView employeeName, employeeSalary;
 
+        TextView environmentnum = findViewById(R.id.fwnNum6);
+        TextView totalweightnum = findViewById(R.id.fwnNum5);
+        TextView fwnnumnum = findViewById(R.id.fwnNum);
+        TextView totalpricenum = findViewById(R.id.fwnNum4);
+        TextView weightnum = findViewById(R.id.fwnNum3);
+        TextView pricenum = findViewById(R.id.fwnNum2);
+
+
+        fwnnumnum.setText(String.valueOf(calculateFWN()));
+        totalpricenum.setText(String.valueOf(calculatePrice()) + " DKK");
+        pricenum.setText(calculateAverageCatPrice() + " DKK");
+        totalweightnum.setText(String.valueOf(calculateTotalWeigth()) + " Kg");
+        weightnum.setText(String.valueOf(calculateAverageWeigth()) + " Kg");
     }
 
+    private float calculatePrice() {
+
+        float price = 0;
+        ArrayList<Category> cats = db.GetAllCategories();
+        for (int i = 0; i <= cats.size() - 1; i++) {
+            Category cat = cats.get(i);
+            price += (cat.GetAmountFW() + cat.GetAmountFS()) * cat.GetPricePerUnit();
+        }
+        return price;
+    }
+
+    private float calculateFWN() {
+
+        float w = 0;
+        ArrayList<Category> cats = db.GetAllCategories();
+        for (int i = 0; i <= cats.size() - 1; i++) {
+            Category cat = cats.get(i);
+            w += (cat.GetAmountFW() + cat.GetAmountFS());
+        }
+
+
+        return db.purchases/w;
+    }
+
+    private float calculateAverageCatPrice() {
+        float price = 0;
+        ArrayList<Category> cats = db.GetAllCategories();
+        for (int i = 0; i <= cats.size() - 1; i++) {
+            Category cat = cats.get(i);
+            price += (cat.GetAmountFW() + cat.GetAmountFS()) * cat.GetPricePerUnit();
+        }
+        price = price / (cats.size());
+        return price;
+    }
+
+    private float calculateTotalWeigth() {
+        float w = 0;
+        ArrayList<Category> cats = db.GetAllCategories();
+        for (int i = 0; i <= cats.size() - 1; i++) {
+            Category cat = cats.get(i);
+            w += (cat.GetAmountFW() + cat.GetAmountFS());
+        }
+        return w;
+    }
+
+    private float calculateAverageWeigth() {
+        float wa = 0;
+        ArrayList<Category> cats = db.GetAllCategories();
+        for (int i = 0; i <= cats.size() - 1; i++) {
+            Category cat = cats.get(i);
+            wa += (cat.GetAmountFW() + cat.GetAmountFS());
+        }
+        wa = wa / (cats.size());
+        return wa;
+    }
+
+
     private void Help() {
-        new HelpDialog(context, "Denne side giver dig information omkring dit madspild");
+        new HelpDialog(context, "Food Waste Number er udregnet af total prisen af dit madspild divideret med vægten af dit madpspild. Det kan bruges som en målbar enhed der nemt kan sammenlignes på kryds og tværs af køkkener.");
 
     }
 
@@ -306,9 +379,10 @@ public class StatsActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         drawChart();
+        FillTable();
 
     }
 
@@ -324,9 +398,14 @@ public class StatsActivity extends AppCompatActivity {
         ArrayList<PieEntry> yvalues = new ArrayList<PieEntry>();
         PieDataSet dataSet;
         Log.d("fre", "inputs:" + db.GetInputs().size());
-        for (int i = 0; i <= cats.size()-1; i++){
+        ArrayList<String> names = new ArrayList<String>();
+        for (int i = 0; i <= cats.size() - 1; i++) {
             Category cat = cats.get(i);
-            yvalues.add(new PieEntry(cat.GetAmountFS()+cat.GetAmountFW(), cat.GetName(), i));
+            if (cat.GetAmountFW() + cat.GetAmountFS() == 0) {
+                continue;
+            }
+            yvalues.add(new PieEntry(cat.GetAmountFS() + cat.GetAmountFW(), cat.GetName(), i));
+            names.add(cat.GetName() + " " + (cat.GetAmountFS() + cat.GetAmountFW()) + " Kg");
         }
         /*for (int i = 0; i <= inputs.size()-1; i++) {
             DataBase.Input in = inputs.get(i);
@@ -359,6 +438,7 @@ public class StatsActivity extends AppCompatActivity {
         PieData data = new PieData(dataSet);
         data.setValueFormatter(new PercentFormatter());
         pieChart.setData(data);
+        pieChart.setExtraOffsets(0, 0, 50, 0);
         Description description = new Description();
         description.setText("");
         pieChart.setDescription(description);
@@ -368,7 +448,29 @@ public class StatsActivity extends AppCompatActivity {
         pieChart.setTransparentCircleRadius(58f);
         pieChart.setHoleRadius(58f);
 
+        Legend l = pieChart.getLegend();
+        l.getEntries();
+
+        l.setPosition(Legend.LegendPosition.BELOW_CHART_CENTER);
+
+        l.setYEntrySpace(10f);
+
+        l.setWordWrapEnabled(true);
         dataSet.setColors(ColorTemplate.VORDIPLOM_COLORS);
+        LegendEntry[] le = new LegendEntry[names.size()];
+        for (int i = 0; i <= names.size() - 1; i++) {
+            LegendEntry l1 = new LegendEntry(names.get(i), Legend.LegendForm.CIRCLE, 10f, 2f, null, dataSet.getColor(i));
+            le[i] = l1;
+        }
+
+        l.setCustom(le);
+        l.setPosition(RIGHT_OF_CHART);
+        //  l.setXOffset(-17);
+        l.setYOffset(40);
+        l.setTextSize(16f);
+        l.setEnabled(true);
+
+        //  dataSet.getColor();
         data.setValueTextSize(22f);
 
         data.setValueTextColor(Color.BLACK);
