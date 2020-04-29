@@ -89,10 +89,10 @@ public class nyBrugerDialog extends AlertDialog {
         }
         int days = Integer.parseInt(dropdown.getSelectedItem().toString());
         db.NewUser(username.getText().toString(),password.getText().toString(),email.getText().toString(), days, true, true);
-        BackgroundTask backgroundTask = new BackgroundTask(context);
-        backgroundTask.execute("register", username.getText().toString(), password.getText().toString());
         Log.d("Register: ", "Username: " + username.getText().toString() + " Password: " + password.getText().toString());
         new CustomToast("Ny bruger registeret", getContext());
         dialog.cancel();
+        BackgroundTask backgroundTask = new BackgroundTask(context);
+        backgroundTask.execute("register", username.getText().toString(), password.getText().toString());
     }
 }
