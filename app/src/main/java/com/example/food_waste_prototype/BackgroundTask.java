@@ -136,6 +136,8 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
         String flag = sharedPreferences.getString("flag","0");
 
         if(flag.equals("register")) {
+            Intent intent = new Intent(context, InputActivity.class);
+            context.startActivity(intent);
             Toast.makeText(context,s,Toast.LENGTH_LONG).show();
         }
         if(flag.equals("login")){
@@ -153,9 +155,9 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
                 editor.commit();
                 editor.putString("password",password);
                 editor.commit();
-                Intent intent = new Intent(context,InputActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Intent intent = new Intent(context, InputActivity.class);
                 context.startActivity(intent);
+                //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             }else{
                 //display("Login Failed...", "That email and password do not match our records :(.");
                 Toast.makeText(context, "Brugernavnet eller kodeordet findes ikke", Toast.LENGTH_SHORT).show();

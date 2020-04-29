@@ -35,7 +35,19 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 //validate(brugernavn.getText().toString(), password.getText().toString());
-                AllowAccess();
+                if (!brugernavn.getText().toString().equals("") && !password.getText().toString().equals("")){
+                    AllowAccess();
+                } else {
+                    if (brugernavn.getText().toString().equals("")){
+                        brugernavn.setHint("Indtast brugernavn");
+                        //Toast.makeText(getApplicationContext(), "Brugernavn ikke indtastet", Toast.LENGTH_SHORT);
+                    }
+                    if (password.getText().toString().equals("")){
+                        password.setHint("Indtast kodeord");
+                        //Toast.makeText(getApplicationContext(), "Kodeord ikke indtastet", Toast.LENGTH_SHORT);
+                    }
+                }
+
             }
         });
 
