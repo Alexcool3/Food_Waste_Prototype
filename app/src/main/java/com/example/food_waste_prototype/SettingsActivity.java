@@ -87,13 +87,16 @@ public class SettingsActivity extends AppCompatActivity {
 
         Button bt = newView.findViewById(R.id.dialog_ok);
         Button btno = newView.findViewById(R.id.dialog_cancel);
+
+        final AlertDialog dialog = AlertDialog.create();
+
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                dialog.cancel();
                 SwitchActivity(action);
             }
         });
-        final AlertDialog dialog = AlertDialog.create();
         btno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -139,6 +142,7 @@ public class SettingsActivity extends AppCompatActivity {
             startActivity(intent);
         }
         if (string == "warning") {
+            DataBase.getInstance(SettingsActivity.this).clearData();
             Toast.makeText(SettingsActivity.this,
                     "Din data er blevet nulstillet", Toast.LENGTH_LONG).show();
 
@@ -147,8 +151,9 @@ public class SettingsActivity extends AppCompatActivity {
             //startActivity(intent);
         }
         if (string == "delete") {
+            DataBase.getInstance(SettingsActivity.this).wipeinator();
             Toast.makeText(SettingsActivity.this,
-                    "Din bruger er slettet", Toast.LENGTH_LONG).show();
+                    "Din bruger og data er blevet slettet", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(this, LoginActivity.class);
 
             startActivity(intent);

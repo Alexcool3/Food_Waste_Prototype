@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -45,6 +46,7 @@ public class nyBrugerDialog extends AlertDialog {
         final Spinner dropdown = newView.findViewById(R.id.dropdown2);
         Button accept = newView.findViewById(R.id.button);
         Button cancel = newView.findViewById(R.id.button2);
+        ImageButton info = newView.findViewById(R.id.button_information2);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,6 +59,13 @@ public class nyBrugerDialog extends AlertDialog {
             public void onClick(View view) {
                 AcceptInput(email, editTextBrugernavn, editTextKodeord, dropdown, db, dialog);
 
+            }
+        });
+
+        info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new HelpDialog(getContext(),"Du skal vælge hvor mange dage om ugen dit køkken opererer. Dette bliver brugt til at udregne statistikker for dit ugentlige mad spild i køkkenet.");
             }
         });
 

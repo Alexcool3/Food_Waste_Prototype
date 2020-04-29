@@ -1,5 +1,6 @@
 package com.example.food_waste_prototype;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
@@ -17,6 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout ;
+
+import static androidx.core.app.ActivityCompat.startActivityForResult;
 
 public class TaskBarView extends ConstraintLayout implements View.OnClickListener{
     Context context2;
@@ -94,15 +97,19 @@ public class TaskBarView extends ConstraintLayout implements View.OnClickListene
     public void SwitchActivity(String target, Context context) {
 
         if (target == "stats") {
-
+           // ((Activity) context).finish();
             Intent intent = new Intent(context, StatsActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             context.startActivity(intent);
+
 
         }
         if (target == "input") {
 
-            Intent intent = new Intent(context, InputActivity.class);
+           Intent intent = new Intent(context, InputActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             context.startActivity(intent);
+
         }
     }
 }

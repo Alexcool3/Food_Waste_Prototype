@@ -24,12 +24,13 @@ public class InputDialog extends AlertDialog {
         OpenDialog(context, cg);
     }
 
-    public InputDialog(Context context, final DataBase.Input input, final HistoryDialog hd) {
+    public InputDialog(final Context context, final DataBase.Input input, final HistoryDialog hd) {
         super(context);
         db = DataBase.getInstance(context);
         final AlertDialog.Builder AlertDialog = new AlertDialog.Builder(context); // Context, this, etc.
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View newView = inflater.inflate(R.layout.dialog_input, null);
+        newView.bringToFront();
         AlertDialog.setView(newView);
         final AlertDialog dialog = AlertDialog.create();
         dialog.show();
@@ -79,10 +80,14 @@ public class InputDialog extends AlertDialog {
 
             }
         });
+
+
+
     }
 
 
     public void OpenDialog(Context context, final Category cg) {
+       // Log.d("fred", String.valueOf(context));
         final AlertDialog.Builder AlertDialog = new AlertDialog.Builder(context); // Context, this, etc.
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View newView = inflater.inflate(R.layout.dialog_input, null);
@@ -131,6 +136,15 @@ public class InputDialog extends AlertDialog {
                 } else {
                     toggle.setImageResource(R.drawable.button_toggle);
                 }
+
+            }
+        });
+
+        ImageButton info = newView.findViewById(R.id.button_information3);
+        info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new HelpDialog(getContext(), "Mad Spild er defineret som mad der kunne have været spist, men ikke er blevet spist. Eksempelvis gammel milkers. \n \n  Mad Affald er mad, der ikke er spiseligt af mennesker. For eksempel ægge skaller eller roden af et løg. ");
 
             }
         });

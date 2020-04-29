@@ -56,11 +56,10 @@ public class StatsActivity extends AppCompatActivity {
         context = StatsActivity.this;
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); // make the app fullscreen
         db = DataBase.getInstance(context);
-        db.CreateInput("ost", 40, true);
-        db.CreateInput("ost", 40, false);
-
+        //  Log.d("fre", "inputs:" + 0);
+        
         SetupButtons(context);
-        FillTable();
+        // FillTable();
         // db.CreateCategory("ost", 33);
         ///  db.CreateCategory("kød", 33);
         // db.AddFoodWaste("ost", 500, false);
@@ -158,37 +157,35 @@ public class StatsActivity extends AppCompatActivity {
     }
 
     public boolean TimeFrame(Calendar inputday, Spinner dd) {
-
         String text = dd.getSelectedItem().toString();
         int difference = 0;
         if (text.equals("Dag")) {
-            difference = 1;
+            difference = -1;
         }
         if (text.equals("Måned")) {
-            difference = 31;
+            difference = -31;
         }
         if (text.equals("År")) {
-            difference = 365;
+            difference = -365;
         }
 
-        long end = currentSet.getTimeInMillis();
-        long start = inputday.getTimeInMillis();
-        return (difference < TimeUnit.MILLISECONDS.toDays(Math.abs(end - start)));
-    }
-        /*
+        /// long end = currentSet.getTimeInMillis();
+        //long start = inputday.getTimeInMillis();
+        //return (difference < TimeUnit.MILLISECONDS.toDays(Math.abs(end - start)));
+
 
         Calendar startDate = currentSet;
         Calendar endDate = currentSet;
 
 
-       // Log.d("hej", "difference:"+ String.valueOf(difference));
-        Log.d("hej", "end date:"+ endDate.getTime().toString());
-        Log.d("hej", "input date:"+ inputday.getTime().toString());
-        startDate.set(Calendar.DATE,difference);
-        Log.d("hej", "start date:"+ startDate.getTime().toString());
-        Log.d("hej", "results "+ (inputday.after(startDate.getTime()) && inputday.before(endDate.getTime())));
+        // Log.d("hej", "difference:"+ String.valueOf(difference));
+        //   Log.d("hej", "end date:" + endDate.getTime().toString());
+        // Log.d("hej", "input date:" + inputday.getTime().toString());
+        // startDate.set(Calendar.DATE,difference);
+        //  Log.d("hej", "start date:" + startDate.getTime().toString());
+        // Log.d("hej", "results " + (inputday.after(startDate.getTime()) && inputday.before(endDate.getTime())));
         return (inputday.after(startDate.getTime()) && inputday.before(endDate.getTime()));
-    }*/
+    }
 
 
     private void setDate(String direction, Spinner dropdown, TextView date) {
@@ -249,13 +246,13 @@ public class StatsActivity extends AppCompatActivity {
                 date.setText(yearFormat.format(cal.getTime()));
             }
         }
-        drawChart(dropdown);
+        drawChart();
     }
 
     private void SwitchTable(ImageButton switchy, TableLayout table, PieChart pieChart, Spinner dd) {
 
 
-        drawChart(dd);
+        drawChart();
 
         if (table.getVisibility() == View.VISIBLE) {
             table.setVisibility(View.INVISIBLE);
@@ -279,7 +276,7 @@ public class StatsActivity extends AppCompatActivity {
         } else {
             toggle.setImageResource(R.drawable.button_toggle);
         }
-        drawChart(dd);
+        drawChart();
     }
 
     private void FillTable() {
@@ -288,7 +285,7 @@ public class StatsActivity extends AppCompatActivity {
     }
 
     private void Help() {
-        HistoryDialog hd = new HistoryDialog(StatsActivity.this, db);
+        new HelpDialog(context, "Denne side giver dig information omkring dit madspild");
 
     }
 
@@ -308,66 +305,52 @@ public class StatsActivity extends AppCompatActivity {
         }
     }
 
-    private void drawChart(Spinner dd) {
+    @Override
+    public void onResume(){
+        super.onResume();
+        drawChart();
+
+    }
+
+    public void drawChart() {
+        final Spinner dropdown = findViewById(R.id.dropdown);
         final PieChart pieChart = findViewById(R.id.pieChart);
         //TODO: iteratre over the inputs instead and use the TimeFrame() function to make sure they are within the requested date
         pieChart.clear();
         pieChart.setUsePercentValues(true);
 
-        ArrayList<DataBase.Input> inputs = db.GetInputs();
-
+        ArrayList<Category> cats = db.GetAllCategories();
+        //ArrayList<DataBase.Input>  navne = new ArrayList<>();
         ArrayList<PieEntry> yvalues = new ArrayList<PieEntry>();
         PieDataSet dataSet;
-        for (int i = 0; i < inputs.size(); i++) {
+        Log.d("fre", "inputs:" + db.GetInputs().size());
+        for (int i = 0; i <= cats.size()-1; i++){
+            Category cat = cats.get(i);
+            yvalues.add(new PieEntry(cat.GetAmountFS()+cat.GetAmountFW(), cat.GetName(), i));
+        }
+        /*for (int i = 0; i <= inputs.size()-1; i++) {
             DataBase.Input in = inputs.get(i);
-            TimeFrame(in.TimetoCalendar(), dd);
-
-            if ((TimeFrame(in.TimetoCalendar(), dd))) {
+            if (in.getamount() == 0) {
                 continue;
             }
-            if (db.GetEnumToString().equals("Mad Spild")) {
 
-                if (!(in.GetWasteString().equals("Mad Spild"))) {
-                    continue;
+            float amount = in.getamount();
+            navne.add(in);
+            for (int j = 0; j < inputs.size(); j++) {
+                DataBase.Input in2 = inputs.get(i);
+                Log.d("fre", "in2; " + in2);
+                if (in2.getName().equals(in.getName()) && (!navne.contains(in2)) && !(in2 ==in)){
+                    amount += in2.getamount();
+                    navne.add(in2);
+                    //  inputs.remove(in2);
                 }
-
-                if (in.getamount() == 0) {
-                    continue;
-                }
-
-                float amount = 0;
-                for (int j = 0; j < inputs.size(); j++) {
-                    DataBase.Input in2 = inputs.get(i);
-                    if (in2.getName().equals(in.getName())) {
-                        amount += in2.getamount();
-                    }
-                }
-
-                yvalues.add(new PieEntry(amount, in.getName(), i));
-            } else {
-                if (!(in.GetWasteString().equals("Mad Affald"))) {
-                    continue;
-                }
-
-                if (in.getamount() == 0) {
-                    continue;
-                }
-
-                float amount = 0;
-                for (int j = 0; j < inputs.size(); j++) {
-                    DataBase.Input in2 = inputs.get(i);
-                    if (in2.getName().equals(in.getName())) {
-                        amount += in2.getamount();
-                    }
-                }
-
-                yvalues.add(new PieEntry(amount, in.getName(), i));
             }
 
-        }
+
+        }*/
 
         if (yvalues.size() == 0) {
-            Toast.makeText(context, "Ikke nok indtastninger til at lave diagram", Toast.LENGTH_SHORT).show();
+            //     Toast.makeText(context, "Ikke nok indtastninger til at lave diagram", Toast.LENGTH_SHORT).show();
             return;
 
         }
@@ -380,11 +363,16 @@ public class StatsActivity extends AppCompatActivity {
         description.setText("");
         pieChart.setDescription(description);
         pieChart.setDrawHoleEnabled(false);
+        pieChart.setEntryLabelColor(Color.BLACK);
+        pieChart.setEntryLabelTextSize(18f);
         pieChart.setTransparentCircleRadius(58f);
         pieChart.setHoleRadius(58f);
+
         dataSet.setColors(ColorTemplate.VORDIPLOM_COLORS);
-        data.setValueTextSize(13f);
-        data.setValueTextColor(Color.DKGRAY);
+        data.setValueTextSize(22f);
+
+        data.setValueTextColor(Color.BLACK);
     }
 }
+
 

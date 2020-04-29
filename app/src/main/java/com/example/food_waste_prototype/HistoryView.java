@@ -171,6 +171,12 @@ public class HistoryView extends RelativeLayout {
             @Override
             public void onClick(View v) {
 
+                for (int i = 0; i < db.GetInputs().size(); i++)  {
+                    DataBase.Input in = db.GetInputs().get(i);
+                    if(in.getName().equals(cat.GetName()) && !(nameInput.getText().toString().equals(""))){
+                        in.SetName(nameInput.getText().toString());
+                    }
+                }
 
                 if (nameInput.getText().toString().equals("")) {
                     cat.SetName(cat.GetName());
@@ -183,6 +189,7 @@ public class HistoryView extends RelativeLayout {
                 } else {
                     cat.SetPricePerUnit(Float.parseFloat(String.valueOf(priceInput.getText())));
                 }
+
 
 
                 // populate(context, tb);
