@@ -3,9 +3,12 @@ package com.example.food_waste_prototype;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.os.Build;
 import android.provider.ContactsContract;
 import android.util.Log;
 import android.widget.Button;
+
+import androidx.annotation.RequiresApi;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,6 +22,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -171,10 +175,12 @@ boolean loggedIn = false;
 
     //region  Methods to do with inputs
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public Input CreateInput(String name, float amount, boolean foodScraps){
-        Calendar time = Calendar.getInstance();
-        Input ip = new Input(time.getTime(), name, amount, foodScraps);
-        Log.d("hej", "input time at start:"+ ip.TimetoCalendar().getTime().toString() );
+        //TODO: Does it work on Nikos old ass phone?
+        LocalDate date=LocalDate.now();
+        Input ip = new Input(date, name, amount, foodScraps);
+       // Log.d("hej", "input time at start:"+ ip.TimetoCalendar().getTime().toString() );
         inputs.add(ip);
         return  ip;
     }
@@ -370,12 +376,12 @@ boolean loggedIn = false;
 
     public class Input{
         // The idea is this class should be used to in combination with the history/edit popups
-        private Date time;
+        private LocalDate time;
         private String name;
         private float amount;
         private boolean foodScraps;
 
-        Input(Date  time, String name, float amount, boolean foodScraps){
+        Input(LocalDate  time, String name, float amount, boolean foodScraps){
             this.time= time;
             this.name=name;
             this.amount=amount;
@@ -386,7 +392,7 @@ boolean loggedIn = false;
             return name;
         }
 
-        public Date getTime(){
+        public LocalDate getTime(){
             return time;
         }
 
@@ -418,11 +424,11 @@ boolean loggedIn = false;
             }
         }
 
-        public Calendar TimetoCalendar(){
+       /* public Calendar TimetoCalendar(){
             Calendar cal = Calendar.getInstance();
             cal.setTime(time);
             return cal;
-        }
+        }*/
     }
     //endregion
 }

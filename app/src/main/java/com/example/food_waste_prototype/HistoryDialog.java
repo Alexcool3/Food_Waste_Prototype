@@ -20,6 +20,10 @@ import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.jar.Attributes;
 
@@ -29,6 +33,7 @@ public class HistoryDialog extends AlertDialog {
 
     View thisview = null;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public HistoryDialog(Context context, DataBase db) {
         super(context);
 
@@ -40,6 +45,7 @@ public class HistoryDialog extends AlertDialog {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void OpenDialog(Context context, DataBase db) {
         final AlertDialog.Builder AlertDialog = new AlertDialog.Builder(context); // Context, this, etc.
         thisview = getLayoutInflater().inflate(R.layout.dialog_history2, null);
@@ -59,6 +65,7 @@ public class HistoryDialog extends AlertDialog {
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void Populate(Context context, DataBase db) {
         TableLayout tb = thisview.findViewById(R.id.tableLayout);
         tb.removeAllViews();
@@ -84,9 +91,12 @@ public class HistoryDialog extends AlertDialog {
             row.setGravity(Gravity.LEFT);
             row.setPadding(0, 10, 0, 5);
             HistoryView hv = new HistoryView(context, s, HistoryDialog.this);
-            SimpleDateFormat timeformat = new SimpleDateFormat("dd/MM");
 
-            hv.SetText(timeformat.format(s.getTime()) + " " + (int) (s.getamount()) + " Kg " + s.getName() + " " + s.GetWasteString());
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM");
+            LocalDate dateTime = s.getTime();
+            String formattedDateTime = dateTime.format(formatter);
+
+            hv.SetText(formattedDateTime + " " + (int) (s.getamount()) + " Kg " + s.getName() + " " + s.GetWasteString());
             row.addView(hv);
             tb.addView(row);
             // row.addView(hv);

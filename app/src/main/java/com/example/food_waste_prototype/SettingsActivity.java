@@ -121,23 +121,14 @@ public class SettingsActivity extends AppCompatActivity {
         dialog.show();
     }
     private void SwitchActivity(String string) {
-        if (string == "input") {
-            Intent intent = new Intent(this, InputActivity.class);
 
-            startActivity(intent);
-        }
-        if (string == "stats") {
-            Intent intent = new Intent(this, StatsActivity.class);
-
-            startActivity(intent);
-        }
         if (string == "back") {
             finish();
         }
         if (string == "login") {
             new CustomToast("Du er blevet logget af", SettingsActivity.this);
             Intent intent = new Intent(this, LoginActivity.class);
-
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
         }
         if (string == "warning") {

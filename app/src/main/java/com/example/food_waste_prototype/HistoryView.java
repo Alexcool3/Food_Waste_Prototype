@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.media.Image;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -17,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class HistoryView extends RelativeLayout {
@@ -31,6 +33,7 @@ public class HistoryView extends RelativeLayout {
         ImageButton edit = findViewById(R.id.editButton);
 
         delete.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
                 db.DeleteInput(input);
@@ -39,6 +42,7 @@ public class HistoryView extends RelativeLayout {
             }
         });
         edit.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
              InputDialog id = new InputDialog(context, input, hd);

@@ -3,6 +3,7 @@ package com.example.food_waste_prototype;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -30,8 +32,11 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.sql.Struct;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -45,8 +50,11 @@ public class StatsActivity extends AppCompatActivity {
     ArrayList<String> names = new ArrayList<>();
     ArrayList<String> prices = new ArrayList<>();
     ArrayList<String> amounts = new ArrayList<>();
-    Calendar cal = Calendar.getInstance();
-    Calendar currentSet = Calendar.getInstance();
+
+    LocalDate currentSetDate;
+    LocalDate currentSetWeek;
+    LocalDate currentSetMonth;
+
     DataBase db;
     Context context;
 
@@ -54,6 +62,7 @@ public class StatsActivity extends AppCompatActivity {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +70,9 @@ public class StatsActivity extends AppCompatActivity {
         context = StatsActivity.this;
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); // make the app fullscreen
         db = DataBase.getInstance(context);
+        currentSetDate = LocalDate.now();
+        currentSetWeek = LocalDate.now();
+        currentSetMonth = LocalDate.now();
         //  Log.d("fre", "inputs:" + 0);
         SetupButtons(context);
         FillTable();
@@ -89,16 +101,18 @@ public class StatsActivity extends AppCompatActivity {
         final Spinner dropdown = findViewById(R.id.dropdown);
         final PieChart pieChart = findViewById(R.id.pieChart);
 
+
         //setup the dropdown
-        String[] items = new String[]{"Dag", "Måned", "År"};
+        String[] items = new String[]{"Dag", "Uge", "Måned"};
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(StatsActivity.this, R.layout.spinner_text, items);
         adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
         dropdown.setAdapter(adapter);
         dropdown.setOnItemSelectedListener(
                 new OnItemSelectedListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
                     public void onItemSelected(
                             AdapterView<?> parent, View view, int position, long id) {
-                        setDate("left", dropdown, date);
+                        setDate("", dropdown, date);
                     }
 
                     public void onNothingSelected(AdapterView<?> parent) {
@@ -108,6 +122,7 @@ public class StatsActivity extends AppCompatActivity {
 
         // arrow to the left of the label
         leftArrow.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
                 setDate("left", dropdown, date);
@@ -116,9 +131,10 @@ public class StatsActivity extends AppCompatActivity {
 
         // arrow to the right of the label
         rightArrow.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
-                setDate("rigth", dropdown, date);
+                setDate("right", dropdown, date);
             }
         });
 
@@ -138,6 +154,7 @@ public class StatsActivity extends AppCompatActivity {
 
         // switching between table
         switchbutton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
                 SwitchTable(switchbutton, table, pieChart, dropdown);
@@ -161,38 +178,13 @@ public class StatsActivity extends AppCompatActivity {
         });
     }
 
-    public boolean TimeFrame(Calendar inputday, Spinner dd) {
-        String text = dd.getSelectedItem().toString();
-        int difference = 0;
-        if (text.equals("Dag")) {
-            difference = -1;
-        }
-        if (text.equals("Måned")) {
-            difference = -31;
-        }
-        if (text.equals("År")) {
-            difference = -365;
-        }
-
-        /// long end = currentSet.getTimeInMillis();
-        //long start = inputday.getTimeInMillis();
-        //return (difference < TimeUnit.MILLISECONDS.toDays(Math.abs(end - start)));
-
-
-        Calendar startDate = currentSet;
-        Calendar endDate = currentSet;
-
-
-        // Log.d("hej", "difference:"+ String.valueOf(difference));
-        //   Log.d("hej", "end date:" + endDate.getTime().toString());
-        // Log.d("hej", "input date:" + inputday.getTime().toString());
-        // startDate.set(Calendar.DATE,difference);
-        //  Log.d("hej", "start date:" + startDate.getTime().toString());
-        // Log.d("hej", "results " + (inputday.after(startDate.getTime()) && inputday.before(endDate.getTime())));
-        return (inputday.after(startDate.getTime()) && inputday.before(endDate.getTime()));
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public boolean TimeFrame(Spinner dd, DataBase.Input inputtime) {
+        return inputtime.getTime() == LocalDate.now();
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void setDate(String direction, Spinner dropdown, TextView date) {
 
         // get the current selected item from dropdown
@@ -201,59 +193,75 @@ public class StatsActivity extends AppCompatActivity {
 
         // label between the arrows
 
-        SimpleDateFormat dayFormat = new SimpleDateFormat("dd/MM");
-        SimpleDateFormat monthFormat = new SimpleDateFormat("MMMM");
-        SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
+        DateTimeFormatter dayformatter = DateTimeFormatter.ofPattern("dd/MM");
+        DateTimeFormatter weekformatter = DateTimeFormatter.ofPattern("ww");
+        DateTimeFormatter monthformatter = DateTimeFormatter.ofPattern("MMMM yy");
+
 
         //  if(date.getText().equals("December")){
         //     cal.add(Calendar.DAY_OF_MONTH, 1);
         //     date.setText(dayFormat.format(cal.getTime()));
 
         // }
-        Calendar time = Calendar.getInstance();
-        int year = time.get(Calendar.YEAR);
-        if (text.equals("Dag")) {
-            cal.set(Calendar.MONTH, time.getTime().getMonth());
-            cal.set(Calendar.YEAR, year);
-            // move the entry to the left one
-            if (direction.equals("left")) {
-                cal.add(Calendar.DAY_OF_MONTH, -1);
-                currentSet = cal;
-                date.setText(dayFormat.format(cal.getTime()));
+        //currentSetDate = LocalDate.now();
 
-            } else {
-                cal.add(Calendar.DAY_OF_MONTH, +1);
-                currentSet = cal;
-                date.setText(dayFormat.format(cal.getTime()));
-            }
-        } else if (text.equals("Måned")) {
-            cal.set(Calendar.DATE, time.getTime().getDate());
-            cal.set(Calendar.YEAR, year);
+        if (text.equals("Dag")) {
             if (direction.equals("left")) {
-                cal.add(Calendar.MONTH, -1);
-                currentSet = cal;
-                date.setText(monthFormat.format(cal.getTime()));
+                currentSetDate = currentSetDate.minusDays(1);
+                String formattedDateTime = currentSetDate.format(dayformatter);
+                date.setText(formattedDateTime);
+                FillTable();
+            } else if (direction.equals("right")) {
+                currentSetDate = currentSetDate.plusDays(1);
+                String formattedDateTime = currentSetDate.format(dayformatter);
+                date.setText(formattedDateTime);
+                FillTable();
             } else {
-                cal.add(Calendar.MONTH, +1);
-                currentSet = cal;
-                date.setText(monthFormat.format(cal.getTime()));
+                String formattedDateTime = currentSetDate.format(dayformatter);
+                date.setText(formattedDateTime);
+                FillTable();
             }
-        } else if (text.equals("År")) {
-            cal.set(Calendar.MONTH, time.getTime().getMonth());
-            cal.set(Calendar.DATE, time.getTime().getDay());
+        }
+
+        if (text.equals("Uge")) {
             if (direction.equals("left")) {
-                cal.add(Calendar.YEAR, -1);
-                currentSet = cal;
-                date.setText(yearFormat.format(cal.getTime()));
+                currentSetWeek = currentSetWeek.minusWeeks(1);
+                String formattedDateTime = currentSetWeek.format(weekformatter);
+                date.setText(formattedDateTime);
+                FillTable();
+            } else if (direction.equals("right")) {
+                currentSetWeek = currentSetWeek.plusWeeks(1);
+                String formattedDateTime = currentSetWeek.format(weekformatter);
+                date.setText(formattedDateTime);
+                FillTable();
             } else {
-                cal.add(Calendar.YEAR, +1);
-                currentSet = cal;
-                date.setText(yearFormat.format(cal.getTime()));
+                String formattedDateTime = currentSetWeek.format(weekformatter);
+                date.setText(formattedDateTime);
+                FillTable();
+            }
+        }
+
+        if (text.equals("Måned")) {
+            if (direction.equals("left")) {
+                currentSetMonth = currentSetMonth.minusMonths(1);
+                String formattedDateTime = currentSetMonth.format(monthformatter);
+                date.setText(formattedDateTime);
+                FillTable();
+            } else if (direction.equals("right")) {
+                currentSetMonth = currentSetMonth.plusMonths(1);
+                String formattedDateTime = currentSetMonth.format(monthformatter);
+                date.setText(formattedDateTime);
+                FillTable();
+            } else {
+                String formattedDateTime = currentSetMonth.format(monthformatter);
+                date.setText(formattedDateTime);
+                FillTable();
             }
         }
         drawChart();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void SwitchTable(ImageButton switchy, TableLayout table, PieChart pieChart, Spinner dd) {
 
 
@@ -271,6 +279,7 @@ public class StatsActivity extends AppCompatActivity {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void SwitchToggle(ImageButton toggle, TextView toggletext, Spinner dd) {
 
         db.flipEnum();
@@ -281,10 +290,12 @@ public class StatsActivity extends AppCompatActivity {
             toggle.setImageResource(R.drawable.button_toggle);
         }
         drawChart();
+        FillTable();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void FillTable() {
-
+        final Spinner dropdown = findViewById(R.id.dropdown);
         TextView environmentnum = findViewById(R.id.fwnNum6);
         TextView totalweightnum = findViewById(R.id.fwnNum5);
         TextView fwnnumnum = findViewById(R.id.fwnNum);
@@ -292,70 +303,126 @@ public class StatsActivity extends AppCompatActivity {
         TextView weightnum = findViewById(R.id.fwnNum3);
         TextView pricenum = findViewById(R.id.fwnNum2);
 
+        float[] tb = calculateTableStats(dropdown);
+        for (int i = 0; i <= tb.length - 1; i++) {
+            if(Float.isNaN(tb[i])){
+                tb[i]=0;
+            }
+        }
 
-        fwnnumnum.setText(String.valueOf(calculateFWN()));
+        fwnnumnum.setText(String.valueOf(tb[3]));
         totalpricenum.setText(String.valueOf(calculatePrice()) + " DKK");
-        pricenum.setText(calculateAverageCatPrice() + " DKK");
-        totalweightnum.setText(String.valueOf(calculateTotalWeigth()) + " Kg");
-        weightnum.setText(String.valueOf(calculateAverageWeigth()) + " Kg");
+        pricenum.setText(tb[2] + " DKK");
+        totalweightnum.setText(tb[0] + " Kg");
+        weightnum.setText(String.valueOf(tb[1] + " Kg"));
     }
 
     private float calculatePrice() {
 
+
+        float calculatePrice = 0;
+        ArrayList<Category> cats = db.GetAllCategories();
+        for (int i = 0; i <= cats.size() - 1; i++) {
+            Category cat = cats.get(i);
+            calculatePrice += (cat.GetAmountFW() + cat.GetAmountFS()) * cat.GetPricePerUnit();
+        }
+
+
+        return calculatePrice;
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private float[] calculateTableStats(Spinner dd) {
+
         float price = 0;
-        ArrayList<Category> cats = db.GetAllCategories();
-        for (int i = 0; i <= cats.size() - 1; i++) {
-            Category cat = cats.get(i);
-            price += (cat.GetAmountFW() + cat.GetAmountFS()) * cat.GetPricePerUnit();
-        }
-        return price;
-    }
-
-    private float calculateFWN() {
-
+        float calculateAverageWeigth = 0;
+        float foodwaste = 0;
         float w = 0;
-        ArrayList<Category> cats = db.GetAllCategories();
-        for (int i = 0; i <= cats.size() - 1; i++) {
-            Category cat = cats.get(i);
-            w += (cat.GetAmountFW() + cat.GetAmountFS());
+        String text = dd.getSelectedItem().toString();
+
+        ArrayList<Category> tempcats = inputsToday(text);
+        for (int i = 0; i <= tempcats.size() - 1; i++) {
+            Category cat = tempcats.get(i);
+
+
+            if (db.GetEnumToString().equals("Mad Spild")) {
+                w += cat.GetAmountFW();
+                calculateAverageWeigth += cat.GetAmountFW();
+                price += cat.GetAmountFW() * cat.GetPricePerUnit();
+                foodwaste += cat.GetAmountFW();
+
+            } else if (db.GetEnumToString().equals("Mad Affald")) {
+                w += cat.GetAmountFS();
+                calculateAverageWeigth += cat.GetAmountFS();
+                price += cat.GetAmountFS() * cat.GetPricePerUnit();
+                foodwaste += cat.GetAmountFS();
+            }
+
+        }
+        calculateAverageWeigth = calculateAverageWeigth / (tempcats.size());
+        price = price / (tempcats.size());
+        float calculateFWN = db.purchases / foodwaste;
+
+        if(Float.isInfinite(calculateFWN)){
+            calculateFWN=0;
         }
 
 
-        return db.purchases/w;
+        float[] tablestats = new float[]{w, calculateAverageWeigth, price, calculateFWN};
+
+
+        return tablestats;
     }
 
-    private float calculateAverageCatPrice() {
-        float price = 0;
-        ArrayList<Category> cats = db.GetAllCategories();
-        for (int i = 0; i <= cats.size() - 1; i++) {
-            Category cat = cats.get(i);
-            price += (cat.GetAmountFW() + cat.GetAmountFS()) * cat.GetPricePerUnit();
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private ArrayList<Category> inputsToday(String timer) {
+        LocalDate inputtime;
+        switch (timer) {
+            case "Dag":
+                inputtime = currentSetDate;
+                break;
+            case "Uge":
+                inputtime = currentSetWeek;
+                break;
+            case "Måned":
+                inputtime = currentSetMonth;
+                break;
+            default:
+                inputtime = currentSetDate;
+                new CustomToast("HEJ MED DIG DER ER FEJLMED MÅNEDE HAHA FUCK", context);
         }
-        price = price / (cats.size());
-        return price;
-    }
 
-    private float calculateTotalWeigth() {
-        float w = 0;
-        ArrayList<Category> cats = db.GetAllCategories();
-        for (int i = 0; i <= cats.size() - 1; i++) {
-            Category cat = cats.get(i);
-            w += (cat.GetAmountFW() + cat.GetAmountFS());
+        ArrayList<DataBase.Input> inputs = db.GetInputs();
+        ArrayList<Category> tempcats = new ArrayList<Category>();
+        ArrayList<Category> catsdb = db.GetAllCategories();
+
+
+        for (int i = 0; i <= inputs.size() - 1; i++) {
+            DataBase.Input in = inputs.get(i);
+            if (in.getTime().isEqual(inputtime)) {
+                for (int j = 0; j <= catsdb.size() - 1; j++) {
+                    Category cat = catsdb.get(j);
+                    Category tempcat = new Category(context, cat.GetName(), cat.GetPricePerUnit());
+                    if (!(tempcats.contains(cat))) {
+                        tempcats.add(tempcat);
+                    }
+
+                    if (tempcat.GetName().equals(in.getName())) {
+                        if (db.GetEnumToString().equals("Mad Affald") && in.getfoodScraps()) {
+                            tempcat.AddFS(in.getamount());
+                        } else if ((db.GetEnumToString().equals("Mad Spild")) && !(in.getfoodScraps())) {
+                            tempcat.AddFW(in.getamount());
+
+                        }
+
+                    }
+                }
+            }
         }
-        return w;
+        return tempcats;
     }
-
-    private float calculateAverageWeigth() {
-        float wa = 0;
-        ArrayList<Category> cats = db.GetAllCategories();
-        for (int i = 0; i <= cats.size() - 1; i++) {
-            Category cat = cats.get(i);
-            wa += (cat.GetAmountFW() + cat.GetAmountFS());
-        }
-        wa = wa / (cats.size());
-        return wa;
-    }
-
 
     private void Help() {
         new HelpDialog(context, "Food Waste Number er udregnet af total prisen af dit madspild divideret med vægten af dit madpspild. Det kan bruges som en målbar enhed der nemt kan sammenlignes på kryds og tværs af køkkener.");
@@ -378,22 +445,28 @@ public class StatsActivity extends AppCompatActivity {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onResume() {
         super.onResume();
+        currentSetDate = LocalDate.now();
         drawChart();
         FillTable();
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void drawChart() {
         final Spinner dropdown = findViewById(R.id.dropdown);
         final PieChart pieChart = findViewById(R.id.pieChart);
-        //TODO: iteratre over the inputs instead and use the TimeFrame() function to make sure they are within the requested date
+
+
+        ArrayList<Category> cats = inputsToday(dropdown.getSelectedItem().toString());
+
         pieChart.clear();
         pieChart.setUsePercentValues(true);
 
-        ArrayList<Category> cats = db.GetAllCategories();
+
         //ArrayList<DataBase.Input>  navne = new ArrayList<>();
         ArrayList<PieEntry> yvalues = new ArrayList<PieEntry>();
         PieDataSet dataSet;
