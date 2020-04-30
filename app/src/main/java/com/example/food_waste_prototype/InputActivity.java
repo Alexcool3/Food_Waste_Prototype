@@ -247,7 +247,7 @@ public class InputActivity extends AppCompatActivity {
                 populate(context);
 
                 BackgroundTask backgroundTask = new BackgroundTask(getApplicationContext());
-                backgroundTask.execute("inputs", DataBase.username, nameInput.getText().toString(), priceInput.getText().toString());
+                backgroundTask.execute("categories", DataBase.username, nameInput.getText().toString(), priceInput.getText().toString());
 
                 dialog.dismiss();
 

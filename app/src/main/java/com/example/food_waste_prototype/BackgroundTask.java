@@ -41,7 +41,9 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
 
         final String urlRegistration = "https://lortesiden.000webhostapp.com/register.php";
         final String urlLogin = "https://lortesiden.000webhostapp.com/login.php";
-        final String urlInputs = "https://lortesiden.000webhostapp.com/inputs.php";
+        final String urlCategories = "https://lortesiden.000webhostapp.com/newCategory.php";
+        final String urlDeleteCategory = "https://lortesiden.000webhostapp.com/deleteCategory.php";
+        final String urlInput = "https://lortesiden.000webhostapp.com/inputs.php";
         String task = params[0];
 
         if (task.equals("register")){
@@ -124,13 +126,48 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
             }
         }
 
-        if (task.equals("inputs")){
+        if (task.equals("categories")){
             String regName = params[1];
             String regCategory = params[2];
             String regKilos = params[3];
 
             try {
-                URL url = new URL(urlInputs);
+                URL url = new URL(urlCategories);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream,"UTF-8");
+                BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
+                String myData = URLEncoder.encode("identifier_username","UTF-8")+"="+ URLEncoder.encode(regName,"UTF-8")+"&"
+                        +URLEncoder.encode("identifier_category","UTF-8")+"="+URLEncoder.encode(regCategory,"UTF-8")+"&"
+                        +URLEncoder.encode("identifier_kilos","UTF-8")+"="+URLEncoder.encode(regKilos,"UTF-8");
+                bufferedWriter.write(myData);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+
+                InputStream inputStream = httpURLConnection.getInputStream();
+                inputStream.close();
+                Log.d("Works!", "Works!");
+                editor.putString("flag","categories");
+                editor.commit();
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        if (task.equals("deleteCategory")){
+            String regName = params[1];
+            String regCategory = params[2];
+            String regKilos = params[3];
+
+            try {
+                URL url = new URL(urlDeleteCategory);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
                 httpURLConnection.setDoOutput(true);
@@ -149,6 +186,41 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
                 inputStream.close();
                 Log.d("Works!", "Works!");
                 editor.putString("flag","inputs");
+                editor.commit();
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        if (task.equals("input")){
+            String regName = params[1];
+            String regWeight = params[2];
+            String regCategory = params[3];
+
+            try {
+                URL url = new URL(urlInput);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream,"UTF-8");
+                BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
+                String myData = URLEncoder.encode("identifier_username","UTF-8")+"="+ URLEncoder.encode(regName,"UTF-8")+"&"
+                        +URLEncoder.encode("identifier_weight","UTF-8")+"="+URLEncoder.encode(regWeight,"UTF-8")+"&"
+                        +URLEncoder.encode("identifier_category","UTF-8")+"="+URLEncoder.encode(regCategory,"UTF-8");
+                bufferedWriter.write(myData);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+
+                InputStream inputStream = httpURLConnection.getInputStream();
+                inputStream.close();
+                Log.d("input", "Inputs sker");
+                editor.putString("flag","input");
                 editor.commit();
 
             } catch (MalformedURLException e) {
@@ -199,7 +271,11 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
             Toast.makeText(context, "login failed", Toast.LENGTH_SHORT).show();
         }
 
-        if (flag.equals("inputs")){
+        if (flag.equals("categories")){
+
+        }
+
+        if (flag.equals("input")){
 
         }
     }

@@ -2,6 +2,7 @@ package com.example.food_waste_prototype;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,7 +36,7 @@ public class InputDialog extends AlertDialog {
         final AlertDialog dialog = AlertDialog.create();
         dialog.show();
 
-        TextView title = newView.findViewById(R.id.dialog_title);
+        final TextView title = newView.findViewById(R.id.dialog_title);
         title.setText(("Rediger " + input.getName()));
 
         final EditText amountInput = dialog.findViewById(R.id.waste_input);
@@ -52,6 +53,7 @@ public class InputDialog extends AlertDialog {
         confirm_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                EditInput(dialog, amountInput, input, hd);
             }
         });
@@ -113,6 +115,8 @@ public class InputDialog extends AlertDialog {
             @Override
             public void onClick(View view) {
                 AcceptWaste(dialog, amountInput, cg);
+                BackgroundTask backgroundTask = new BackgroundTask(getContext());
+                backgroundTask.execute("input", DataBase.username, amountInput.getText().toString(), cg.GetName());
             }
         });
 
