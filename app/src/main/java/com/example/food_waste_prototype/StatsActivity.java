@@ -146,6 +146,7 @@ public class StatsActivity extends AppCompatActivity {
             toggle.setImageResource(R.drawable.button_toggle);
         }
         toggle.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
                 SwitchToggle(toggle, toggletext, dropdown);
