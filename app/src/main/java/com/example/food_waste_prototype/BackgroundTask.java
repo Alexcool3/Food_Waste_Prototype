@@ -1,6 +1,5 @@
 package com.example.food_waste_prototype;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -40,8 +39,9 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
         editor.putString("flag", "0");
         editor.commit();
 
-        String urlRegistration = "https://lortesiden.000webhostapp.com/register.php";
-        String urlLogin = "https://lortesiden.000webhostapp.com/login.php";
+        final String urlRegistration = "https://lortesiden.000webhostapp.com/register.php";
+        final String urlLogin = "https://lortesiden.000webhostapp.com/login.php";
+        final String urlInputs = "https://lortesiden.000webhostapp.com/inputs.php";
         String task = params[0];
 
         if (task.equals("register")){
@@ -53,6 +53,7 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
                 httpURLConnection.setDoOutput(true);
+
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream,"UTF-8");
                 BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
@@ -61,6 +62,7 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
                 bufferedWriter.write(myData);
                 bufferedWriter.flush();
                 bufferedWriter.close();
+
                 InputStream inputStream = httpURLConnection.getInputStream();
                 inputStream.close();
                 Log.d("Works!", "Works!");
@@ -79,25 +81,25 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
             String loginUsername = params[1];
             String loginPassword = params[2];
             try {
-                URL url = new URL(urlLogin);
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                httpURLConnection.setRequestMethod("POST");
-                httpURLConnection.setDoOutput(true);
+                URL url = new URL(urlLogin); // s
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();//s
+                httpURLConnection.setRequestMethod("POST");//
+                httpURLConnection.setDoOutput(true);//s
                 httpURLConnection.setDoInput(true);
 
                 //send the email and password to the database
-                OutputStream outputStream = httpURLConnection.getOutputStream();
-                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream,"UTF-8");
+                OutputStream outputStream = httpURLConnection.getOutputStream();//s
+                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream,"UTF-8");//s
                 BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
                 String myData = URLEncoder.encode("identifier_username","UTF-8")+"="+URLEncoder.encode(loginUsername,"UTF-8")+"&"
-                        +URLEncoder.encode("identifier_password","UTF-8")+"="+URLEncoder.encode(loginPassword,"UTF-8");
-                bufferedWriter.write(myData);
-                bufferedWriter.flush();
-                bufferedWriter.close();
+                        +URLEncoder.encode("identifier_password","UTF-8")+"="+URLEncoder.encode(loginPassword,"UTF-8");//s
+                bufferedWriter.write(myData);//s
+                bufferedWriter.flush();//s
+                bufferedWriter.close();//s
                 outputStream.close();
 
                 //get response from the database
-                InputStream inputStream = httpURLConnection.getInputStream();
+                InputStream inputStream = httpURLConnection.getInputStream();//s
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream,"UTF-8");
                 BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
                 String dataResponse = "";
@@ -106,14 +108,13 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
                     dataResponse += inputLine;
                 }
                 bufferedReader.close();
-                inputStream.close();
+                inputStream.close();//s
                 httpURLConnection.disconnect();
 
-                System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 System.out.println(dataResponse);
 
-                editor.putString("flag","login");
-                editor.commit();
+                editor.putString("flag","login");//s
+                editor.commit();//s
                 return  dataResponse;
 
             } catch (MalformedURLException e) {
@@ -121,6 +122,41 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+
+        if (task.equals("inputs")){
+            String regName = params[1];
+            String regCategory = params[2];
+            String regKilos = params[3];
+
+            try {
+                URL url = new URL(urlInputs);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream,"UTF-8");
+                BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
+                String myData = URLEncoder.encode("identifier_username","UTF-8")+"="+ URLEncoder.encode(regName,"UTF-8")+"&"
+                        +URLEncoder.encode("identifier_category","UTF-8")+"="+URLEncoder.encode(regCategory,"UTF-8")+"&"
+                        +URLEncoder.encode("identifier_kilos","UTF-8")+"="+URLEncoder.encode(regKilos,"UTF-8");
+                bufferedWriter.write(myData);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+
+                InputStream inputStream = httpURLConnection.getInputStream();
+                inputStream.close();
+                Log.d("Works!", "Works!");
+                editor.putString("flag","inputs");
+                editor.commit();
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
 
         return null;
@@ -136,9 +172,8 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
         String flag = sharedPreferences.getString("flag","0");
 
         if(flag.equals("register")) {
-            Intent intent = new Intent(context, InputActivity.class);
+            Intent intent = new Intent(context, InputActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
-            Toast.makeText(context,s,Toast.LENGTH_LONG).show();
         }
         if(flag.equals("login")){
             String test = "false";
@@ -155,17 +190,17 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
                 editor.commit();
                 editor.putString("password",password);
                 editor.commit();
-                Intent intent = new Intent(context, InputActivity.class);
+                Intent intent = new Intent(context, InputActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
-                //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             }else{
-                //display("Login Failed...", "That email and password do not match our records :(.");
                 Toast.makeText(context, "Brugernavnet eller kodeordet findes ikke", Toast.LENGTH_SHORT).show();
             }
         }else{
-            //display("Login Failed...","Something weird happened :(.");
-            Log.d("login failed", "login failed");
             Toast.makeText(context, "login failed", Toast.LENGTH_SHORT).show();
+        }
+
+        if (flag.equals("inputs")){
+
         }
     }
 
@@ -173,15 +208,4 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
     protected void onProgressUpdate(Void... values) {
         super.onProgressUpdate(values);
     }
-
-    public void display(String title, String message){
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setCancelable(true);
-        builder.setTitle(title);
-        builder.setMessage(message);
-        builder.show();
-    }
-
-
-
 }

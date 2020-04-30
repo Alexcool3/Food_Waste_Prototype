@@ -14,8 +14,8 @@ import android.widget.Toast;
 public class nyBrugerDialog extends AlertDialog {
     private EditText editTextBrugernavn;
     private EditText editTextKodeord;
-    private Button button;
     private Context context;
+
 
     protected nyBrugerDialog(Context context, DataBase db) {
         super(context);
@@ -56,6 +56,7 @@ public class nyBrugerDialog extends AlertDialog {
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                DataBase.username = editTextBrugernavn.getText().toString();
                 AcceptInput(email, editTextBrugernavn, editTextKodeord, dropdown, db, dialog);
 
             }
@@ -89,10 +90,10 @@ public class nyBrugerDialog extends AlertDialog {
         }
         int days = Integer.parseInt(dropdown.getSelectedItem().toString());
         db.NewUser(username.getText().toString(),password.getText().toString(),email.getText().toString(), days, true, true);
-        BackgroundTask backgroundTask = new BackgroundTask(context);
-        backgroundTask.execute("register", username.getText().toString(), password.getText().toString());
         Log.d("Register: ", "Username: " + username.getText().toString() + " Password: " + password.getText().toString());
         new CustomToast("Ny bruger registeret", getContext());
         dialog.cancel();
+        BackgroundTask backgroundTask = new BackgroundTask(context);
+        backgroundTask.execute("register", username.getText().toString(), password.getText().toString());
     }
 }

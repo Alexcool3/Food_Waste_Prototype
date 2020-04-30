@@ -29,6 +29,7 @@ import java.util.Date;
 import static android.content.ContentValues.TAG;
 
 public class DataBase {
+    public static String username = "test";
 boolean loggedIn = false;
 
     public static  DataBase instance;
