@@ -124,6 +124,41 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
             }
         }
 
+        if (task.equals("inputs")){
+            String regName = params[1];
+            String regCategory = params[2];
+            String regKilos = params[3];
+
+            try {
+                URL url = new URL(urlInputs);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream,"UTF-8");
+                BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
+                String myData = URLEncoder.encode("identifier_username","UTF-8")+"="+ URLEncoder.encode(regName,"UTF-8")+"&"
+                        +URLEncoder.encode("identifier_category","UTF-8")+"="+URLEncoder.encode(regCategory,"UTF-8")+"&"
+                        +URLEncoder.encode("identifier_kilos","UTF-8")+"="+URLEncoder.encode(regKilos,"UTF-8");
+                bufferedWriter.write(myData);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+
+                InputStream inputStream = httpURLConnection.getInputStream();
+                inputStream.close();
+                Log.d("Works!", "Works!");
+                editor.putString("flag","inputs");
+                editor.commit();
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
         return null;
     }
 
@@ -162,6 +197,10 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
             }
         }else{
             Toast.makeText(context, "login failed", Toast.LENGTH_SHORT).show();
+        }
+
+        if (flag.equals("inputs")){
+
         }
     }
 

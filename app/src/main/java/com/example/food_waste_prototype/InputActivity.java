@@ -245,6 +245,10 @@ public class InputActivity extends AppCompatActivity {
                 db.CreateCategory(nameInput.getText().toString(), Float.parseFloat(priceInput.getText().toString()), context);
 
                 populate(context);
+
+                BackgroundTask backgroundTask = new BackgroundTask(getApplicationContext());
+                backgroundTask.execute("inputs", DataBase.username, nameInput.getText().toString(), priceInput.getText().toString());
+
                 dialog.dismiss();
 
             }

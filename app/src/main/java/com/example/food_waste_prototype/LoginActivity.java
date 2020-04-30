@@ -2,6 +2,7 @@ package com.example.food_waste_prototype;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -47,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
                         //Toast.makeText(getApplicationContext(), "Kodeord ikke indtastet", Toast.LENGTH_SHORT);
                     }
                 }
-
+                DataBase.username = brugernavn.getText().toString();
             }
         });
 

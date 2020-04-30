@@ -14,8 +14,8 @@ import android.widget.Toast;
 public class nyBrugerDialog extends AlertDialog {
     private EditText editTextBrugernavn;
     private EditText editTextKodeord;
-    private Button button;
     private Context context;
+
 
     protected nyBrugerDialog(Context context, DataBase db) {
         super(context);
@@ -56,6 +56,7 @@ public class nyBrugerDialog extends AlertDialog {
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                DataBase.username = editTextBrugernavn.getText().toString();
                 AcceptInput(email, editTextBrugernavn, editTextKodeord, dropdown, db, dialog);
 
             }
