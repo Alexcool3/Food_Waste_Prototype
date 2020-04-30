@@ -42,4 +42,12 @@ DataBase DB;
 
 
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Intent intent = new Intent(loadingScreen.this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivity(intent);
+    }
 }
