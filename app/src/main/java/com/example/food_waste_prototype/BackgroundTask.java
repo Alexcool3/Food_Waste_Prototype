@@ -41,6 +41,7 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
 
         final String urlRegistration = "https://lortesiden.000webhostapp.com/register.php";
         final String urlLogin = "https://lortesiden.000webhostapp.com/login.php";
+        final String urlInputs = "https://lortesiden.000webhostapp.com/inputs.php";
         String task = params[0];
 
         if (task.equals("register")){
