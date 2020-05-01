@@ -31,6 +31,7 @@ import static android.content.ContentValues.TAG;
 
 public class DataBase {
     public static String username = "test";
+    public static int id = 0;
     boolean loggedIn = false;
 
     public static DataBase instance;

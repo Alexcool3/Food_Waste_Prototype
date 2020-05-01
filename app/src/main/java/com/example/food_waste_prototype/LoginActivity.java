@@ -1,12 +1,14 @@
 package com.example.food_waste_prototype;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.provider.ContactsContract;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -69,8 +71,17 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void AllowAccess() {
-        BackgroundTask backgroundTask = new BackgroundTask(getApplicationContext());
-        backgroundTask.execute("login", brugernavn.getText().toString(), password.getText().toString());
+        ConnectivityManager cm = (ConnectivityManager) getApplication().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetworkInfo != null &&
+                activeNetworkInfo.isConnectedOrConnecting();
+        if (isConnected){ // Check for cellular connectivity.
+            BackgroundTask backgroundTask = new BackgroundTask(getApplicationContext());
+            backgroundTask.execute("login", brugernavn.getText().toString(), password.getText().toString());
+        }else{
+            startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
+        }
+
     }
 
     private void validate(String inputBrugernavn, String inputPassword) {
