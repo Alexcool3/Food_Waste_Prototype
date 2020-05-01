@@ -2,6 +2,7 @@ package com.example.food_waste_prototype;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.ArrayList;
@@ -101,8 +103,8 @@ public class DotsMenuView extends RelativeLayout {
                 RemoveView(cl);
                 StopAction(context, cl);
                 ArrayList<Category> cats = db.GetAllCategories();
-                if(cats.size()==0){
-                    new CustomToast("Ingen kategorier at slette",context);
+                if (cats.size() == 0) {
+                    new CustomToast("Ingen kategorier at slette", context);
 
                     return;
                 }
@@ -119,7 +121,7 @@ public class DotsMenuView extends RelativeLayout {
                 RemoveView(cl);
                 StopAction(context, cl);
                 ArrayList<Category> cats = db.GetAllCategories();
-                if(cats.size()==0){
+                if (cats.size() == 0) {
                     new CustomToast("Ingen kategorier at redigere", context);
 
                     return;
@@ -132,6 +134,7 @@ public class DotsMenuView extends RelativeLayout {
         });
 
         history.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
 
@@ -155,8 +158,8 @@ public class DotsMenuView extends RelativeLayout {
                 RemoveView(cl);
                 StopAction(context, cl);
                 ArrayList<Category> cats = db.GetAllCategories();
-                if(cats.size()==0){
-                    Toast.makeText(context, "Ingen kategorier at slette", Toast.LENGTH_LONG).show();
+                if (cats.size() == 0) {
+                    new CustomToast("Ingen kategorier at slette", context);
                     return;
                 }
                 for (int number = 0; number < cats.size(); number++) {
@@ -167,6 +170,7 @@ public class DotsMenuView extends RelativeLayout {
         });
 
         historytext.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
 
@@ -182,8 +186,8 @@ public class DotsMenuView extends RelativeLayout {
                 RemoveView(cl);
                 StopAction(context, cl);
                 ArrayList<Category> cats = db.GetAllCategories();
-                if(cats.size()==0){
-                    Toast.makeText(context, "Ingen kategorier at redigere", Toast.LENGTH_LONG).show();
+                if (cats.size() == 0) {
+                    new CustomToast("Ingen kategorier at redigere", context);
                     return;
                 }
                 for (int number = 0; number < cats.size(); number++) {

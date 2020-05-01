@@ -17,18 +17,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.constraintlayout.widget.ConstraintLayout ;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
+import android.os.Vibrator;
 
 import static androidx.core.app.ActivityCompat.startActivityForResult;
 
-public class TaskBarView extends ConstraintLayout implements View.OnClickListener{
+public class TaskBarView extends ConstraintLayout implements View.OnClickListener {
     Context context2;
     ImageButton inputtaskbarbutton;
     ImageButton statstaskbarbutton;
 
     public TaskBarView(Context context) {
         super(context);
-        context2=context;
+        context2 = context;
         inflate(context, R.layout.taskbar_view, this);
         // TODO Auto-generated constructor stub
     }
@@ -40,25 +42,28 @@ public class TaskBarView extends ConstraintLayout implements View.OnClickListene
         attributes.recycle();
     }
 
-    public TaskBarView(Context context, AttributeSet attrs, int defStyle){
+    public TaskBarView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
-    public void taskings(Context context){
+    public void taskings(Context context) {
         Log.d("task", "did 3");
         DetermineColor(context);
         SetupButtons(context);
     }
 
-    public void SetupButtons(final Context context){
+    public void SetupButtons(final Context context) {
         Log.d("task", "did 4");
+        final Vibrator v = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
         ImageButton inputtaskbarbutton = this.findViewById(R.id.button_input4);
         ImageButton statstaskbarbutton = this.findViewById(R.id.button_stats2);
 
         statstaskbarbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("task", "did 2");
+                //Log.d("task", "did 2");
+                assert v != null;
+                v.vibrate(400);
                 SwitchActivity("stats", context);
             }
         });
@@ -66,7 +71,8 @@ public class TaskBarView extends ConstraintLayout implements View.OnClickListene
         inputtaskbarbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("task", "did 2");
+                assert v != null;
+                v.vibrate(400);
                 SwitchActivity("input", context);
             }
         });
@@ -74,21 +80,20 @@ public class TaskBarView extends ConstraintLayout implements View.OnClickListene
 
 
     @Override
-    public void onClick(View v)
-    {
+    public void onClick(View v) {
         Log.d("task", "bar");
-            Toast.makeText(getContext(), "Text", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Text", Toast.LENGTH_SHORT).show();
 
     }
 
-    private void DetermineColor(Context context){
+    private void DetermineColor(Context context) {
         ImageView statsback = findViewById(R.id.background_stats);
-       ImageView inputback = findViewById(R.id.backgroundInput);
-        if(context instanceof StatsActivity){
+        ImageView inputback = findViewById(R.id.backgroundInput);
+        if (context instanceof StatsActivity) {
             inputback.setBackgroundColor(getResources().getColor(R.color.Beige));
-        } else if(context instanceof InputActivity){
+        } else if (context instanceof InputActivity) {
             statsback.setBackgroundColor(getResources().getColor(R.color.Beige));
-        } else{
+        } else {
             statsback.setBackgroundColor(getResources().getColor(R.color.Beige));
             inputback.setBackgroundColor(getResources().getColor(R.color.Beige));
         }
@@ -97,7 +102,7 @@ public class TaskBarView extends ConstraintLayout implements View.OnClickListene
     public void SwitchActivity(String target, Context context) {
 
         if (target == "stats") {
-           // ((Activity) context).finish();
+            // ((Activity) context).finish();
             Intent intent = new Intent(context, StatsActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             context.startActivity(intent);
@@ -106,7 +111,7 @@ public class TaskBarView extends ConstraintLayout implements View.OnClickListene
         }
         if (target == "input") {
 
-           Intent intent = new Intent(context, InputActivity.class);
+            Intent intent = new Intent(context, InputActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             context.startActivity(intent);
 

@@ -81,7 +81,7 @@ public class HistoryDialog extends AlertDialog {
             return;
         }
 
-        for (int i = db.GetInputs().size()-1; i > -1; i--) {
+        for (int i = db.GetInputs().size() - 1; i > -1; i--) {
             DataBase.Input s = db.GetInputs().get(i);
 
             Log.d("ost", s.getName());

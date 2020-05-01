@@ -25,25 +25,26 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        brugernavn = (EditText)findViewById(R.id.etBrugernavn);
-        password = (EditText)findViewById(R.id.etPassword);
-        login = (Button)findViewById(R.id.buttonLogin);
-        registrer = (Button)findViewById(R.id.buttonRegistrer);
+        brugernavn = (EditText) findViewById(R.id.etBrugernavn);
+        password = (EditText) findViewById(R.id.etPassword);
+        login = (Button) findViewById(R.id.buttonLogin);
+        registrer = (Button) findViewById(R.id.buttonRegistrer);
 
 
-        login.setOnClickListener(new View.OnClickListener(){
+        login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 //validate(brugernavn.getText().toString(), password.getText().toString());
-                if (!brugernavn.getText().toString().equals("") && !password.getText().toString().equals("")){
+                if (!brugernavn.getText().toString().equals("") && !password.getText().toString().equals("")) {
+                    validate(brugernavn.getText().toString(), password.getText().toString());
                     AllowAccess();
                 } else {
-                    if (brugernavn.getText().toString().equals("")){
+                    if (brugernavn.getText().toString().equals("")) {
                         brugernavn.setHint("Indtast brugernavn");
                         //Toast.makeText(getApplicationContext(), "Brugernavn ikke indtastet", Toast.LENGTH_SHORT);
                     }
-                    if (password.getText().toString().equals("")){
+                    if (password.getText().toString().equals("")) {
                         password.setHint("Indtast kodeord");
                         //Toast.makeText(getApplicationContext(), "Kodeord ikke indtastet", Toast.LENGTH_SHORT);
                     }
@@ -63,26 +64,21 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void openDialog(DataBase db) {
-    
+
         nyBrugerDialog nyBrugerDialog = new nyBrugerDialog(LoginActivity.this, db);
     }
 
-    private void AllowAccess(){
+    private void AllowAccess() {
         BackgroundTask backgroundTask = new BackgroundTask(getApplicationContext());
         backgroundTask.execute("login", brugernavn.getText().toString(), password.getText().toString());
     }
 
     private void validate(String inputBrugernavn, String inputPassword) {
 
-        if(DB.ValidateUser(inputBrugernavn, inputPassword)){
-            DB.loggedIn = true;
-            Intent intent = new Intent(LoginActivity.this, InputActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            startActivity(intent);
-        }
-        else {
-            Toast.makeText(getApplicationContext(), "Brugernavnet eller kodeordet findes ikke", Toast.LENGTH_SHORT).show();
-        }
+        DB.NewUser(inputBrugernavn, inputPassword, "Fisk", 7, true, true);
+        // else {
+        //   Toast.makeText(getApplicationContext(), "Brugernavnet eller kodeordet findes ikke", Toast.LENGTH_SHORT).show();
+        //}
     }
 
 

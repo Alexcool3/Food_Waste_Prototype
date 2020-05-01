@@ -14,13 +14,13 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class PurchaseView extends ConstraintLayout {
     DataBase db;
+
     public PurchaseView(Context context) {
         super(context);
         View newView = inflate(context, R.layout.input_purchasebutton, this);
         db = DataBase.getInstance(context);
 
     }
-
 
 
     public void OpenDialog(Context context) {
@@ -83,12 +83,11 @@ public class PurchaseView extends ConstraintLayout {
         }
         String pricestring;
 
-        db.purchases+= Float.parseFloat(price.getText().toString());
-        new CustomToast("Indtastede " + price.getText().toString() + " Dkk" , getContext());
+        db.purchases += Float.parseFloat(price.getText().toString());
+        new CustomToast("Indtastede " + price.getText().toString() + " Dkk", getContext());
 
         dialog.dismiss();
     }
-
 
 
 }

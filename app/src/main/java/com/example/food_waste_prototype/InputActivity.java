@@ -65,6 +65,11 @@ public class InputActivity extends AppCompatActivity {
         return instance;
     }
 
+
+    @Override
+    public void onBackPressed() {
+    }
+
     private void SetupButtons(final Context context) {
         final ImageButton settingsButton = findViewById(R.id.button_options2);
         settingsButton.setOnClickListener(new View.OnClickListener() {
@@ -241,6 +246,11 @@ public class InputActivity extends AppCompatActivity {
 
                 }
 
+
+                if (nameInput.getText().toString().length() > 10) {
+                    new CustomToast("Navnet er for langt. Maks 11 bogstaver.", context);
+                    return;
+                }
 
                 db.CreateCategory(nameInput.getText().toString(), Float.parseFloat(priceInput.getText().toString()), context);
 

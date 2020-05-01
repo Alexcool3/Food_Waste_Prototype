@@ -24,6 +24,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 public class HistoryView extends RelativeLayout {
 
     private DataBase db;
+
     public HistoryView(final Context context, final DataBase.Input input, final HistoryDialog hd) {
         super(context);
 
@@ -45,7 +46,7 @@ public class HistoryView extends RelativeLayout {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
-             InputDialog id = new InputDialog(context, input, hd);
+                InputDialog id = new InputDialog(context, input, hd);
                 hd.Populate(context, db);
             }
         });
@@ -74,10 +75,10 @@ public class HistoryView extends RelativeLayout {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               db.DeleteCategory(cg.GetName());
-              //  cl.removeView(categoryView);
+                db.DeleteCategory(cg.GetName());
+                //  cl.removeView(categoryView);
                 InputActivity.getInstance().populate(context);
-              //  Toast.makeText(context, "Deleted " + cg.GetName(), Toast.LENGTH_LONG).show();
+                //  Toast.makeText(context, "Deleted " + cg.GetName(), Toast.LENGTH_LONG).show();
 
                 RemoveSmallMenu(cl, newView, dummy, categoryView);
 
@@ -106,7 +107,7 @@ public class HistoryView extends RelativeLayout {
 
         int[] location = new int[2];  // create new int array to store position of window
         image.getLocationOnScreen(location); // gets pos of the button on the category view
-        setPadding(location[0]+20, location[1] - 80, 0, 0); // sets the padding of the small buttons view to be slighty above the category
+        setPadding(location[0] + 20, location[1] - 80, 0, 0); // sets the padding of the small buttons view to be slighty above the category
 
         cl.addView(dummy); // add the views to the constrant view at the base on input page
         cl.addView(newView);
@@ -175,9 +176,9 @@ public class HistoryView extends RelativeLayout {
             @Override
             public void onClick(View v) {
 
-                for (int i = 0; i < db.GetInputs().size(); i++)  {
+                for (int i = 0; i < db.GetInputs().size(); i++) {
                     DataBase.Input in = db.GetInputs().get(i);
-                    if(in.getName().equals(cat.GetName()) && !(nameInput.getText().toString().equals(""))){
+                    if (in.getName().equals(cat.GetName()) && !(nameInput.getText().toString().equals(""))) {
                         in.SetName(nameInput.getText().toString());
                     }
                 }
@@ -189,11 +190,10 @@ public class HistoryView extends RelativeLayout {
                 }
 
                 if (priceInput.getText().toString().equals("")) {
-                    cat.SetPricePerUnit (cat.GetPricePerUnit());
+                    cat.SetPricePerUnit(cat.GetPricePerUnit());
                 } else {
                     cat.SetPricePerUnit(Float.parseFloat(String.valueOf(priceInput.getText())));
                 }
-
 
 
                 // populate(context, tb);

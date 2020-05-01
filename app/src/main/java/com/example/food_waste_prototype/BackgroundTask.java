@@ -254,10 +254,10 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
             String[] serverResponse = s.split(",");
             Log.d("serverResponse", serverResponse[0]);
             test = serverResponse[0];
-            username = serverResponse[1];
-            password = serverResponse[2];
 
             if(test.equals("true")){
+                username = serverResponse[1];
+                password = serverResponse[2];
                 editor.putString("username",username);
                 editor.commit();
                 editor.putString("password",password);
@@ -265,10 +265,12 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
                 Intent intent = new Intent(context, InputActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }else{
-                Toast.makeText(context, "Brugernavnet eller kodeordet findes ikke", Toast.LENGTH_SHORT).show();
+                new CustomToast("Brugernavnet eller kodeordet findes ikke", context);
+
             }
         }else{
-            Toast.makeText(context, "login failed", Toast.LENGTH_SHORT).show();
+            new CustomToast("Login fejlede", context);
+
         }
 
         if (flag.equals("categories")){

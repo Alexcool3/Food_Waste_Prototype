@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class HelpDialog  extends  AlertDialog{
+public class HelpDialog extends AlertDialog {
 
     protected HelpDialog(Context context, String text) {
         super(context);
@@ -29,11 +29,12 @@ public class HelpDialog  extends  AlertDialog{
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CloseDialog(dialog);            }
+                CloseDialog(dialog);
+            }
         });
     }
 
-    public void CloseDialog(AlertDialog dialog){
+    public void CloseDialog(AlertDialog dialog) {
         dialog.cancel();
     }
 }

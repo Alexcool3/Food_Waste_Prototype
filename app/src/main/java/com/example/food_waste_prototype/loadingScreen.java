@@ -7,9 +7,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.IntentCompat;
 
 public class loadingScreen extends AppCompatActivity {
-DataBase DB;
+    DataBase DB;
 
 
     @Override
@@ -17,12 +19,6 @@ DataBase DB;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading_screen);
         DB = DataBase.getInstance(loadingScreen.this);
-
-        DB.CreateCategory("Grøntsager", 5, loadingScreen.this);
-        DB.CreateCategory("Kød", 50, loadingScreen.this);
-        DB.CreateCategory("Brød", 5, loadingScreen.this);
-        DB.CreateCategory("Mælk", 5, loadingScreen.this);
-        DB.CreateCategory("Fisk", 5, loadingScreen.this);
         ImageView image = findViewById(R.id.imageView);
 
         image.startAnimation(AnimationUtils.loadAnimation(loadingScreen.this, R.anim.rotation));
@@ -31,10 +27,23 @@ DataBase DB;
             public void run() {
                 if (!DB.loggedIn) {
                     Intent intent = new Intent(loadingScreen.this, LoginActivity.class);
+
+                    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
-                }
-                else {
+                    ActivityCompat.finishAffinity(loadingScreen.this);
+
+                    startActivity(intent);
+                } else {
                     Intent intent = new Intent(loadingScreen.this, InputActivity.class);
+
+                    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    ActivityCompat.finishAffinity(loadingScreen.this);
+
                     startActivity(intent);
                 }
             }
@@ -43,11 +52,9 @@ DataBase DB;
 
     }
 
-    @Override
+   /* @Override
     protected void onResume() {
         super.onResume();
-        Intent intent = new Intent(loadingScreen.this, LoginActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        startActivity(intent);
-    }
+
+    }*/
 }

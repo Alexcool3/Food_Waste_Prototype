@@ -26,20 +26,21 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+
 import static android.content.ContentValues.TAG;
 
 public class DataBase {
     public static String username = "test";
-boolean loggedIn = false;
+    boolean loggedIn = false;
 
-    public static  DataBase instance;
+    public static DataBase instance;
     public static WhichWaste waste = WhichWaste.foodwaste;
     private ArrayList<Category> categories = new ArrayList<>(); // contains a list of all the current categories and how much waste has been input into them
     private ArrayList<Input> inputs = new ArrayList<>(); // contains a list of all the past inputs
     private ArrayList<User> users = new ArrayList<>(); // contains a list of all users and the current user
-    public float purchases=0;
+    public float purchases = 0;
 
-    private DataBase(Context context){
+    private DataBase(Context context) {
 
     }
 
@@ -48,39 +49,37 @@ boolean loggedIn = false;
         foodscraps
     }
 
-    public void flipEnum(){
-        if(waste.equals(WhichWaste.foodscraps)){
+    public void flipEnum() {
+        if (waste.equals(WhichWaste.foodscraps)) {
             waste = WhichWaste.foodwaste;
-        } else{
+        } else {
             waste = WhichWaste.foodscraps;
         }
     }
 
-    public String GetEnumToString(){
-        if(waste.equals(WhichWaste.foodscraps)){
+    public String GetEnumToString() {
+        if (waste.equals(WhichWaste.foodscraps)) {
             return "Mad Affald";
-        } else{
+        } else {
             return "Mad Spild";
         }
     }
 
-    public static DataBase getInstance(Context context)
-    {
+    public static DataBase getInstance(Context context) {
 
 
-        if (instance == null)
-        {
+        if (instance == null) {
             instance = new DataBase(context);
         }
         return instance;
     }
 
-    public void clearData(){
+    public void clearData() {
         categories.clear();
         inputs.clear();
     }
 
-    public void wipeinator(){
+    public void wipeinator() {
         users.clear();
         categories.clear();
         inputs.clear();
@@ -89,28 +88,38 @@ boolean loggedIn = false;
 
     //region Methods to do with users
 
-    public void NewUser(String userName, String password, String email, int days, boolean remember, boolean currentUser){
+    public void NewUser(String userName, String password, String email, int days, boolean remember, boolean currentUser) {
         // the idea is to call this when a new is created
-        User user = new User(userName,password,email,days,  remember, currentUser);
+        User user = new User(userName, password, email, days, remember, currentUser);
         users.add(user);
     }
 
-    public boolean ValidateUser(String username, String password){
+    public boolean ValidateUser(String username, String password) {
         // the idea is to call this when a user tries to login
-        for(int i = 0; i < users.size(); i++) {
+        for (int i = 0; i < users.size(); i++) {
             User user = users.get(i);
-            if(username.equals(user.GetUserName()) && password.equals(user.GetPassword())) {
-                user.isCurrentUser=true;
+            if (username.equals(user.GetUserName()) && password.equals(user.GetPassword())) {
+                user.isCurrentUser = true;
                 return true;
             }
         }
         return false;
     }
 
-    public void DeleteCurrentUser(){
-        for(int i = 0; i < users.size(); i++) {
+    public DataBase.User GetCurrentUser() {
+        for (int i = 0; i < users.size(); i++) {
             User user = users.get(i);
-            if(user.isCurrentUser){
+            if (user.isCurrentUser) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    public void DeleteCurrentUser() {
+        for (int i = 0; i < users.size(); i++) {
+            User user = users.get(i);
+            if (user.isCurrentUser) {
                 users.remove(user);
             }
         }
@@ -120,34 +129,34 @@ boolean loggedIn = false;
 
     //region Methods to do with categories
 
-    public Category CreateCategory(String name, float pricePerUnit, Context context){
+    public Category CreateCategory(String name, float pricePerUnit, Context context) {
         Category cg = new Category(context, name, pricePerUnit);
         categories.add((cg));
         return cg;
 
     }
 
-    public Category EditCategory(Category cg, String newName, float pricePerUnit){
+    public Category EditCategory(Category cg, String newName, float pricePerUnit) {
         // the idea is to call this function upon pressing the edit category button
-        if (!(cg.GetName().equals(newName))){
+        if (!(cg.GetName().equals(newName))) {
             cg.SetName(newName);
         }
-        if(!(cg.GetPricePerUnit()==pricePerUnit)){
+        if (!(cg.GetPricePerUnit() == pricePerUnit)) {
             cg.SetPricePerUnit(pricePerUnit);
         }
         return cg;
         // how should this function interact with the list?
     }
 
-    public void DeleteCategory(String name){
+    public void DeleteCategory(String name) {
         Category cg = GetCategory(name);
         categories.remove(cg);
         DeleteInputs(name);
     }
 
-    public void AddFoodWaste(String categoryName, float amount, boolean foodScraps){
-        Category cg= GetCategory(categoryName);
-        if(!(cg ==null)) {
+    public void AddFoodWaste(String categoryName, float amount, boolean foodScraps) {
+        Category cg = GetCategory(categoryName);
+        if (!(cg == null)) {
 
 
             if (foodScraps) {
@@ -158,14 +167,14 @@ boolean loggedIn = false;
         }
     }
 
-    public ArrayList<Category> GetAllCategories(){
+    public ArrayList<Category> GetAllCategories() {
         return categories;
     }
 
-    public Category GetCategory(String target){
-        for(int i = 0; i < categories.size(); i++) {
+    public Category GetCategory(String target) {
+        for (int i = 0; i < categories.size(); i++) {
             Category cg = categories.get(i);
-            if(target.equals(cg.GetName())) {
+            if (target.equals(cg.GetName())) {
                 return cg;
             }
         }
@@ -177,38 +186,39 @@ boolean loggedIn = false;
     //region  Methods to do with inputs
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public Input CreateInput(String name, float amount, boolean foodScraps){
+    public Input CreateInput(String name, float amount, boolean foodScraps) {
         //TODO: Does it work on Nikos old ass phone?
-        LocalDate date=LocalDate.now();
+        LocalDate date = LocalDate.now();
         Input ip = new Input(date, name, amount, foodScraps);
-       // Log.d("hej", "input time at start:"+ ip.TimetoCalendar().getTime().toString() );
+        // Log.d("hej", "input time at start:"+ ip.TimetoCalendar().getTime().toString() );
         inputs.add(ip);
-        return  ip;
+        return ip;
     }
 
-    public void DeleteInput(Input input){
+    public void DeleteInput(Input input) {
         //delete a single input based on the number in the list
         Category cg = GetCategory(input.getName());
-        if(input.getfoodScraps()){
+        if (input.getfoodScraps()) {
             cg.AddFS(-input.getamount());
-        } else{
+        } else {
             cg.AddFW(-input.getamount());
         }
         inputs.remove(input);
 
     }
 
-    public void DeleteInputs(String nameOfCategory){
+    public void DeleteInputs(String nameOfCategory) {
         // goes trough the list of inputs and removes them if they match the name
         // the idea is to remove the related inputs if a category is deleted
-        for(int i = 0; i < inputs.size(); i++) {
+        for (int i = 0; i < inputs.size(); i++) {
             Input ip = inputs.get(i);
-            if(nameOfCategory.equals(ip.getName())) {
+            if (nameOfCategory.equals(ip.getName())) {
                 inputs.remove(ip);
             }
         }
     }
-    public ArrayList<Input> GetInputs(){
+
+    public ArrayList<Input> GetInputs() {
         return inputs;
     }
     //endregion
@@ -216,7 +226,7 @@ boolean loggedIn = false;
     //region Methods to do with saving, reading and deleting data
     // NOTE: I did not test if these functions work so fuck it
 
-    public void SaveAllDataToFile(Context context){
+    public void SaveAllDataToFile(Context context) {
         // I did not test if it works :)
         JSONArray cat = new JSONArray(categories);
         cat.put(CreateCategory("OST", 33, context));
@@ -229,29 +239,29 @@ boolean loggedIn = false;
     }
 
 
-    public void ReadAllDate(Context context){
-        try{
+    public void ReadAllDate(Context context) {
+        try {
             read("Categories", categories, context);
-        } catch (NullPointerException e){
-            Log.d("load"," Failed to load categories");
+        } catch (NullPointerException e) {
+            Log.d("load", " Failed to load categories");
         }
-        try{
+        try {
             read("Inputs", inputs, context);
-        } catch (NullPointerException e){
-            Log.d("load"," Failed to load inputs");
+        } catch (NullPointerException e) {
+            Log.d("load", " Failed to load inputs");
         }
 
-        try{
+        try {
             read("Users", users, context);
-        } catch (NullPointerException e){
-            Log.d("load"," Failed to load users");
+        } catch (NullPointerException e) {
+            Log.d("load", " Failed to load users");
         }
 
 
     }
 
     private <T> void read(String filename, ArrayList<T> arraylist, Context context) {
-        String data = ReadDataFromFile(context,filename);
+        String data = ReadDataFromFile(context, filename);
         try {
             JSONArray jsonArr = new JSONArray(data);
 
@@ -265,15 +275,15 @@ boolean loggedIn = false;
         }
     }
 
-    private void save(JSONArray jArray,Context context, String fileName){
+    private void save(JSONArray jArray, Context context, String fileName) {
         String json = jArray.toString();
         boolean isFilePresent = isFilePresent(context, json);
-        if(isFilePresent) {
+        if (isFilePresent) {
             String jsonString = ReadDataFromFile(context, json);
             // TODO:delete the file? or parse it and add the new stuff
         } else {
             boolean isFileCreated = CreateFile(context, fileName);
-            if(isFileCreated) {
+            if (isFileCreated) {
                 Log.d(TAG, "save: filed saved succesfully at ");
             } else {
                 Log.d(TAG, "save: failed saving file");
@@ -281,10 +291,10 @@ boolean loggedIn = false;
         }
     }
 
-    private boolean CreateFile(Context context, String fileName){
-        String jsonString="{}";
+    private boolean CreateFile(Context context, String fileName) {
+        String jsonString = "{}";
         try {
-            FileOutputStream fos = context.openFileOutput(fileName,Context.MODE_PRIVATE);
+            FileOutputStream fos = context.openFileOutput(fileName, Context.MODE_PRIVATE);
             fos.write(jsonString.getBytes());
             fos.close();
             return true;
@@ -301,7 +311,7 @@ boolean loggedIn = false;
         return file.exists();
     }
 
-    public void DeleteAllData(){
+    public void DeleteAllData() {
         users.clear();
         categories.clear();
         users.clear();
@@ -331,96 +341,95 @@ boolean loggedIn = false;
     //region The inner classes
 
 
-
-    private class User{
+    public class User {
         // Should represent a user
         private String userName;
         private String password;
         private String email;
-        private  int days;
+        private int days;
         private boolean rememberLogin;
         private boolean isCurrentUser;
 
-        User(String userName, String password, String email, int days, boolean remember, boolean isCurrentUser){
-            this.userName=userName;
-            this.password=password;
+        User(String userName, String password, String email, int days, boolean remember, boolean isCurrentUser) {
+            this.userName = userName;
+            this.password = password;
             this.email = email;
-            this.days=days;
-            this.rememberLogin=remember;
+            this.days = days;
+            this.rememberLogin = remember;
             this.isCurrentUser = isCurrentUser;
         }
 
-        private void setUserName(String name){
-            this.userName=name;
+        public void setUserName(String name) {
+            this.userName = name;
         }
 
-        private void setPassword(String passCode){
-            this.password=passCode;
+        public void setPassword(String passCode) {
+            this.password = passCode;
         }
 
-        private String GetUserName(){
+        public String GetUserName() {
             return userName;
         }
 
-        private String GetPassword(){
+        public String GetPassword() {
             return password;
         }
 
-        private boolean GetSsCurrentUser(){
+        private boolean GetSsCurrentUser() {
             return isCurrentUser;
         }
 
-        private boolean GetRememberLogin(){
+        private boolean GetRememberLogin() {
             return rememberLogin;
         }
     }
 
-    public class Input{
+    public class Input {
         // The idea is this class should be used to in combination with the history/edit popups
         private LocalDate time;
         private String name;
         private float amount;
         private boolean foodScraps;
 
-        Input(LocalDate  time, String name, float amount, boolean foodScraps){
-            this.time= time;
-            this.name=name;
-            this.amount=amount;
-            this.foodScraps=foodScraps;
+        Input(LocalDate time, String name, float amount, boolean foodScraps) {
+            this.time = time;
+            this.name = name;
+            this.amount = amount;
+            this.foodScraps = foodScraps;
         }
 
         public String getName() {
             return name;
         }
 
-        public LocalDate getTime(){
+        public LocalDate getTime() {
             return time;
         }
 
-        public float getamount(){
+        public float getamount() {
             return amount;
         }
 
-        public boolean getfoodScraps(){
+        public boolean getfoodScraps() {
             return foodScraps;
         }
 
-        public void SetfoodScraps(boolean scraps){
-            foodScraps=scraps;
+        public void SetfoodScraps(boolean scraps) {
+            foodScraps = scraps;
         }
 
-        public void SetAmount(float amountings){
-            amount=amountings;
+        public void SetAmount(float amountings) {
+            amount = amountings;
         }
 
-        public void SetName(String name){
-            this.name=name;
+        public void SetName(String name) {
+            this.name = name;
         }
 
-        public String GetWasteString(){
-            if(foodScraps){
+        public String GetWasteString() {
+            if (foodScraps) {
                 return "Mad Affald";
-            } else{
+            } else {
                 return "Mad Spild";
             }
         }

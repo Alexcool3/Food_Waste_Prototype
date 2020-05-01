@@ -6,8 +6,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class AddCategoryView extends ConstraintLayout {
 
-        public AddCategoryView(Context context) {
-            super(context);
-            inflate(context, R.layout.category_addbutton, this);
+    public AddCategoryView(Context context) {
+        super(context);
+        inflate(context, R.layout.category_addbutton, this);
     }
 }

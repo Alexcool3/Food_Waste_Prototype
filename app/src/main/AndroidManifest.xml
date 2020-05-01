@@ -4,10 +4,13 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:icon="@drawable/meat"
+        android:roundIcon="@drawable/meat"
         android:supportsRtl="true"
-        android:theme="@style/FoodWasteTheme">
+        android:label="@string/app_name"
+        android:theme="@style/FoodWasteTheme"
+        android:configChanges="keyboardHidden|orientation|screenSize"
+        android:screenOrientation="portrait">
         <activity android:name=".loadingScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,7 +22,6 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
@@ -28,14 +30,14 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+
             </intent-filter>
         </activity>
         <activity
@@ -44,16 +46,18 @@
             <intent-filter>
                 <action android:name="android.inten.ation.Main" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+
             </intent-filter>
         </activity>
         <activity android:name=".StatsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+
             </intent-filter>
         </activity>
     </application>
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
+
 </manifest>

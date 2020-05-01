@@ -34,6 +34,7 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.sql.Struct;
 import java.sql.Time;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -306,16 +307,19 @@ public class StatsActivity extends AppCompatActivity {
 
         float[] tb = calculateTableStats(dropdown);
         for (int i = 0; i <= tb.length - 1; i++) {
-            if(Float.isNaN(tb[i])){
-                tb[i]=0;
+            if (Float.isNaN(tb[i])) {
+                tb[i] = 0;
+
             }
         }
 
-        fwnnumnum.setText(String.valueOf(tb[3]));
-        totalpricenum.setText(String.valueOf(calculatePrice()) + " DKK");
-        pricenum.setText(tb[2] + " DKK");
-        totalweightnum.setText(tb[0] + " Kg");
-        weightnum.setText(String.valueOf(tb[1] + " Kg"));
+        DecimalFormat df = new DecimalFormat("#.##");
+
+        fwnnumnum.setText(df.format(tb[3]));
+        totalpricenum.setText(df.format(calculatePrice()) + " DKK");
+        pricenum.setText(df.format(tb[2]) + " DKK");
+        totalweightnum.setText(df.format(tb[0]) + " Kg");
+        weightnum.setText(df.format(tb[1]) + " Kg");
     }
 
     private float calculatePrice() {
@@ -365,8 +369,8 @@ public class StatsActivity extends AppCompatActivity {
         price = price / (tempcats.size());
         float calculateFWN = db.purchases / foodwaste;
 
-        if(Float.isInfinite(calculateFWN)){
-            calculateFWN=0;
+        if (Float.isInfinite(calculateFWN)) {
+            calculateFWN = 0;
         }
 
 

@@ -108,7 +108,7 @@ public class Category extends LinearLayout {
                 @Override
                 public void onClick(View view) {
                     StopShaking(context);
-                    for (int i = 0; i <= DataBase.getInstance(context).GetAllCategories().size()-1; i++) {
+                    for (int i = 0; i <= DataBase.getInstance(context).GetAllCategories().size() - 1; i++) {
                         Category cg = DataBase.getInstance(context).GetAllCategories().get(i);
                         cg.StopShaking(context);
                     }
@@ -137,10 +137,9 @@ public class Category extends LinearLayout {
                         public void onClick(View v) {
 
 
-
-                            for (int i = 0; i < DataBase.getInstance(context).GetInputs().size(); i++)  {
+                            for (int i = 0; i < DataBase.getInstance(context).GetInputs().size(); i++) {
                                 DataBase.Input in = DataBase.getInstance(context).GetInputs().get(i);
-                                if(in.getName().equals(GetName()) && !(nameInput.getText().toString().equals(""))){
+                                if (in.getName().equals(GetName()) && !(nameInput.getText().toString().equals(""))) {
                                     in.SetName(nameInput.getText().toString());
                                 }
                             }
@@ -170,7 +169,7 @@ public class Category extends LinearLayout {
                     StopShaking(context);
                     DataBase.getInstance(context).DeleteCategory(GetName());
 
-                    for (int i = 0; i <= DataBase.getInstance(context).GetAllCategories().size()-1; i++) {
+                    for (int i = 0; i <= DataBase.getInstance(context).GetAllCategories().size() - 1; i++) {
                         Category cg = DataBase.getInstance(context).GetAllCategories().get(i);
                         cg.StopShaking(context);
                     }
@@ -185,8 +184,8 @@ public class Category extends LinearLayout {
 
     public void StopShaking(final Context context) {
         clearAnimation();
-        edittarget=false;
-        deletetarget=false;
+        edittarget = false;
+        deletetarget = false;
         final ImageButton image = this.findViewById(R.id.image);
         image.setOnClickListener(null);
         image.setOnClickListener(new View.OnClickListener() {
@@ -208,7 +207,7 @@ public class Category extends LinearLayout {
 
             final ImageButton image = this.findViewById(R.id.image);
 
-            switch (name.toLowerCase()){
+            switch (name.toLowerCase()) {
                 case "grøntsager":
                     image.setImageResource(R.drawable.greenybois);
                     break;
@@ -233,9 +232,9 @@ public class Category extends LinearLayout {
             image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                   InputDialog id =  new InputDialog(context, Category.this);
+                    InputDialog id = new InputDialog(context, Category.this);
                     hideBorder();
-                 //  id.getWindow();
+                    //  id.getWindow();
                 }
             });
 
@@ -249,12 +248,12 @@ public class Category extends LinearLayout {
                 }
             });
 
-        } else{
+        } else {
             hideBorder();
         }
     }
 
-    private void hideBorder(){
+    private void hideBorder() {
         ImageView border = findViewById(R.id.border);
         border.setVisibility(INVISIBLE);
     }

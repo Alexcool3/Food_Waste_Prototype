@@ -14,8 +14,10 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -25,6 +27,7 @@ public class SettingsActivity extends AppCompatActivity {
     ArrayList<String> names = new ArrayList<>();
     ArrayList<String> prices = new ArrayList<>();
     ArrayList<String> amounts = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +41,6 @@ public class SettingsActivity extends AppCompatActivity {
 
 
     private void TaskBarButtons() {
-
 
 
         ImageButton backbutton = findViewById(R.id.backbutton); //back button
@@ -57,13 +59,13 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 openDialog("login");
-               // SwitchActivity("login");
+                // SwitchActivity("login");
             }
         });
         indstillinger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               SwitchActivity("same");
+                SwitchActivity("same");
             }
         });
         nulstil.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +82,7 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
     }
+
     public void openDialog(final String action) {
         final AlertDialog.Builder AlertDialog = new AlertDialog.Builder(this); // Context, this, etc.
         View newView = getLayoutInflater().inflate(R.layout.dialog_activity, null);
@@ -104,7 +107,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        if(action.equals("login")) {
+        if (action.equals("login")) {
 
 
             TextView tv = newView.findViewById(R.id.dialog_info);
@@ -113,13 +116,13 @@ public class SettingsActivity extends AppCompatActivity {
 
         dialog.show();
     }
+
     public void openDialoglog() {
-        final AlertDialog.Builder AlertDialog = new AlertDialog.Builder(this); // Context, this, etc.
-        View newView = getLayoutInflater().inflate(R.layout.nybrugerdialog, null);
-        AlertDialog.setView(newView);
-        final AlertDialog dialog = AlertDialog.create();
-        dialog.show();
+
+        new nyBrugerDialog(SettingsActivity.this, DataBase.getInstance(SettingsActivity.this), "settingsactivity");
+
     }
+
     private void SwitchActivity(String string) {
 
         if (string == "back") {
@@ -135,7 +138,7 @@ public class SettingsActivity extends AppCompatActivity {
             DataBase.getInstance(SettingsActivity.this).clearData();
             new CustomToast("Din data er blevet nulstillet", SettingsActivity.this);
 
-           // Intent intent = new Intent(this, SettingsActivity.class);
+            // Intent intent = new Intent(this, SettingsActivity.class);
 
             //startActivity(intent);
         }

@@ -2,6 +2,7 @@ package com.example.food_waste_prototype;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.os.Build;
 import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +13,8 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
 
 import com.github.mikephil.charting.charts.PieChart;
 
@@ -51,10 +54,11 @@ public class InputDialog extends AlertDialog {
 
         Button confirm_button = newView.findViewById(R.id.confirm_button);
         confirm_button.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
 
-               EditInput(dialog, amountInput, input, hd);
+                EditInput(dialog, amountInput, input, hd);
             }
         });
 
@@ -84,12 +88,11 @@ public class InputDialog extends AlertDialog {
         });
 
 
-
     }
 
 
     public void OpenDialog(Context context, final Category cg) {
-       // Log.d("fred", String.valueOf(context));
+        // Log.d("fred", String.valueOf(context));
         final AlertDialog.Builder AlertDialog = new AlertDialog.Builder(context); // Context, this, etc.
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View newView = inflater.inflate(R.layout.dialog_input, null);
@@ -112,6 +115,7 @@ public class InputDialog extends AlertDialog {
 
         Button confirm_button = newView.findViewById(R.id.confirm_button);
         confirm_button.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
                 AcceptWaste(dialog, amountInput, cg);
@@ -158,6 +162,7 @@ public class InputDialog extends AlertDialog {
         dialog.cancel();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void AcceptWaste(AlertDialog dialog, EditText waste, Category cg) {
         if (waste.getText().toString().equals("")) {
             waste.setHint("Indtast spild i Kilo");
@@ -177,9 +182,10 @@ public class InputDialog extends AlertDialog {
         dialog.dismiss();
     }
 
-    private void EditInput(AlertDialog dialog, EditText waste, DataBase.Input input, final HistoryDialog hd){
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void EditInput(AlertDialog dialog, EditText waste, DataBase.Input input, final HistoryDialog hd) {
 
-        if(input.getfoodScraps()) {
+        if (input.getfoodScraps()) {
             db.GetCategory(input.getName()).AddFS(-input.getamount());
         } else {
             db.GetCategory(input.getName()).AddFW(-input.getamount());
@@ -194,7 +200,7 @@ public class InputDialog extends AlertDialog {
                 input.SetfoodScraps(false);
                 db.GetCategory(input.getName()).AddFW(input.getamount());
             }
-            hd.Populate(getContext(),db);
+            hd.Populate(getContext(), db);
             dialog.dismiss();
             return;
         }
@@ -209,7 +215,7 @@ public class InputDialog extends AlertDialog {
             db.GetCategory(input.getName()).AddFW(Float.parseFloat(waste.getText().toString()));
         }
 
-        hd.Populate(getContext(),db);
+        hd.Populate(getContext(), db);
         dialog.dismiss();
         return;
     }
