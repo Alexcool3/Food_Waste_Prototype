@@ -29,8 +29,8 @@
         android:layout_marginTop="16dp"
         android:background="@null"
         android:scaleType="fitCenter"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.68"
+        app:layout_constraintEnd_toEndOf="@+id/view"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_kodeord"
         app:srcCompat="@drawable/button_information" />
@@ -128,9 +128,10 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="170dp"
+        android:layout_width="0dp"
         android:layout_height="48dp"
-        android:gravity="center"
+        android:layout_marginRight="3dp"
+        android:gravity="center|right"
         android:text="Aktive dage om ugen"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/view"
