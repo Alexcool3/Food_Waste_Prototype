@@ -8,9 +8,14 @@
         android:id="@+id/custom_toast_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="2dp"
         android:gravity="center"
         android:text="Custom Toast"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
         android:typeface="serif" />
+
 </RelativeLayout>
