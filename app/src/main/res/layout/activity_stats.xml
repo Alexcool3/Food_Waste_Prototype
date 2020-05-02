@@ -87,31 +87,31 @@
 
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="113dp"
+        android:layout_height="104dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center"
-        android:layout_marginBottom="32dp"
         android:src="@drawable/spinner_arrow"
         app:layout_constraintBottom_toBottomOf="@+id/greenbox"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.91"
+        app:layout_constraintHorizontal_bias="0.838"
         app:layout_constraintStart_toEndOf="@+id/greenbox"
-        app:layout_constraintTop_toTopOf="@+id/dropdown" />
+        app:layout_constraintTop_toTopOf="@+id/dropdown"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Spinner
         android:id="@+id/dropdown"
-        android:layout_width="204dp"
-        android:layout_height="87dp"
+        android:layout_width="173dp"
+        android:layout_height="58dp"
         android:layout_centerVertical="true"
         android:layout_gravity="center"
         android:background="@android:color/transparent"
-        android:gravity="center"
+        android:gravity="right"
         android:spinnerMode="dropdown"
         app:layout_constraintBottom_toBottomOf="@+id/greenbox"
         app:layout_constraintEnd_toEndOf="@+id/greenbox"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.93"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/line2" />
 
