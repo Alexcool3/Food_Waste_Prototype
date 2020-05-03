@@ -2,8 +2,6 @@ package com.example.food_waste_prototype;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.res.TypedArray;
-import android.media.Image;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -13,10 +11,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -37,8 +33,10 @@ public class HistoryView extends RelativeLayout {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
+                DeleteInputFromServer(context, DataBase.username, String.valueOf(DataBase.userID));
                 db.DeleteInput(input);
                 hd.Populate(context, db);
+
 
             }
         });
@@ -61,7 +59,7 @@ public class HistoryView extends RelativeLayout {
         TextView textView = findViewById(R.id.name); //identify the text view inside the layout
         textView.setVisibility(GONE); //remove the text view so only the buttons remain
 
-        ImageButton delete = findViewById(R.id.deleteButton);
+        final ImageButton delete = findViewById(R.id.deleteButton);
         ImageButton edit = findViewById(R.id.editButton);
 
 
@@ -75,7 +73,10 @@ public class HistoryView extends RelativeLayout {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                DeleteCategoryFromServer(context, DataBase.username, cg.GetName());
+                Log.d("d", "category name:" + cg.GetName());
                 db.DeleteCategory(cg.GetName());
+
                 //  cl.removeView(categoryView);
                 InputActivity.getInstance().populate(context);
                 //  Toast.makeText(context, "Deleted " + cg.GetName(), Toast.LENGTH_LONG).show();
@@ -200,5 +201,16 @@ public class HistoryView extends RelativeLayout {
                 dialog.dismiss();
             }
         });
+    }
+
+    private void DeleteCategoryFromServer(Context context, String username, String categoryName){
+        Log.d("called", "delete called");
+        BackgroundTask backgroundTask = new BackgroundTask(context);
+        backgroundTask.execute("deleteCategory", username, categoryName);
+    }
+
+    private void DeleteInputFromServer(Context context, String username, String id){
+        BackgroundTask backgroundTask = new BackgroundTask(context);
+        backgroundTask.execute("deleteInput", username, id);
     }
 }

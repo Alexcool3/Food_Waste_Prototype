@@ -3,20 +3,14 @@ package com.example.food_waste_prototype;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Build;
-import android.provider.ContactsContract;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
-
-import com.github.mikephil.charting.charts.PieChart;
 
 public class InputDialog extends AlertDialog {
 
@@ -118,9 +112,9 @@ public class InputDialog extends AlertDialog {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
-                AcceptWaste(dialog, amountInput, cg);
                 BackgroundTask backgroundTask = new BackgroundTask(getContext());
                 backgroundTask.execute("input", DataBase.username, amountInput.getText().toString(), cg.GetName());
+                AcceptWaste(dialog, amountInput, cg, backgroundTask.GetCurrentID());
             }
         });
 
@@ -163,7 +157,7 @@ public class InputDialog extends AlertDialog {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void AcceptWaste(AlertDialog dialog, EditText waste, Category cg) {
+    private void AcceptWaste(AlertDialog dialog, EditText waste, Category cg, int id) {
         if (waste.getText().toString().equals("")) {
             waste.setHint("Indtast spild i Kilo");
             return;
@@ -171,11 +165,11 @@ public class InputDialog extends AlertDialog {
         String foodwaste;
         if (db.GetEnumToString().equals("Mad Affald")) {
             cg.AddFS(Float.parseFloat(waste.getText().toString()));
-            db.CreateInput(cg.GetName(), (Float.parseFloat(waste.getText().toString())), true);
+            db.CreateInput(cg.GetName(), (Float.parseFloat(waste.getText().toString())), true, id);
             foodwaste = " Mad Affald ";
         } else {
             cg.AddFW(Float.parseFloat(waste.getText().toString()));
-            db.CreateInput(cg.GetName(), (Float.parseFloat(waste.getText().toString())), false);
+            db.CreateInput(cg.GetName(), (Float.parseFloat(waste.getText().toString())), false, id);
             foodwaste = " Mad Spild ";
         }
         new CustomToast("Indtastede " + waste.getText().toString() + " Kg " + foodwaste + " i " + cg.GetName(), getContext());
@@ -196,6 +190,7 @@ public class InputDialog extends AlertDialog {
                 input.SetfoodScraps(true);
                 db.GetCategory(input.getName()).AddFS(input.getamount());
                 //db.GetCategory(input.getName()).AddFS(Float.parseFloat(waste.getText().toString()));
+
             } else {
                 input.SetfoodScraps(false);
                 db.GetCategory(input.getName()).AddFW(input.getamount());

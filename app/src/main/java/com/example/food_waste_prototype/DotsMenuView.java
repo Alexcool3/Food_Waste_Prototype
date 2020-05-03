@@ -1,18 +1,13 @@
 package com.example.food_waste_prototype;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.os.Build;
-import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -220,6 +215,7 @@ public class DotsMenuView extends RelativeLayout {
 
         cl.addView(background, 0);
     }
+
 
 }
 

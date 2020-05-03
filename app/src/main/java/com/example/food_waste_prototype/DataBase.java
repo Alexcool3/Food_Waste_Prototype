@@ -1,12 +1,8 @@
 package com.example.food_waste_prototype;
 
-import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.os.Build;
-import android.provider.ContactsContract;
 import android.util.Log;
-import android.widget.Button;
 
 import androidx.annotation.RequiresApi;
 
@@ -21,17 +17,15 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 import static android.content.ContentValues.TAG;
 
 public class DataBase {
     public static String username = "test";
-    public static int id = 0;
+    public static int userID = 0;
+
     boolean loggedIn = false;
 
     public static DataBase instance;
@@ -153,6 +147,7 @@ public class DataBase {
         Category cg = GetCategory(name);
         categories.remove(cg);
         DeleteInputs(name);
+
     }
 
     public void AddFoodWaste(String categoryName, float amount, boolean foodScraps) {
@@ -187,10 +182,12 @@ public class DataBase {
     //region  Methods to do with inputs
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public Input CreateInput(String name, float amount, boolean foodScraps) {
+    public Input CreateInput(String name, float amount, boolean foodScraps, int id) {
         //TODO: Does it work on Nikos old ass phone?
         LocalDate date = LocalDate.now();
         Input ip = new Input(date, name, amount, foodScraps);
+        ip.SetID(id);
+        Log.d("Input ID", "ID: " + ip.GetID());
         // Log.d("hej", "input time at start:"+ ip.TimetoCalendar().getTime().toString() );
         inputs.add(ip);
         return ip;
@@ -391,6 +388,7 @@ public class DataBase {
         private String name;
         private float amount;
         private boolean foodScraps;
+        private int id = 0;
 
         Input(LocalDate time, String name, float amount, boolean foodScraps) {
             this.time = time;
@@ -433,6 +431,14 @@ public class DataBase {
             } else {
                 return "Mad Spild";
             }
+        }
+
+        public void SetID(int id){
+            this.id = id;
+        }
+
+        public int GetID(){
+            return id;
         }
 
        /* public Calendar TimetoCalendar(){

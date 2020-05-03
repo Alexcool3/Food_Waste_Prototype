@@ -177,7 +177,7 @@ public class nyBrugerDialog extends AlertDialog {
         dialog.cancel();
 
         // TODO: how does the server handle editting a user?
-        //  BackgroundTask backgroundTask = new BackgroundTask(context);
-        // backgroundTask.execute("register", username.getText().toString(), password.getText().toString());
+        //BackgroundTask backgroundTask = new BackgroundTask(context);
+        //backgroundTask.execute("register", username.getText().toString(), password.getText().toString());
     }
 }

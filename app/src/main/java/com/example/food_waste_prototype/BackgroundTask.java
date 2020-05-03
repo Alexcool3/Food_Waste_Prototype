@@ -22,9 +22,9 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
 
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
+    private static int currentID = 0;
 
     private Context context;
-
     public BackgroundTask(Context context){
         this.context = context;
     }
@@ -142,7 +142,7 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
         if (task.equals("categories")){
             String regName = params[1];
             String regCategory = params[2];
-            String regKilos = params[3];
+            String regPrice = params[3];
 
             try {
                 URL url = new URL(urlCategories);
@@ -155,14 +155,14 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
                 BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
                 String myData = URLEncoder.encode("identifier_username","UTF-8")+"="+ URLEncoder.encode(regName,"UTF-8")+"&"
                         +URLEncoder.encode("identifier_category","UTF-8")+"="+URLEncoder.encode(regCategory,"UTF-8")+"&"
-                        +URLEncoder.encode("identifier_kilos","UTF-8")+"="+URLEncoder.encode(regKilos,"UTF-8");
+                        +URLEncoder.encode("identifier_price","UTF-8")+"="+URLEncoder.encode(regPrice,"UTF-8");
                 bufferedWriter.write(myData);
                 bufferedWriter.flush();
                 bufferedWriter.close();
 
                 InputStream inputStream = httpURLConnection.getInputStream();
                 inputStream.close();
-                Log.d("Works!", "Works!");
+                Log.d("Categories", "Invoked!");
                 editor.putString("flag","categories");
                 editor.commit();
 
@@ -177,7 +177,6 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
         if (task.equals("deleteCategory")){
             String regName = params[1];
             String regCategory = params[2];
-            String regKilos = params[3];
 
             try {
                 URL url = new URL(urlDeleteCategory);
@@ -189,15 +188,14 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
                 OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream,"UTF-8");
                 BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
                 String myData = URLEncoder.encode("identifier_username","UTF-8")+"="+ URLEncoder.encode(regName,"UTF-8")+"&"
-                        +URLEncoder.encode("identifier_category","UTF-8")+"="+URLEncoder.encode(regCategory,"UTF-8")+"&"
-                        +URLEncoder.encode("identifier_kilos","UTF-8")+"="+URLEncoder.encode(regKilos,"UTF-8");
+                        +URLEncoder.encode("identifier_category","UTF-8")+"="+URLEncoder.encode(regCategory,"UTF-8");
                 bufferedWriter.write(myData);
                 bufferedWriter.flush();
                 bufferedWriter.close();
 
                 InputStream inputStream = httpURLConnection.getInputStream();
                 inputStream.close();
-                Log.d("Works!", "Works!");
+                Log.d("Delete!", "Deleted category!");
                 editor.putString("flag","inputs");
                 editor.commit();
 
@@ -210,6 +208,7 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
         }
 
         if (task.equals("input")){
+            /*
             String regName = params[1];
             String regWeight = params[2];
             String regCategory = params[3];
@@ -232,8 +231,88 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
 
                 InputStream inputStream = httpURLConnection.getInputStream();
                 inputStream.close();
-                Log.d("input", "Inputs sker");
+                Log.d("input", "Inputs happens");
                 editor.putString("flag","input");
+                editor.commit();
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+             */
+            String regName = params[1];
+            String regWeight = params[2];
+            String regCategory = params[3];
+            try {
+                URL url = new URL(urlInput);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();//s
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+
+                //send the username and password to the database
+                OutputStream outputStream = httpURLConnection.getOutputStream();//s
+                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream,"UTF-8");
+                BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
+                String myData = URLEncoder.encode("identifier_username","UTF-8")+"="+URLEncoder.encode(regName,"UTF-8")+"&"
+                        +URLEncoder.encode("identifier_weight","UTF-8")+"="+URLEncoder.encode(regWeight,"UTF-8")+"&"
+                        +URLEncoder.encode("identifier_category","UTF-8")+"="+URLEncoder.encode(regCategory,"UTF-8");//s
+                bufferedWriter.write(myData);//s
+                bufferedWriter.flush();//s
+                bufferedWriter.close();//s
+                outputStream.close();
+
+                //get response from the database
+                InputStream inputStream = httpURLConnection.getInputStream();
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream,"UTF-8");
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String dataResponse = "";
+                String inputLine = "";
+                while((inputLine = bufferedReader.readLine()) != null){
+                    dataResponse += inputLine;
+                }
+                bufferedReader.close();
+                inputStream.close();//s
+                httpURLConnection.disconnect();
+
+                System.out.println(dataResponse);
+
+                editor.putString("flag","input");//s
+                editor.commit();//s
+                return  dataResponse;
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        if (task.equals("deleteInput")){
+            String regName = params[1];
+            String regId = params[2];
+
+            try {
+                URL url = new URL(urlDeleteCategory);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream,"UTF-8");
+                BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
+                String myData = URLEncoder.encode("identifier_username","UTF-8")+"="+ URLEncoder.encode(regName,"UTF-8")+"&"
+                        +URLEncoder.encode("identifier_id","UTF-8")+"="+URLEncoder.encode(regId,"UTF-8");
+                bufferedWriter.write(myData);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+
+                InputStream inputStream = httpURLConnection.getInputStream();
+                inputStream.close();
+                Log.d("Delete!", "Input deleted !");
+                editor.putString("flag","inputs");
                 editor.commit();
 
             } catch (MalformedURLException e) {
@@ -264,8 +343,8 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
             Log.d("serverResponse", serverResponse[0]);
             if (test.equals("true")){
                 id = serverResponse[1];
-                DataBase.id = Integer.parseInt(id);
-                Log.d("user id", "id: " + DataBase.id);
+                DataBase.userID = Integer.parseInt(id);
+                Log.d("user id", "id: " + DataBase.userID);
             }
             Intent intent = new Intent(context, InputActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
@@ -275,6 +354,7 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
             String test = "false";
             String username = "";
             String password = "";
+            String id = "";
             String[] serverResponse = s.split(",");
             Log.d("serverResponse", serverResponse[0]);
             test = serverResponse[0];
@@ -282,6 +362,8 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
             if(test.equals("true")){
                 username = serverResponse[1];
                 password = serverResponse[2];
+                id = serverResponse[3];
+                DataBase.userID = Integer.parseInt(id);
                 editor.putString("username",username);
                 editor.commit();
                 editor.putString("password",password);
@@ -302,8 +384,25 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
         }
 
         if (flag.equals("input")){
-
+            String test = "false";
+            String id = "";
+            String[] serverResponse = s.split(",");
+            test = serverResponse[0];
+            Log.d("serverResponse", serverResponse[0]);
+            if (test.equals("true")){
+                id = serverResponse[1];
+                Current(Integer.parseInt(id));
+                Log.d("input id", "id: " + id);
+            }
         }
+    }
+
+    private static void Current(int id){
+        currentID = id;
+    }
+
+    public int GetCurrentID(){
+        return currentID;
     }
 
     @Override

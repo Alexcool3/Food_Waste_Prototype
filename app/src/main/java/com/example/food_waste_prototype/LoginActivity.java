@@ -78,6 +78,7 @@ public class LoginActivity extends AppCompatActivity {
         if (isConnected){ // Check for cellular connectivity.
             BackgroundTask backgroundTask = new BackgroundTask(getApplicationContext());
             backgroundTask.execute("login", brugernavn.getText().toString(), password.getText().toString());
+            DataBase.username = brugernavn.getText().toString();
         }else{
             startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
         }
