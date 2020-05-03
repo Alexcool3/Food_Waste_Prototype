@@ -43,6 +43,7 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
         final String urlCategories = "https://lortesiden.000webhostapp.com/newCategory.php";
         final String urlDeleteCategory = "https://lortesiden.000webhostapp.com/deleteCategory.php";
         final String urlInput = "https://lortesiden.000webhostapp.com/inputs.php";
+        final String urlDeleteInput = "https://lortesiden.000webhostapp.com/deleteInput.php";
         String task = params[0];
 
         if (task.equals("register")){
@@ -208,39 +209,6 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
         }
 
         if (task.equals("input")){
-            /*
-            String regName = params[1];
-            String regWeight = params[2];
-            String regCategory = params[3];
-
-            try {
-                URL url = new URL(urlInput);
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                httpURLConnection.setRequestMethod("POST");
-                httpURLConnection.setDoOutput(true);
-
-                OutputStream outputStream = httpURLConnection.getOutputStream();
-                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream,"UTF-8");
-                BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
-                String myData = URLEncoder.encode("identifier_username","UTF-8")+"="+ URLEncoder.encode(regName,"UTF-8")+"&"
-                        +URLEncoder.encode("identifier_weight","UTF-8")+"="+URLEncoder.encode(regWeight,"UTF-8")+"&"
-                        +URLEncoder.encode("identifier_category","UTF-8")+"="+URLEncoder.encode(regCategory,"UTF-8");
-                bufferedWriter.write(myData);
-                bufferedWriter.flush();
-                bufferedWriter.close();
-
-                InputStream inputStream = httpURLConnection.getInputStream();
-                inputStream.close();
-                Log.d("input", "Inputs happens");
-                editor.putString("flag","input");
-                editor.commit();
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-             */
             String regName = params[1];
             String regWeight = params[2];
             String regCategory = params[3];
@@ -291,6 +259,7 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
         }
 
         if (task.equals("deleteInput")){
+            /*
             String regName = params[1];
             String regId = params[2];
 
@@ -320,7 +289,51 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            */
+            String regName = params[1];
+            String regId = params[2];
+            try {
+                URL url = new URL(urlDeleteInput); // s
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();//s
+                httpURLConnection.setRequestMethod("POST");//
+                httpURLConnection.setDoOutput(true);//s
+                httpURLConnection.setDoInput(true);
 
+                //send the email and password to the database
+                OutputStream outputStream = httpURLConnection.getOutputStream();//s
+                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream,"UTF-8");//s
+                BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
+                String myData = URLEncoder.encode("identifier_username","UTF-8")+"="+URLEncoder.encode(regName,"UTF-8")+"&"
+                        +URLEncoder.encode("identifier_id","UTF-8")+"="+URLEncoder.encode(regId,"UTF-8");//s
+                bufferedWriter.write(myData);//s
+                bufferedWriter.flush();//s
+                bufferedWriter.close();//s
+                outputStream.close();
+
+                //get response from the database
+                InputStream inputStream = httpURLConnection.getInputStream();//s
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream,"UTF-8");
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String dataResponse = "";
+                String inputLine = "";
+                while((inputLine = bufferedReader.readLine()) != null){
+                    dataResponse += inputLine;
+                }
+                bufferedReader.close();
+                inputStream.close();//s
+                httpURLConnection.disconnect();
+
+                System.out.println(dataResponse);
+
+                editor.putString("flag","deleteInput");//s
+                editor.commit();//s
+                return  dataResponse;
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         return null;
@@ -395,6 +408,10 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
                 latestInput.SetID(Integer.parseInt(id));
                 Log.d("DatabaseInput", "ID: " + DataBase.instance.GetLastInputInsance().GetID());
             }
+        }
+
+        if (flag.equals("deleteInput")){
+
         }
     }
 

@@ -33,7 +33,7 @@ public class HistoryView extends RelativeLayout {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
-                DeleteInputFromServer(context, DataBase.username, String.valueOf(DataBase.userID));
+                DeleteInputFromServer(context, DataBase.username, String.valueOf(input.GetID()));
                 db.DeleteInput(input);
                 hd.Populate(context, db);
 
