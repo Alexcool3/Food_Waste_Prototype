@@ -208,20 +208,248 @@ public class Category extends LinearLayout {
             final ImageButton image = this.findViewById(R.id.image);
 
             switch (name.toLowerCase()) {
-                case "grøntsager":
-                    image.setImageResource(R.drawable.greenybois);
+                case "alkohol":
+                    image.setImageResource(R.drawable.alcohol);
                     break;
-                case "mælk":
-                    image.setImageResource(R.drawable.milkers);
+                case "æbler":
+                    image.setImageResource(R.drawable.apple);
                     break;
-                case "fisk":
-                    image.setImageResource(R.drawable.fisk);
+                case "æble":
+                    image.setImageResource(R.drawable.apple);
+                    break;
+                case "avocadoer":
+                    image.setImageResource(R.drawable.avocado);
+                    break;
+                case "avocado":
+                    image.setImageResource(R.drawable.avocado);
+                    break;
+                case "bananer":
+                    image.setImageResource(R.drawable.banana);
+                    break;
+                case "banan":
+                    image.setImageResource(R.drawable.banana);
+                    break;
+                case "øller":
+                    image.setImageResource(R.drawable.beer);
+                    break;
+                case "øl":
+                    image.setImageResource(R.drawable.beer);
                     break;
                 case "brød":
                     image.setImageResource(R.drawable.bread);
                     break;
+                case "burgere":
+                    image.setImageResource(R.drawable.burger);
+                    break;
+                case "burger":
+                    image.setImageResource(R.drawable.burger);
+                    break;
+                case "kål":
+                    image.setImageResource(R.drawable.cabbage);
+                    break;
+                case "kager":
+                    image.setImageResource(R.drawable.cake);
+                    break;
+                case "kage":
+                    image.setImageResource(R.drawable.cake);
+                    break;
+                case "gulerod":
+                    image.setImageResource(R.drawable.carrot);
+                    break;
+                case "gulerødder":
+                    image.setImageResource(R.drawable.carrot);
+                    break;
+                case "ost":
+                    image.setImageResource(R.drawable.cheese);
+                    break;
+                case "oste":
+                    image.setImageResource(R.drawable.cheese);
+                    break;
+                case "bær":
+                    image.setImageResource(R.drawable.cherry);
+                    break;
+                case "kylling":
+                    image.setImageResource(R.drawable.chicken);
+                    break;
+                case "kaffe":
+                    image.setImageResource(R.drawable.coffe);
+                    break;
+                case "cola":
+                    image.setImageResource(R.drawable.cola);
+                    break;
+                case "korn":
+                    image.setImageResource(R.drawable.corn);
+                    break;
+                case "agurk":
+                    image.setImageResource(R.drawable.cucumber);
+                    break;
+                case "agurker":
+                    image.setImageResource(R.drawable.cucumber);
+                    break;
+                case "muffin":
+                    image.setImageResource(R.drawable.cupcake);
+                    break;
+                case "muffins":
+                    image.setImageResource(R.drawable.cupcake);
+                    break;
+                case "donut":
+                    image.setImageResource(R.drawable.donut);
+                    break;
+                case "donuts":
+                    image.setImageResource(R.drawable.donut);
+                    break;
+                case "drinks":
+                    image.setImageResource(R.drawable.drinks);
+                    break;
+                case "æg":
+                    image.setImageResource(R.drawable.egg);
+                    break;
+                case "aubergine":
+                    image.setImageResource(R.drawable.eggplant);
+                    break;
+                case "auberginer":
+                    image.setImageResource(R.drawable.eggplant);
+                    break;
+                case "fastfood":
+                    image.setImageResource(R.drawable.fasttfood);
+                    break;
+                case "fisk":
+                    image.setImageResource(R.drawable.fish);
+                    break;
+                case "pomfritter":
+                    image.setImageResource(R.drawable.fries);
+                    break;
+                case "fritter":
+                    image.setImageResource(R.drawable.fries);
+                    break;
+                case "frugt":
+                    image.setImageResource(R.drawable.fruit);
+                    break;
+                case "frugter":
+                    image.setImageResource(R.drawable.fruit);
+                    break;
+                case "druer":
+                    image.setImageResource(R.drawable.grapes);
+                    break;
+                case "vindruer":
+                    image.setImageResource(R.drawable.grapes);
+                    break;
+                case "grøntsager":
+                    image.setImageResource(R.drawable.greenybois);
+                    break;
+                case "grill":
+                    image.setImageResource(R.drawable.grill);
+                    break;
+                case "urter":
+                    image.setImageResource(R.drawable.herbs);
+                    break;
+                case "krydderier":
+                    image.setImageResource(R.drawable.herbs);
+                    break;
+                case "hotdog":
+                    image.setImageResource(R.drawable.hotdog);
+                    break;
+                case "hotdogs":
+                    image.setImageResource(R.drawable.hotdog);
+                    break;
+                case "is":
+                    image.setImageResource(R.drawable.icecream);
+                    break;
+                case "lemon":
+                    image.setImageResource(R.drawable.lemon);
+                    break;
                 case "kød":
-                    image.setImageResource(R.drawable.meat);
+                    image.setImageResource(R.drawable.meatslice);
+                    break;
+                case "mælk":
+                    image.setImageResource(R.drawable.milk);
+                    break;
+                case "svampe":
+                    image.setImageResource(R.drawable.mushroom);
+                    break;
+                case "champignons":
+                    image.setImageResource(R.drawable.mushroom);
+                    break;
+                case "spaghetti":
+                    image.setImageResource(R.drawable.nuddel);
+                    break;
+                case "nudler":
+                    image.setImageResource(R.drawable.nuddel);
+                    break;
+                case "løg":
+                    image.setImageResource(R.drawable.onion);
+                    break;
+                case "appelsin":
+                    image.setImageResource(R.drawable.orange);
+                    break;
+                case "appelsiner":
+                    image.setImageResource(R.drawable.orange);
+                    break;
+                case "fersken":
+                    image.setImageResource(R.drawable.peach);
+                    break;
+                case "ærter":
+                    image.setImageResource(R.drawable.peas);
+                    break;
+                case "rød peber":
+                    image.setImageResource(R.drawable.pepper);
+                    break;
+                case "græskar":
+                    image.setImageResource(R.drawable.pumpkin);
+                    break;
+                case "pølse":
+                    image.setImageResource(R.drawable.sausage);
+                    break;
+                case "pølser":
+                    image.setImageResource(R.drawable.sausage);
+                    break;
+                case "suppe":
+                    image.setImageResource(R.drawable.soup);
+                    break;
+                case "supper":
+                    image.setImageResource(R.drawable.soup);
+                    break;
+                case "spyd":
+                    image.setImageResource(R.drawable.stick);
+                    break;
+                case "jordbær":
+                    image.setImageResource(R.drawable.strawberry);
+                    break;
+                case "stuvning":
+                    image.setImageResource(R.drawable.stuvning);
+                    break;
+                case "blæksprutte":
+                    image.setImageResource(R.drawable.squid);
+                    break;
+                case "sprutte":
+                    image.setImageResource(R.drawable.squid);
+                    break;
+                case "tacos":
+                    image.setImageResource(R.drawable.tacos);
+                    break;
+                case "mexicansk":
+                    image.setImageResource(R.drawable.tacos);
+                    break;
+                case "sushi":
+                    image.setImageResource(R.drawable.sushi);
+                    break;
+                case "te":
+                    image.setImageResource(R.drawable.tea);
+                    break;
+                case "the":
+                    image.setImageResource(R.drawable.tea);
+                    break;
+                case "tomater":
+                    image.setImageResource(R.drawable.tomat);
+                    break;
+                case "vandmelon":
+                    image.setImageResource(R.drawable.watermelon);
+                    break;
+                case "vand melon":
+                    image.setImageResource(R.drawable.watermelon);
+                    break;
+                case "vin":
+                    image.setImageResource(R.drawable.wine);
                     break;
                 default:
                     image.setImageResource(R.drawable.button_default);
