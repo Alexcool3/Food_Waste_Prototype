@@ -114,7 +114,7 @@ public class InputDialog extends AlertDialog {
             public void onClick(View view) {
                 BackgroundTask backgroundTask = new BackgroundTask(getContext());
                 backgroundTask.execute("input", DataBase.username, amountInput.getText().toString(), cg.GetName());
-                AcceptWaste(dialog, amountInput, cg, backgroundTask.GetCurrentID());
+                AcceptWaste(dialog, amountInput, cg);
             }
         });
 
@@ -157,7 +157,7 @@ public class InputDialog extends AlertDialog {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void AcceptWaste(AlertDialog dialog, EditText waste, Category cg, int id) {
+    private void AcceptWaste(AlertDialog dialog, EditText waste, Category cg) {
         if (waste.getText().toString().equals("")) {
             waste.setHint("Indtast spild i Kilo");
             return;
@@ -165,11 +165,11 @@ public class InputDialog extends AlertDialog {
         String foodwaste;
         if (db.GetEnumToString().equals("Mad Affald")) {
             cg.AddFS(Float.parseFloat(waste.getText().toString()));
-            db.CreateInput(cg.GetName(), (Float.parseFloat(waste.getText().toString())), true, id);
+            db.CreateInput(cg.GetName(), (Float.parseFloat(waste.getText().toString())), true);
             foodwaste = " Mad Affald ";
         } else {
             cg.AddFW(Float.parseFloat(waste.getText().toString()));
-            db.CreateInput(cg.GetName(), (Float.parseFloat(waste.getText().toString())), false, id);
+            db.CreateInput(cg.GetName(), (Float.parseFloat(waste.getText().toString())), false);
             foodwaste = " Mad Spild ";
         }
         new CustomToast("Indtastede " + waste.getText().toString() + " Kg " + foodwaste + " i " + cg.GetName(), getContext());

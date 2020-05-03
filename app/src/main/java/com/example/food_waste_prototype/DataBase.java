@@ -182,12 +182,10 @@ public class DataBase {
     //region  Methods to do with inputs
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public Input CreateInput(String name, float amount, boolean foodScraps, int id) {
+    public Input CreateInput(String name, float amount, boolean foodScraps){
         //TODO: Does it work on Nikos old ass phone?
         LocalDate date = LocalDate.now();
         Input ip = new Input(date, name, amount, foodScraps);
-        ip.SetID(id);
-        Log.d("Input ID", "ID: " + ip.GetID());
         // Log.d("hej", "input time at start:"+ ip.TimetoCalendar().getTime().toString() );
         inputs.add(ip);
         return ip;
@@ -435,6 +433,7 @@ public class DataBase {
 
         public void SetID(int id){
             this.id = id;
+            Log.d("Input instance", "ID:" + id);
         }
 
         public int GetID(){
@@ -448,4 +447,8 @@ public class DataBase {
         }*/
     }
     //endregion
+
+    public DataBase.Input GetLastInputInsance(){
+        return inputs.get(inputs.size()-1);
+    }
 }

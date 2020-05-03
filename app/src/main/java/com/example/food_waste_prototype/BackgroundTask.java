@@ -391,8 +391,9 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
             Log.d("serverResponse", serverResponse[0]);
             if (test.equals("true")){
                 id = serverResponse[1];
-                Current(Integer.parseInt(id));
-                Log.d("input id", "id: " + id);
+                DataBase.Input latestInput = DataBase.instance.GetLastInputInsance();
+                latestInput.SetID(Integer.parseInt(id));
+                Log.d("DatabaseInput", "ID: " + DataBase.instance.GetLastInputInsance().GetID());
             }
         }
     }
