@@ -29,7 +29,7 @@ public class AlarmBroadCastReceiver extends BroadcastReceiver {
             CharSequence name = context.getResources().getString(R.string.app_name);// The user-visible name of the channel.
             NotificationCompat.Builder mBuilder;
            // Intent notificationIntent = new Intent(context, InputActivity.class);
-            Intent notificationIntent = new Intent( Intent.ACTION_VIEW , Uri.parse( "https://stackoverflow.com/questions/2762861/android-goto-http-url-on-button-click" ) );
+            Intent notificationIntent = new Intent( Intent.ACTION_VIEW , Uri.parse( "https://forms.gle/T3sKJfoWc4wU4VsJ7" ) );
             Bundle bundle = new Bundle();
             notificationIntent.putExtras(bundle);
             notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
