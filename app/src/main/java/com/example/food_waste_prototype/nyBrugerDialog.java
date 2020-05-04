@@ -159,6 +159,8 @@ public class nyBrugerDialog extends AlertDialog {
         dialog.cancel();
         BackgroundTask backgroundTask = new BackgroundTask(context);
         backgroundTask.execute("register", username.getText().toString(), password.getText().toString());
+        DataBase.instance.username = username.getText().toString();
+        DataBase.instance.password = password.getText().toString();
     }
 
 

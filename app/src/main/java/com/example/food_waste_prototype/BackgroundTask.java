@@ -24,6 +24,8 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
     SharedPreferences.Editor editor;
     private static int currentID = 0;
 
+
+
     private Context context;
     public BackgroundTask(Context context){
         this.context = context;
@@ -36,7 +38,9 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
         sharedPreferences = context.getSharedPreferences("MYPREFS", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         editor.putString("flag", "0");
+        //editor.putBoolean("loggedIn", true);
         editor.commit();
+
 
         final String urlRegistration = "https://lortesiden.000webhostapp.com/register_user.php";
         final String urlLogin = "https://lortesiden.000webhostapp.com/login.php";
@@ -358,10 +362,17 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
                 id = serverResponse[1];
                 DataBase.userID = Integer.parseInt(id);
                 Log.d("user id", "id: " + DataBase.userID);
+                editor.putString("flag","deleteInput");//s
+                editor.commit();//s
+                editor.putString("id", id);
+                editor.commit();
+                editor.putString("username", DataBase.instance.username);
+                editor.commit();
+                editor.putString("password", DataBase.instance.password);
+                editor.commit();
+                Intent intent = new Intent(context, InputActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
             }
-            Intent intent = new Intent(context, InputActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(intent);
-
         }
         if(flag.equals("login")){
             String test = "false";

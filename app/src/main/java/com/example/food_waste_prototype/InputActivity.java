@@ -93,7 +93,6 @@ public class InputActivity extends AppCompatActivity {
                 if (!(dots.isopen)) {
                     dots.MakeView(context, cl, dotsbutton);
 
-
                 } else {
                     dots.RemoveView(cl);
 

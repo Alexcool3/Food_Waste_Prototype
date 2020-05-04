@@ -1,27 +1,17 @@
 package com.example.food_waste_prototype;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
-import android.media.Image;
+import android.os.Vibrator;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
-
-import android.os.Vibrator;
-
-import static androidx.core.app.ActivityCompat.startActivityForResult;
 
 public class TaskBarView extends ConstraintLayout implements View.OnClickListener {
     Context context2;
@@ -63,8 +53,7 @@ public class TaskBarView extends ConstraintLayout implements View.OnClickListene
             public void onClick(View view) {
                 //Log.d("task", "did 2");
                 assert v != null;
-                v.vibrate(400);
-
+                v.vibrate(50);
                 SwitchActivity("stats", context);
             }
         });
@@ -73,7 +62,8 @@ public class TaskBarView extends ConstraintLayout implements View.OnClickListene
             @Override
             public void onClick(View view) {
                 assert v != null;
-                v.vibrate(400);
+                v.vibrate(50);
+
                 SwitchActivity("input", context);
             }
         });
