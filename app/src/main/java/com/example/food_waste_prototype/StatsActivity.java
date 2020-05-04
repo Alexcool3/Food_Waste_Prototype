@@ -396,7 +396,7 @@ public class StatsActivity extends AppCompatActivity {
                 break;
             default:
                 inputtime = currentSetDate;
-                new CustomToast("HEJ MED DIG DER ER FEJLMED MÅNEDE HAHA FUCK", context);
+
         }
 
         ArrayList<DataBase.Input> inputs = db.GetInputs();

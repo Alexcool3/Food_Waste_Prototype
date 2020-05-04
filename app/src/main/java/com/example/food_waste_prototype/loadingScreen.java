@@ -1,5 +1,8 @@
 package com.example.food_waste_prototype;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.IntentCompat;
 
+import java.util.Calendar;
+
 public class loadingScreen extends AppCompatActivity {
     DataBase DB;
 
@@ -19,6 +24,7 @@ public class loadingScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading_screen);
         DB = DataBase.getInstance(loadingScreen.this);
+        startAlarmBroadcastReceiver(loadingScreen.this);
         ImageView image = findViewById(R.id.imageView);
 
         image.startAnimation(AnimationUtils.loadAnimation(loadingScreen.this, R.anim.rotation));
@@ -52,9 +58,22 @@ public class loadingScreen extends AppCompatActivity {
 
     }
 
-   /* @Override
-    protected void onResume() {
-        super.onResume();
+    public static void startAlarmBroadcastReceiver(Context context) {
+        Intent _intent = new Intent(context, AlarmBroadCastReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, _intent, 0);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        assert alarmManager != null;
+        if(pendingIntent!=null){
+            alarmManager.cancel(pendingIntent);
+        }
 
-    }*/
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+
+        calendar.set(Calendar.HOUR_OF_DAY, 10);
+        calendar.set(Calendar.MINUTE, 37);
+        calendar.set(Calendar.SECOND, 0);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+    }
 }

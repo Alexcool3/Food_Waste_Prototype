@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         brugernavn = (EditText) findViewById(R.id.etBrugernavn);
+        CheckBox checkbox = (CheckBox) findViewById(R.id.checkBox);
         password = (EditText) findViewById(R.id.etPassword);
         login = (Button) findViewById(R.id.buttonLogin);
         registrer = (Button) findViewById(R.id.buttonRegistrer);
@@ -62,6 +64,12 @@ public class LoginActivity extends AppCompatActivity {
                 openDialog(DB);
             }
         });
+
+
+        if( checkbox.isChecked()){
+            // do something
+        };
+
 
     }
 

@@ -64,6 +64,7 @@ public class TaskBarView extends ConstraintLayout implements View.OnClickListene
                 //Log.d("task", "did 2");
                 assert v != null;
                 v.vibrate(400);
+
                 SwitchActivity("stats", context);
             }
         });

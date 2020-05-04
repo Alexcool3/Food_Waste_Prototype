@@ -3,6 +3,7 @@ package com.example.food_waste_prototype;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.content.Context;
 import android.content.Intent;
@@ -48,6 +49,8 @@ public class SettingsActivity extends AppCompatActivity {
         Button indstillinger = findViewById(R.id.change); //change button
         Button slet = findViewById(R.id.erase); //nulstil button
         Button nulstil = findViewById(R.id.delete); //slet button
+        Button skema = findViewById(R.id.erase2); //spørgeskema button
+
 
         backbutton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,7 +83,11 @@ public class SettingsActivity extends AppCompatActivity {
                 openDialog("delete");
             }
         });
-
+        skema.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { SwitchActivity("skema");
+            }
+        });
     }
 
     public void openDialog(final String action) {
@@ -154,6 +161,12 @@ public class SettingsActivity extends AppCompatActivity {
             openDialoglog();
             //Intent intent = new Intent(this, SettingsActivity.class);
             //startActivity(intent);
+        }
+
+        if (string == "skema") {
+            Intent browse = new Intent( Intent.ACTION_VIEW , Uri.parse( "https://stackoverflow.com/questions/2762861/android-goto-http-url-on-button-click" ) );
+
+            startActivity( browse );
         }
     }
 }
