@@ -23,9 +23,10 @@ import java.util.ArrayList;
 import static android.content.ContentValues.TAG;
 
 public class DataBase {
-    public static String username = "test";
+    public static String username = "";
+    public static String password = "";
     public static int userID = 0;
-
+    int loggedIN = 0;
     boolean loggedIn = false;
 
     public static DataBase instance;

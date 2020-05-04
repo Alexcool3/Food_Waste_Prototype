@@ -2,6 +2,7 @@ package com.example.food_waste_prototype;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -78,7 +79,14 @@ public class LoginActivity extends AppCompatActivity {
         if (isConnected){ // Check for cellular connectivity.
             BackgroundTask backgroundTask = new BackgroundTask(getApplicationContext());
             backgroundTask.execute("login", brugernavn.getText().toString(), password.getText().toString());
-            DataBase.username = brugernavn.getText().toString();
+            DataBase.instance.username = brugernavn.getText().toString();
+            DataBase.instance.password = password.getText().toString();
+            SharedPreferences sharedPreferences = LoginActivity.this.getSharedPreferences("MYPREFS", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            int loggedIN = 1;
+            editor.putInt("loggedIN", loggedIN);
+            editor.commit();
+
         }else{
             startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
         }
