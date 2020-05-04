@@ -392,7 +392,7 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
                 editor.commit();
                 editor.putString("password",password);
                 editor.commit();
-                Intent intent = new Intent(context, InputActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Intent intent = new Intent(context, InputActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 context.startActivity(intent);
             }else{
                 new CustomToast("Brugernavnet eller kodeordet findes ikke", context);

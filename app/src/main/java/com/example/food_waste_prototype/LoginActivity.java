@@ -30,11 +30,12 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         brugernavn = (EditText) findViewById(R.id.etBrugernavn);
-        CheckBox checkbox = (CheckBox) findViewById(R.id.checkBox);
+        final CheckBox checkbox = (CheckBox) findViewById(R.id.checkBox);
         password = (EditText) findViewById(R.id.etPassword);
         login = (Button) findViewById(R.id.buttonLogin);
         registrer = (Button) findViewById(R.id.buttonRegistrer);
-
+        SharedPreferences sharedPreferences = LoginActivity.this.getSharedPreferences("MYPREFS", Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = sharedPreferences.edit();
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,6 +45,13 @@ public class LoginActivity extends AppCompatActivity {
                 if (!brugernavn.getText().toString().equals("") && !password.getText().toString().equals("")) {
                     validate(brugernavn.getText().toString(), password.getText().toString());
                     AllowAccess();
+                    if(checkbox.isChecked()){
+                        editor.putInt("loggedIN", 1);
+                        editor.commit();
+                    } else {
+                        editor.putInt("loggedIN", 0);
+                        editor.commit();
+                    }
                 } else {
                     if (brugernavn.getText().toString().equals("")) {
                         brugernavn.setHint("Indtast brugernavn");
@@ -67,9 +75,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
-        if( checkbox.isChecked()){
-            // do something
-        };
+
 
 
     }
@@ -89,11 +95,6 @@ public class LoginActivity extends AppCompatActivity {
             backgroundTask.execute("login", brugernavn.getText().toString(), password.getText().toString());
             DataBase.instance.username = brugernavn.getText().toString();
             DataBase.instance.password = password.getText().toString();
-            SharedPreferences sharedPreferences = LoginActivity.this.getSharedPreferences("MYPREFS", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            int loggedIN = 1;
-            editor.putInt("loggedIN", loggedIN);
-            editor.commit();
 
         }else{
             startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
