@@ -8,6 +8,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.core.app.NotificationCompat;
@@ -27,7 +28,8 @@ public class AlarmBroadCastReceiver extends BroadcastReceiver {
             String CHANNEL_ID = "Mad_Spild_App";// The id of the channel.
             CharSequence name = context.getResources().getString(R.string.app_name);// The user-visible name of the channel.
             NotificationCompat.Builder mBuilder;
-            Intent notificationIntent = new Intent(context, InputActivity.class);
+           // Intent notificationIntent = new Intent(context, InputActivity.class);
+            Intent notificationIntent = new Intent( Intent.ACTION_VIEW , Uri.parse( "https://stackoverflow.com/questions/2762861/android-goto-http-url-on-button-click" ) );
             Bundle bundle = new Bundle();
             notificationIntent.putExtras(bundle);
             notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);

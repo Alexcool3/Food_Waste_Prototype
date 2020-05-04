@@ -23,7 +23,7 @@ public class nyBrugerDialog extends AlertDialog {
         OpenDialog(context, db);
     }
 
-    protected nyBrugerDialog(Context context, final DataBase db, String settings) {
+    protected nyBrugerDialog(final Context context, final DataBase db, String settings) {
         // modifies the dialog to become edit user dialog
         super(context);
         final AlertDialog.Builder AlertDialog = new AlertDialog.Builder(context); // Context, this, etc.
@@ -47,6 +47,7 @@ public class nyBrugerDialog extends AlertDialog {
         final Spinner dropdown = newView.findViewById(R.id.dropdown2);
         Button accept = newView.findViewById(R.id.button);
         Button cancel = newView.findViewById(R.id.button2);
+        ImageButton warning = newView.findViewById(R.id.button_information4);
         ImageButton info = newView.findViewById(R.id.button_information2);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +65,15 @@ public class nyBrugerDialog extends AlertDialog {
             }
         });
 
+        warning.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                new HelpDialog(context, "Brug ikke dit rigtige kodeord, da det ikke er gemt sikkert.");
+
+            }
+        });
+
         info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,6 +85,8 @@ public class nyBrugerDialog extends AlertDialog {
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(getContext(), R.layout.spinner_text, items);
         adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
         dropdown.setAdapter(adapter);
+
+
 
     }
 
@@ -102,6 +114,7 @@ public class nyBrugerDialog extends AlertDialog {
         Button accept = newView.findViewById(R.id.button);
         Button cancel = newView.findViewById(R.id.button2);
         ImageButton info = newView.findViewById(R.id.button_information2);
+        ImageButton warning = newView.findViewById(R.id.button_information4);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -129,6 +142,15 @@ public class nyBrugerDialog extends AlertDialog {
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(getContext(), R.layout.spinner_text, items);
         adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
         dropdown.setAdapter(adapter);
+
+        warning.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                new HelpDialog(context, "Brug ikke dit rigtige kodeord, da det ikke er gemt sikkert.");
+
+            }
+        });
 
     }
 

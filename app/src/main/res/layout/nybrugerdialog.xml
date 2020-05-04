@@ -9,6 +9,21 @@
     android:paddingBottom="5dp">
 
 
+    <ImageButton
+        android:id="@+id/button_information4"
+        android:layout_width="33dp"
+        android:layout_height="36dp"
+        android:layout_marginBottom="8dp"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        android:tint="#FF0000"
+        app:layout_constraintBottom_toBottomOf="@+id/edit_kodeord"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/edit_kodeord"
+        app:srcCompat="@android:drawable/stat_sys_warning" />
+
     <View
         android:id="@+id/view"
         android:layout_width="300dp"
@@ -91,7 +106,9 @@
         android:id="@+id/edit_kodeord"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
         android:hint="Indtast Kodeord"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"

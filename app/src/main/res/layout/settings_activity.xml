@@ -108,7 +108,7 @@
         android:id="@+id/delete"
         android:layout_width="0dp"
         android:layout_height="47dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="10dp"
         android:background="@color/Red"
         android:fontFamily="@font/ibm_plex_sans_regular"
         android:gravity="left|center_vertical"
