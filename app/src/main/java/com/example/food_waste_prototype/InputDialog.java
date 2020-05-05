@@ -3,6 +3,7 @@ package com.example.food_waste_prototype;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -12,9 +13,16 @@ import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 
+import java.time.LocalDateTime;
+
+import  java.time.Duration;
+
+
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class InputDialog extends AlertDialog {
 
     DataBase db;
+    LocalDateTime from = LocalDateTime.now();
 
     public InputDialog(Context context, Category cg) {
         super(context);
@@ -86,8 +94,8 @@ public class InputDialog extends AlertDialog {
 
     int foodType = 0;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void OpenDialog(Context context, final Category cg) {
-        // Log.d("fred", String.valueOf(context));
         final AlertDialog.Builder AlertDialog = new AlertDialog.Builder(context); // Context, this, etc.
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View newView = inflater.inflate(R.layout.dialog_input, null);
@@ -153,6 +161,7 @@ public class InputDialog extends AlertDialog {
 
             }
         });
+
     }
 
     private void CloseDialog(AlertDialog dialog) {
@@ -177,6 +186,9 @@ public class InputDialog extends AlertDialog {
         }
         new CustomToast("Indtastede " + waste.getText().toString() + " Kg " + foodwaste + " i " + cg.GetName(), getContext());
         dialog.dismiss();
+        LocalDateTime too = LocalDateTime.now();
+        Duration duration = Duration.between(from, too);
+        Log.d("time","Seconds for input: "+ (duration.getSeconds())); // amount of seconds it took to input
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

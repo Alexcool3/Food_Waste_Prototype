@@ -160,7 +160,7 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
         if (string == "skema") {
-            Intent browse = new Intent( Intent.ACTION_VIEW , Uri.parse( "https://stackoverflow.com/questions/2762861/android-goto-http-url-on-button-click" ) );
+            Intent browse = new Intent( Intent.ACTION_VIEW , Uri.parse("https://forms.gle/T3sKJfoWc4wU4VsJ7") );
 
             startActivity( browse );
         }
