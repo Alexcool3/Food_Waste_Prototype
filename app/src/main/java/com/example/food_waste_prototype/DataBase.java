@@ -388,6 +388,7 @@ public class DataBase {
         private float amount;
         private boolean foodScraps;
         private int id = 0;
+        private int foodType = 0; // 0 = foodscraps, 1 = foodwaste.
 
         Input(LocalDate time, String name, float amount, boolean foodScraps) {
             this.time = time;
@@ -449,7 +450,12 @@ public class DataBase {
     }
     //endregion
 
-    public DataBase.Input GetLastInputInsance(){
+    public DataBase.Input GetLastInputInstance(){
         return inputs.get(inputs.size()-1);
     }
+
+    public Category GetLastCategoryInstance(){
+        return categories.get(categories.size()-1);
+    }
+
 }

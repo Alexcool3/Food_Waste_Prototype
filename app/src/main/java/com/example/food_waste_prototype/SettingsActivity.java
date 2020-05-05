@@ -1,26 +1,18 @@
 package com.example.food_waste_prototype;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
-import android.net.Uri;
-import android.os.Bundle;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 
@@ -143,6 +135,8 @@ public class SettingsActivity extends AppCompatActivity {
         }
         if (string == "warning") {
             DataBase.getInstance(SettingsActivity.this).clearData();
+            BackgroundTask backgroundTask = new BackgroundTask(SettingsActivity.this);
+            backgroundTask.execute("resetUser", DataBase.username);
             new CustomToast("Din data er blevet nulstillet", SettingsActivity.this);
 
             // Intent intent = new Intent(this, SettingsActivity.class);
@@ -151,6 +145,8 @@ public class SettingsActivity extends AppCompatActivity {
         }
         if (string == "delete") {
             DataBase.getInstance(SettingsActivity.this).wipeinator();
+            BackgroundTask backgroundTask = new BackgroundTask(SettingsActivity.this);
+            backgroundTask.execute("deleteUser", DataBase.username);
             new CustomToast("Din bruger og data er blevet slettet", SettingsActivity.this);
 
             Intent intent = new Intent(this, LoginActivity.class);

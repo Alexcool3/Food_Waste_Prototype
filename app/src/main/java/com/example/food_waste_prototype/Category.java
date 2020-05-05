@@ -22,6 +22,7 @@ public class Category extends LinearLayout {
     private float pricePerUnit;
     private float amountFW;
     private float amountFS;
+    private int id;
     private boolean inflated = false;
     public boolean edittarget = false;
     public boolean deletetarget = false;
@@ -155,7 +156,9 @@ public class Category extends LinearLayout {
                                 SetPricePerUnit(Float.parseFloat(String.valueOf(priceInput.getText())));
                             }
 
-
+                            BackgroundTask backgroundTask = new BackgroundTask(context);
+                            Log.d("Check", "Username: " + DataBase.username + " id: " + id + " cat_name:" + nameInput.getText().toString() + "price: " + priceInput.getText().toString());
+                            backgroundTask.execute("editCategory", DataBase.username, String.valueOf(id), nameInput.getText().toString(), priceInput.getText().toString());
                             // populate(context, tb);
                             dialog.dismiss();
                         }
@@ -484,5 +487,13 @@ public class Category extends LinearLayout {
     private void hideBorder() {
         ImageView border = findViewById(R.id.border);
         border.setVisibility(INVISIBLE);
+    }
+
+    public void SetID(int id){
+        this.id = id;
+    }
+
+    public int GetID(){
+        return id;
     }
 }

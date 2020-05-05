@@ -46,6 +46,7 @@ public class HistoryView extends RelativeLayout {
             public void onClick(View view) {
                 InputDialog id = new InputDialog(context, input, hd);
                 hd.Populate(context, db);
+
             }
         });
     }
@@ -196,7 +197,7 @@ public class HistoryView extends RelativeLayout {
                     cat.SetPricePerUnit(Float.parseFloat(String.valueOf(priceInput.getText())));
                 }
 
-
+                EditCategoryInDatabase(context, DataBase.username, String.valueOf(cat.GetID()), nameInput.getText().toString(), priceInput.getText().toString());
                 // populate(context, tb);
                 dialog.dismiss();
             }
@@ -212,5 +213,10 @@ public class HistoryView extends RelativeLayout {
     private void DeleteInputFromServer(Context context, String username, String id){
         BackgroundTask backgroundTask = new BackgroundTask(context);
         backgroundTask.execute("deleteInput", username, id);
+    }
+
+    private void EditCategoryInDatabase(Context context, String username, String id, String category_name, String price){
+        BackgroundTask backgroundTask = new BackgroundTask(context);
+        backgroundTask.execute("editCategory", username, id, category_name, price);
     }
 }
