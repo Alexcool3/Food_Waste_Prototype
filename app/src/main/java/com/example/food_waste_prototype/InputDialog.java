@@ -185,7 +185,7 @@ public class InputDialog extends AlertDialog {
         dialog.dismiss();
         LocalDateTime too = LocalDateTime.now();
         Duration duration = Duration.between(from, too);
-        Log.d("ss", String.valueOf(duration));
+        Log.d("time","Seconds for input: "+ (duration.getSeconds())); // amount of seconds it took to input
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
