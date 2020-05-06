@@ -52,7 +52,7 @@ public class InputActivity extends AppCompatActivity {
 
 
         db.SaveData(InputActivity.this);
-        Toast.makeText(getApplicationContext(), "onPause called", Toast.LENGTH_LONG).show();
+
         super.onPause();
 
 
@@ -222,7 +222,8 @@ public class InputActivity extends AppCompatActivity {
                 for (int number = 0; number < cats.size(); number++) {
                     Category cg = cats.get(number);
                     if (nameInput.getText().toString().toLowerCase().equals(cg.GetName().toLowerCase())) {
-                        Toast.makeText(context, "Kategorien eksisterer allerede", Toast.LENGTH_LONG).show();
+                        new CustomToast("Kategorien eksisterer allerede", context);
+
                         return;
                     }
                 }
