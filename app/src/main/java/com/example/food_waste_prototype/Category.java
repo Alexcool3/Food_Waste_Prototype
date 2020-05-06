@@ -2,7 +2,9 @@ package com.example.food_waste_prototype;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class Category extends LinearLayout {
@@ -63,6 +66,16 @@ public class Category extends LinearLayout {
     public Category(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         // inflate(context, R.layout.category_view, this);
+    }
+
+    public Category(Context context, float foodWaste, float foodScraps, String name, int ID, float pricePerUnit){
+        super(context);
+        this.name = name;
+        this.pricePerUnit = pricePerUnit;
+        this.amountFW = foodWaste;
+        this.amountFS = foodScraps;
+        this.id = ID;
+        //hideBorder();
     }
 
     public String GetName() {
@@ -156,9 +169,11 @@ public class Category extends LinearLayout {
                                 SetPricePerUnit(Float.parseFloat(String.valueOf(priceInput.getText())));
                             }
 
+                            SharedPreferences sharedPreferences = getContext().getSharedPreferences("MYPREFS", Context.MODE_PRIVATE);
+                            DataBase.instance.username = sharedPreferences.getString("username", "");
                             BackgroundTask backgroundTask = new BackgroundTask(context);
-                            Log.d("Check", "Username: " + DataBase.username + " id: " + id + " cat_name:" + nameInput.getText().toString() + "price: " + priceInput.getText().toString());
-                            backgroundTask.execute("editCategory", DataBase.username, String.valueOf(id), nameInput.getText().toString(), priceInput.getText().toString());
+                            Log.d("Check", "Username: " + DataBase.instance.username + " id: " + id + " cat_name: " + nameInput.getText().toString() + " price: " + priceInput.getText().toString());
+                            backgroundTask.execute("editCategory", DataBase.instance.username, String.valueOf(id), nameInput.getText().toString(), priceInput.getText().toString());
                             // populate(context, tb);
                             dialog.dismiss();
                         }
@@ -192,6 +207,7 @@ public class Category extends LinearLayout {
         final ImageButton image = this.findViewById(R.id.image);
         image.setOnClickListener(null);
         image.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
                 new InputDialog(context, Category.this);
@@ -461,6 +477,7 @@ public class Category extends LinearLayout {
 
 
             image.setOnClickListener(new View.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.O)
                 @Override
                 public void onClick(View view) {
                     InputDialog id = new InputDialog(context, Category.this);

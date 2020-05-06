@@ -2,32 +2,21 @@ package com.example.food_waste_prototype;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.os.Build;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.jar.Attributes;
-
-import static android.content.ContentValues.TAG;
 
 public class HistoryDialog extends AlertDialog {
 

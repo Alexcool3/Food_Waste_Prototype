@@ -125,7 +125,7 @@ public class nyBrugerDialog extends AlertDialog {
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DataBase.username = editTextBrugernavn.getText().toString();
+                DataBase.instance.username = editTextBrugernavn.getText().toString();
                 AcceptInput(email, editTextBrugernavn, editTextKodeord, dropdown, db, dialog);
 
             }

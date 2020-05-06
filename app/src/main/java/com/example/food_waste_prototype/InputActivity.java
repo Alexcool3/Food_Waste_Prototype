@@ -3,6 +3,7 @@ package com.example.food_waste_prototype;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -46,14 +47,16 @@ public class InputActivity extends AppCompatActivity {
 
     }
 
-    /*@Override
+    @Override
     protected void onPause() {
-        db.SaveAllDataToFile(InputActivity.this);
-        super.onPause();
-        super.onResume();
-        Toast.makeText(getApplicationContext(), "onPause called", Toast.LENGTH_LONG).show();
 
-    }*/
+
+        db.SaveData(InputActivity.this);
+        Toast.makeText(getApplicationContext(), "onPause called", Toast.LENGTH_LONG).show();
+        super.onPause();
+
+
+    }
 
     public static InputActivity getInstance() {
         return instance;
@@ -249,8 +252,13 @@ public class InputActivity extends AppCompatActivity {
 
                 populate(context);
 
-                BackgroundTask backgroundTask = new BackgroundTask(getApplicationContext());
-                backgroundTask.execute("categories", DataBase.username, nameInput.getText().toString(), priceInput.getText().toString());
+                SharedPreferences sharedPreferences = InputActivity.this.getSharedPreferences("MYPREFS", Context.MODE_PRIVATE);
+
+                DataBase.instance.username = sharedPreferences.getString("username", "");
+
+                BackgroundTask backgroundTask = new BackgroundTask(InputActivity.this);
+                Log.d("Category Database Login", "username: " + DataBase.instance.username + " password: "+ DataBase.instance.password);
+                backgroundTask.execute("categories", DataBase.instance.username, nameInput.getText().toString(), priceInput.getText().toString());
 
                 dialog.dismiss();
 

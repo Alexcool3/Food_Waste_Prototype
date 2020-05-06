@@ -1,6 +1,7 @@
 package com.example.food_waste_prototype;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.util.Log;
 
@@ -26,7 +27,7 @@ public class DataBase {
     public static String username = "";
     public static String password = "";
     public static int userID = 0;
-    int loggedIN = 0;
+    public static int loggedIN = 0;
     boolean loggedIn = false;
 
     public static DataBase instance;
@@ -35,6 +36,7 @@ public class DataBase {
     private ArrayList<Input> inputs = new ArrayList<>(); // contains a list of all the past inputs
     private ArrayList<User> users = new ArrayList<>(); // contains a list of all users and the current user
     public float purchases = 0;
+
 
     private DataBase(Context context) {
 
@@ -200,6 +202,7 @@ public class DataBase {
         } else {
             cg.AddFW(-input.getamount());
         }
+        if (inputs == null) return;
         inputs.remove(input);
 
     }
@@ -210,6 +213,7 @@ public class DataBase {
         for (int i = 0; i < inputs.size(); i++) {
             Input ip = inputs.get(i);
             if (nameOfCategory.equals(ip.getName())) {
+                if (inputs == null) return;
                 inputs.remove(ip);
             }
         }
@@ -395,6 +399,7 @@ public class DataBase {
             this.name = name;
             this.amount = amount;
             this.foodScraps = foodScraps;
+            foodType = foodScraps ? 0 : 1;
         }
 
         public String getName() {
@@ -435,11 +440,14 @@ public class DataBase {
 
         public void SetID(int id){
             this.id = id;
-            Log.d("Input instance", "ID:" + id);
         }
 
         public int GetID(){
             return id;
+        }
+
+        public int GetFoodType(){
+            return foodType;
         }
 
        /* public Calendar TimetoCalendar(){
@@ -456,6 +464,76 @@ public class DataBase {
 
     public Category GetLastCategoryInstance(){
         return categories.get(categories.size()-1);
+    }
+
+    public void SaveData(Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MYPREFS", Context.MODE_PRIVATE);
+        SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
+        sharedPreferencesEditor.putInt("catSize", categories.size());
+        for (int i = 0; i <= categories.size()-1; i++){
+            Category cat = categories.get(i);
+            sharedPreferencesEditor.putFloat(i+"FS", cat.GetAmountFS());
+            sharedPreferencesEditor.putFloat(i+"FW", cat.GetAmountFW());
+            sharedPreferencesEditor.putString(i+"CatName", cat.GetName());
+            sharedPreferencesEditor.putInt("Cat"+cat.GetID(), cat.GetID());
+            sharedPreferencesEditor.putFloat(i+"Price", cat.GetPricePerUnit());
+        }
+        sharedPreferencesEditor.commit();
+        sharedPreferencesEditor.putInt("inputSize", inputs.size());
+        for (int i = 0; i <= inputs.size()-1; i++){
+            Input input = inputs.get(i);
+            sharedPreferencesEditor.putInt("Input"+input.GetID(), input.GetID());
+            sharedPreferencesEditor.putString(i+"InputName", input.getName());
+            sharedPreferencesEditor.putFloat(i+"amount",input.getamount());
+            sharedPreferencesEditor.putString(i+"Date", input.getTime().toString());
+            sharedPreferencesEditor.putInt(i+"foodType", input.foodType);
+        }
+
+        sharedPreferencesEditor.commit();
+
+
+        /*
+        try {
+            Sm.saveSerializable(context, categories, "Cats");
+        } catch (Exception e) {
+            Log.d("SaveData: ", "No data saved");
+        }
+        */
+    }
+    /*
+    public static void saveObjectToSharedPreference(Context context, String serializedObjectKey) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MYPREFS", Context.MODE_PRIVATE);
+        SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
+        final Gson gson = new Gson();
+        String serializedObject = gson.toJson(categories.get(0));
+        sharedPreferencesEditor.putString("Category", categories.get(0));
+        sharedPreferencesEditor.apply();
+    }
+    */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void ReadData(Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MYPREFS", Context.MODE_PRIVATE);
+        int catSize = sharedPreferences.getInt("catSize", 0);
+        if (catSize == 0) return;
+        for (int i = 0; i < catSize; i++){
+            //
+            Category cat = new Category(context, sharedPreferences.getFloat(i+"FS", 0), sharedPreferences.getFloat(i+"FW", 0),sharedPreferences.getString(i+"CatName", ""), sharedPreferences.getInt(String.valueOf(i), 0), sharedPreferences.getFloat(i+"Price", 0));
+            categories.add(cat);
+        }
+
+        int inputSize = sharedPreferences.getInt("inputSize", 0);
+
+        if (inputSize == 0) return;
+        for (int i = 0; i < inputSize; i++){
+
+
+            boolean foodType = sharedPreferences.getInt(i + "foodType", 0) != 1;
+            LocalDate time = LocalDate.parse(sharedPreferences.getString(i+"Date", "1944-05-13"));
+            Input input = new Input(time, sharedPreferences.getString(i+"InputName", ""), sharedPreferences.getFloat(i+"amount", 0), foodType);
+            inputs.add(input);
+        }
+
+
     }
 
 }

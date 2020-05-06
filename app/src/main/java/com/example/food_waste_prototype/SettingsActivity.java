@@ -3,6 +3,7 @@ package com.example.food_waste_prototype;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -135,8 +136,10 @@ public class SettingsActivity extends AppCompatActivity {
         }
         if (string == "warning") {
             DataBase.getInstance(SettingsActivity.this).clearData();
+            SharedPreferences sharedPreferences = SettingsActivity.this.getSharedPreferences("MYPREFS", Context.MODE_PRIVATE);
+            DataBase.instance.username = sharedPreferences.getString("username", "");
             BackgroundTask backgroundTask = new BackgroundTask(SettingsActivity.this);
-            backgroundTask.execute("resetUser", DataBase.username);
+            backgroundTask.execute("resetUser", DataBase.instance.username);
             new CustomToast("Din data er blevet nulstillet", SettingsActivity.this);
 
             // Intent intent = new Intent(this, SettingsActivity.class);
@@ -145,8 +148,10 @@ public class SettingsActivity extends AppCompatActivity {
         }
         if (string == "delete") {
             DataBase.getInstance(SettingsActivity.this).wipeinator();
+            SharedPreferences sharedPreferences = SettingsActivity.this.getSharedPreferences("MYPREFS", Context.MODE_PRIVATE);
+            DataBase.instance.username = sharedPreferences.getString("username", "");
             BackgroundTask backgroundTask = new BackgroundTask(SettingsActivity.this);
-            backgroundTask.execute("deleteUser", DataBase.username);
+            backgroundTask.execute("deleteUser", DataBase.instance.username);
             new CustomToast("Din bruger og data er blevet slettet", SettingsActivity.this);
 
             Intent intent = new Intent(this, LoginActivity.class);

@@ -2,6 +2,7 @@ package com.example.food_waste_prototype;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -92,7 +93,6 @@ public class InputDialog extends AlertDialog {
 
     }
 
-    int foodType = 0;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void OpenDialog(Context context, final Category cg) {
@@ -121,8 +121,7 @@ public class InputDialog extends AlertDialog {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
-                BackgroundTask backgroundTask = new BackgroundTask(getContext());
-                backgroundTask.execute("input", DataBase.username, amountInput.getText().toString(), cg.GetName(), String.valueOf(foodType));
+
                 AcceptWaste(dialog, amountInput, cg);
             }
         });
@@ -144,10 +143,10 @@ public class InputDialog extends AlertDialog {
                 toggleText.setText(db.GetEnumToString());
                 if (db.GetEnumToString().equals("Mad Affald")) {
                     toggle.setImageResource(R.drawable.button_toggle_reverse);
-                    foodType = 0;
+
                 } else {
                     toggle.setImageResource(R.drawable.button_toggle);
-                    foodType = 1;
+
                 }
 
             }
@@ -170,6 +169,7 @@ public class InputDialog extends AlertDialog {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void AcceptWaste(AlertDialog dialog, EditText waste, Category cg) {
+        DataBase.Input input;
         if (waste.getText().toString().equals("")) {
             waste.setHint("Indtast spild i Kilo");
             return;
@@ -177,11 +177,11 @@ public class InputDialog extends AlertDialog {
         String foodwaste;
         if (db.GetEnumToString().equals("Mad Affald")) {
             cg.AddFS(Float.parseFloat(waste.getText().toString()));
-            db.CreateInput(cg.GetName(), (Float.parseFloat(waste.getText().toString())), true);
+            input = db.CreateInput(cg.GetName(), (Float.parseFloat(waste.getText().toString())), true);
             foodwaste = " Mad Affald ";
         } else {
             cg.AddFW(Float.parseFloat(waste.getText().toString()));
-            db.CreateInput(cg.GetName(), (Float.parseFloat(waste.getText().toString())), false);
+            input = db.CreateInput(cg.GetName(), (Float.parseFloat(waste.getText().toString())), false);
             foodwaste = " Mad Spild ";
         }
         new CustomToast("Indtastede " + waste.getText().toString() + " Kg " + foodwaste + " i " + cg.GetName(), getContext());
@@ -189,6 +189,11 @@ public class InputDialog extends AlertDialog {
         LocalDateTime too = LocalDateTime.now();
         Duration duration = Duration.between(from, too);
         Log.d("time","Seconds for input: "+ (duration.getSeconds())); // amount of seconds it took to input
+        BackgroundTask backgroundTask = new BackgroundTask(getContext());
+        Log.d("Date", "Date: " + too);
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("MYPREFS", Context.MODE_PRIVATE);
+        DataBase.instance.username = sharedPreferences.getString("username", "");
+        backgroundTask.execute("input", DataBase.instance.username, String.valueOf(input.getamount()), cg.GetName(), String.valueOf(input.GetFoodType()), String.valueOf((float)duration.getSeconds()), input.getTime().toString());
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -228,8 +233,14 @@ public class InputDialog extends AlertDialog {
             db.GetCategory(input.getName()).AddFW(Float.parseFloat(waste.getText().toString()));
         }
 
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("MYPREFS", Context.MODE_PRIVATE);
+
+        DataBase.instance.username = sharedPreferences.getString("username", "");
+
+        Log.d("EditInput", "username: " + DataBase.instance.username + " Input ID: " + input.GetID());
+
         BackgroundTask backgroundTask = new BackgroundTask(getContext());
-        backgroundTask.execute("editInput", DataBase.username, waste.getText().toString(), String.valueOf(input.GetID()), String.valueOf(type));
+        backgroundTask.execute("editInput", DataBase.instance.username, waste.getText().toString(), String.valueOf(input.GetID()), String.valueOf(type));
         hd.Populate(getContext(), db);
         dialog.dismiss();
         return;

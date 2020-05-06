@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
         password = (EditText) findViewById(R.id.etPassword);
         login = (Button) findViewById(R.id.buttonLogin);
         registrer = (Button) findViewById(R.id.buttonRegistrer);
-        SharedPreferences sharedPreferences = LoginActivity.this.getSharedPreferences("MYPREFS", Context.MODE_PRIVATE);
+        final SharedPreferences sharedPreferences = LoginActivity.this.getSharedPreferences("MYPREFS", Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = sharedPreferences.edit();
 
         login.setOnClickListener(new View.OnClickListener() {
@@ -44,7 +44,6 @@ public class LoginActivity extends AppCompatActivity {
                 //validate(brugernavn.getText().toString(), password.getText().toString());
                 if (!brugernavn.getText().toString().equals("") && !password.getText().toString().equals("")) {
                     validate(brugernavn.getText().toString(), password.getText().toString());
-                    AllowAccess();
                     if(checkbox.isChecked()){
                         editor.putInt("loggedIN", 1);
                         editor.commit();
@@ -62,7 +61,8 @@ public class LoginActivity extends AppCompatActivity {
                         //Toast.makeText(getApplicationContext(), "Kodeord ikke indtastet", Toast.LENGTH_SHORT);
                     }
                 }
-                DataBase.username = brugernavn.getText().toString();
+                AllowAccess();
+                //DataBase.username = brugernavn.getText().toString();
             }
         });
 
@@ -91,10 +91,10 @@ public class LoginActivity extends AppCompatActivity {
         boolean isConnected = activeNetworkInfo != null &&
                 activeNetworkInfo.isConnectedOrConnecting();
         if (isConnected){ // Check for cellular connectivity.
-            BackgroundTask backgroundTask = new BackgroundTask(getApplicationContext());
+            BackgroundTask backgroundTask = new BackgroundTask(LoginActivity.this);
             backgroundTask.execute("login", brugernavn.getText().toString(), password.getText().toString());
-            DataBase.instance.username = brugernavn.getText().toString();
-            DataBase.instance.password = password.getText().toString();
+            //DataBase.username = brugernavn.getText().toString();
+            //DataBase.password = password.getText().toString();
 
         }else{
             startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));

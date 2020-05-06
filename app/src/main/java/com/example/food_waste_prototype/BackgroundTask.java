@@ -36,6 +36,7 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
     protected String doInBackground(String... params) {
 
         sharedPreferences = context.getSharedPreferences("MYPREFS", Context.MODE_PRIVATE);
+
         editor = sharedPreferences.edit();
         editor.putString("flag", "0");
         //editor.putBoolean("loggedIn", true);
@@ -236,10 +237,11 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
             String regWeight = params[2];
             String regCategory = params[3];
             String regType = params[4];
-            //String regTime = params[5];
+            String regTime = params[5];
+            String regDate = params[6];
             try {
                 URL url = new URL(urlInput);
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();//s
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
                 httpURLConnection.setDoOutput(true);
                 httpURLConnection.setDoInput(true);
@@ -251,7 +253,9 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
                 String myData = URLEncoder.encode("identifier_username","UTF-8")+"="+URLEncoder.encode(regName,"UTF-8")+"&"
                         +URLEncoder.encode("identifier_weight","UTF-8")+"="+URLEncoder.encode(regWeight,"UTF-8")+"&"
                         +URLEncoder.encode("identifier_category","UTF-8")+"="+URLEncoder.encode(regCategory,"UTF-8")+"&"
-                        +URLEncoder.encode("identifier_type","UTF-8")+"="+URLEncoder.encode(regType,"UTF-8");
+                        +URLEncoder.encode("identifier_type","UTF-8")+"="+URLEncoder.encode(regType,"UTF-8")+"&"
+                        +URLEncoder.encode("identifier_time","UTF-8")+"="+URLEncoder.encode(regTime,"UTF-8")+"&"
+                        +URLEncoder.encode("identifier_date","UTF-8")+"="+URLEncoder.encode(regDate,"UTF-8");
                 bufferedWriter.write(myData);
                 bufferedWriter.flush();
                 bufferedWriter.close();
@@ -569,7 +573,6 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
             String password = "";
             String id = "";
             String[] serverResponse = s.split(",");
-            //Log.d("serverResponse", serverResponse[0]);
             test = serverResponse[0];
 
             if(test.equals("true")){
@@ -581,6 +584,9 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
                 editor.commit();
                 editor.putString("password",password);
                 editor.commit();
+                //DataBase.instance.username = sharedPreferences.getString("username", "");
+                //DataBase.instance.password = sharedPreferences.getString("password", "");
+                //Log.d("Check", "username: " + DataBase.instance.username + " password: " + DataBase.instance.password);
                 Intent intent = new Intent(context, InputActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 context.startActivity(intent);
             }else{
@@ -614,8 +620,10 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
             //Log.d("serverResponse", serverResponse[0]);
             if (test.equals("true")){
                 id = serverResponse[1];
-                DataBase.Input latestInput = DataBase.instance.GetLastInputInstance();
-                latestInput.SetID(Integer.parseInt(id));
+
+                DataBase.instance.GetLastInputInstance().SetID(Integer.parseInt(id));
+                editor.putInt("Input"+DataBase.instance.GetLastInputInstance().GetID(), DataBase.instance.GetLastInputInstance().GetID());
+                editor.commit();
                 Log.d("DatabaseInput", "ID: " + DataBase.instance.GetLastInputInstance().GetID());
             }
         }

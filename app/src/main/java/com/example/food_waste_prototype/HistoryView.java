@@ -2,6 +2,7 @@ package com.example.food_waste_prototype;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -33,7 +34,10 @@ public class HistoryView extends RelativeLayout {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
-                DeleteInputFromServer(context, DataBase.username, String.valueOf(input.GetID()));
+                //SharedPreferences sharedPreferences = context.getSharedPreferences("MYPREFS", Context.MODE_PRIVATE);
+                //DataBase.instance.username = sharedPreferences.getString("username", "");
+                //Log.d("DeleteInput", "InputID: " + input.GetID());
+                //DeleteInputFromServer(context, DataBase.instance.username, String.valueOf(sharedPreferences.getInt("Input"+input.GetID(), 22)));
                 db.DeleteInput(input);
                 hd.Populate(context, db);
 
@@ -74,7 +78,9 @@ public class HistoryView extends RelativeLayout {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DeleteCategoryFromServer(context, DataBase.username, cg.GetName());
+                SharedPreferences sharedPreferences = context.getSharedPreferences("MYPREFS", Context.MODE_PRIVATE);
+                DataBase.instance.username = sharedPreferences.getString("username", "");
+                DeleteCategoryFromServer(context, DataBase.instance.username, cg.GetName());
                 Log.d("d", "category name:" + cg.GetName());
                 db.DeleteCategory(cg.GetName());
 
@@ -197,7 +203,7 @@ public class HistoryView extends RelativeLayout {
                     cat.SetPricePerUnit(Float.parseFloat(String.valueOf(priceInput.getText())));
                 }
 
-                EditCategoryInDatabase(context, DataBase.username, String.valueOf(cat.GetID()), nameInput.getText().toString(), priceInput.getText().toString());
+                EditCategoryInDatabase(context, DataBase.instance.username, String.valueOf(cat.GetID()), nameInput.getText().toString(), priceInput.getText().toString());
                 // populate(context, tb);
                 dialog.dismiss();
             }
