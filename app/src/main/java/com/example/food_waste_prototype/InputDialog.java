@@ -156,7 +156,7 @@ public class InputDialog extends AlertDialog {
         info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new HelpDialog(getContext(), "Mad Spild er defineret som mad der kunne have været spist, men ikke er blevet spist. Eksempelvis gammel milkers. \n \n  Mad Affald er mad, der ikke er spiseligt af mennesker. For eksempel ægge skaller eller roden af et løg. ");
+                new HelpDialog(getContext(), "Mad Spild er defineret som mad der kunne have været spist, men ikke er blevet spist. Eksempelvis gammel mælk. \n \n  Mad Affald er mad, der ikke er spiseligt af mennesker. For eksempel æggeskaller eller roden af et løg. ");
 
             }
         });
