@@ -591,6 +591,8 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
                 context.startActivity(intent);
             }else{
                 new CustomToast("Brugernavnet eller kodeordet findes ikke", context);
+                Intent intent = new Intent(context, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                context.startActivity(intent);
 
             }
         }else{

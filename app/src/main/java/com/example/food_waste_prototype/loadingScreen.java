@@ -54,8 +54,23 @@ public class loadingScreen extends AppCompatActivity {
                     //Log.d("Saved user login", "username: " + sharedPreferences.getString("username", "") + " password: " + sharedPreferences.getString("password", ""));
                     DB.ReadData(loadingScreen.this);
                     //Log.d("Database Login", "Database.username" + DataBase.username + " Database.password" + DataBase.password);
-                    BackgroundTask backgroundTask = new BackgroundTask(loadingScreen.this);
-                    backgroundTask.execute("login", DataBase.instance.username, DataBase.instance.password);
+                    if(!DataBase.instance.username.equals("") && !DataBase.instance.password.equals("")){
+                        BackgroundTask backgroundTask = new BackgroundTask(loadingScreen.this);
+                        backgroundTask.execute("login", DataBase.instance.username, DataBase.instance.password);
+                    } else {
+
+                        Intent intent = new Intent(loadingScreen.this, LoginActivity.class);
+
+                        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        ActivityCompat.finishAffinity(loadingScreen.this);
+
+                        startActivity(intent);
+
+                    }
+
                     /*
                     Intent intent = new Intent(loadingScreen.this, InputActivity.class);
 
