@@ -172,11 +172,6 @@ public class nyBrugerDialog extends AlertDialog {
         Log.d("Register: ", "Username: " + username.getText().toString() + " Password: " + password.getText().toString());
         new CustomToast("Ny bruger registeret", getContext());
 
-        DataBase.getInstance(context).CreateCategory("Grøntsager", 5, context);
-        DataBase.getInstance(context).CreateCategory("Kød", 50, context);
-        DataBase.getInstance(context).CreateCategory("Brød", 5, context);
-        DataBase.getInstance(context).CreateCategory("Mælk", 5, context);
-        DataBase.getInstance(context).CreateCategory("Fisk", 5, context);
 
         dialog.cancel();
         BackgroundTask backgroundTask = new BackgroundTask(context);
